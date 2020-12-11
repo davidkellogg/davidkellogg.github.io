@@ -2,18 +2,7 @@ body {
 	height: 100%;
 	margin-left: auto;
 	margin-right: auto;
-	}
-
-body, footer {
 	width: 960px;
-	}
-
-@media only screen {
-	body, footer {
-		margin-left: 0%;
-		margin-right: 0%;
-    		width: 100%;
-		}
 	}
 
 header, footer {
@@ -25,6 +14,11 @@ header, footer {
 footer {
 	position: absolute;
 	bottom: 10px;
+	width: 920px;
+	}
+
+p {
+	padding: 0px 10px;
 	}
 
 .title, .subtitle {
@@ -37,6 +31,18 @@ footer {
 	font-size: 18px;
 	}
 
-p {
-	padding: 0px 10px;
+@media only screen and (max-width: 7748px) {
+	body, footer {
+		margin-left: 0%;
+		margin-right: 0%;
+    		width: 100%;
+		}
+
+	header {
+		text-align: left;
+		}
+
+	.subtitle {
+		display: none;
+		}
 	}
