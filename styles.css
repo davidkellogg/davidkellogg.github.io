@@ -31,7 +31,7 @@ p {
 	font-size: 18px;
 	}
 
-@media only screen and (max-width: 375px) and (-webkit-device-pixel-ratio: 2) {
+@media only screen and (max-width: 750px) {
 	body, footer {
 		margin-left: 0%;
 		margin-right: 0%;
