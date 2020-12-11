@@ -8,6 +8,14 @@ body, footer {
 	width: 960px;
 	}
 
+@media only screen and (max-width: 768px) {
+	body, footer {
+		margin-left: 0%;
+		margin-right: 0%;
+    		width: 100%;
+		}
+	}
+
 header, footer {
 	text-align: center;
 	background: #FFCF9B;
@@ -16,15 +24,15 @@ header, footer {
 
 footer {
 	position: absolute;
-	bottom: 0px;
+	bottom: 10px;
 	}
 
-h1, h2 {
+.title, .subtitle {
 	font-family: Optima;
 	font-size: 32px;
 	}
 
-h2 {
+.subtitle {
 	color: #888888;
 	font-size: 18px;
 	}
