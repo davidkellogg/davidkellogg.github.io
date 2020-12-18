@@ -1,50 +1,103 @@
-html, body {
-	height: 100%;
-	background-color: #FDFDFD;
-	}
+/*
+ * Top-level elements
+ */
+
+html,
+body {
+  height: 100vh;
+  background-color: #F8F8FF; /* ghostwhite */
+  }
 
 body {
-	margin-left: auto;
-	margin-right: auto;
-	width: 960px;
-	}
+  margin-top: 1em;
+  margin-bottom: 1em;
+  margin-left: auto;
+  margin-right: auto;
+  width: 70%;
+  }
 
-header, footer, .content {
-	border-style: solid;
-	border-width: 0;
-	border-radius: 5px;
-	box-shadow: 0 5px 5px #DDDDDD;
-	padding: 20px;
-	}
 
-header, footer {
-	text-align: center;
-	background-color: #FFCF9B;
-	}
+/*
+ * Block-level elements
+ */
 
+header,
+footer,
+main {
+  padding: 1.25em;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  border-style: solid;
+  border-width: 0;
+  border-radius: 0.3125em;
+  box-shadow: 0 0.3125em 0.3125em #D3D3D3; /* lightgray */
+  }
+
+header,
 footer {
-	width: 920px;
-	height: 1.5em;
-	}
+  font-family: Optima;
+  background-color: #A0522D; /* sienna */
+  text-align: center;
+  color: #DEB887; /* burlywood */
+  }
 
-.content {
-	background-color: #9BCFFF;
-	min-height: 70%;
-	margin: 1em 0;
-	}
 
-p {
-	margin: 0;
-	}
+/* begin title and Subtitle styles */
 
-.title, .subtitle {
-	font-family: Optima;
-	font-size: 2.5em;
-	margin-block-start: 0.1em;
-	margin-block-end: 0.1em;
-	}
+header > h1, header > h2 {
+  margin-block-start: 0.1em;
+  margin-block-end: 0.1em;
+  }
 
-.subtitle {
-	color: #888888;
-	font-size: 1.5em;
-	}
+header > h1 {
+  font-size: 2.5em;
+  color: #FAEBD7; /* antiquewhite */
+  }
+
+header > h2 {
+  font-size: 1.5em;
+  }
+
+/* end title and subtitle styles */
+
+
+main {
+  background-color: #FFE4C4; /* bisque */
+  min-height: calc( 100vh - 18em );
+  }
+
+
+/*
+ * mobile devices
+ */
+
+@media only screen
+  and (max-width: 1023px) {
+
+  body {
+    width: 100%;
+    margin-top: 0;
+    margin-bottom: 0;
+    }
+
+  header,
+  footer,
+  main {
+    padding: 0.5em;
+    margin-top: 0;
+    margin-bottom: 0;
+    border-radius: 0;
+    }
+
+  header {
+    text-align: left;
+    }
+
+  header > h2 {
+    display: none;
+    }
+
+  main {
+    min-height: calc( 100vh - 7.5em );
+    }
+  }
