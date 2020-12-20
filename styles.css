@@ -1,8 +1,8 @@
 /*
- * Top-level elements
+ * Set site background color and rules for top-level element stretching
  */
 
-html { background-color: #F8F8FF; /* ghostwhite */ }
+html { background-color: #F8F8FF; } /* ghostwhite */
 
 body {
   width: 100%;
@@ -15,8 +15,10 @@ body, body > * {
   margin-bottom: 0;
   }
 
+
+
 /*
- * Block-level elements
+ * Set the look and feel of top-level elements
  */
 
 header,
@@ -32,9 +34,6 @@ footer {
 
 footer { text-align: center; }
 
-
-/* begin title and Subtitle styles */
-
 header > * {
   margin-top: 0.1em;
   margin-bottom: 0.1em;
@@ -45,8 +44,6 @@ header > h1 { color: #FAEBD7; } /* antiquewhite */
 
 header > h2 { display: none; }
 
-/* end title and subtitle styles */
-
 
 main {
   background-color: #FFE4C4; /* bisque */
@@ -54,28 +51,29 @@ main {
   }
 
 
+
 /*
- * desktop devices
+ * Modifications to top-level elements
+ * Applies to screens with resolution equal to or greater than 1080px
  */
 
 @media only screen
-  and (min-width: 1024px) {
+  and ( min-width: 1080px ) {
 
-body { width: 70%; }
+  body { width: 70%; }
 
-body, body > * {
-  margin-top: 1em;
-  }
+  body,
+  body > * { margin-top: 1em; }
 
-header,
-footer,
-main {
-  padding: 1.25em;
-  border-style: solid;
-  border-width: 0;
-  border-radius: 0.3125em;
-  box-shadow: 0 0.3125em 0.3125em #D3D3D3; /* lightgray */
-  }
+  header,
+  footer,
+  main {
+    padding: 1.25em;
+    border-style: solid;
+    border-width: 0;
+    border-radius: 0.3125em;
+    box-shadow: 0 0.3125em 0.3125em #D3D3D3; /* lightgray */
+    }
 
   header { text-align: center; }
 
