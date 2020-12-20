@@ -4,7 +4,8 @@
 
 html { background-color: #F8F8FF; } /* ghostwhite */
 
-body {
+body,
+#site-title {
   width: 100%;
   margin-right: auto;
   margin-left: auto;
@@ -26,29 +27,33 @@ footer,
 main { padding: 0.5em; }
 
 header,
+#site-title > *,
 footer {
   font-family: Optima;
   background-color: #A0522D; /* sienna */
   color: #DEB887; /* burlywood */
   }
 
-footer { text-align: center; }
 
-header > * {
+/* --- site title --- */
+#site-title > a > * {
   margin-top: 0.1em;
   margin-bottom: 0.1em;
   font-size: 1.5em;
   }
 
-header > h1 { color: #FAEBD7; } /* antiquewhite */
+#site-title > a > h1 { color: #FAEBD7; } /* antiquewhite */
 
-header > h2 { display: none; }
+#site-title > a > h2 { display: none; }
+/* ------------------ */
 
 
 main {
   background-color: #FFE4C4; /* bisque */
   min-height: calc( 100vh - 6.3em );
   }
+
+footer { text-align: center; }
 
 
 
@@ -75,11 +80,31 @@ main {
     box-shadow: 0 0.3125em 0.3125em #D3D3D3; /* lightgray */
     }
 
-  header { text-align: center; }
+  header {
+    padding: 0.625em;
+    text-align: center;
+    }
 
-  header > h1 { font-size: 2.5em; }
 
-  header > h2 { display: block; }
+  /* --- site title --- */
+  #site-title {
+    width: 40%;
+    padding: 0.625em;
+    }
+
+  #site-title:hover {
+    background-color: hsl( 19, 56%, 45% ); /* sienna + 5% lightness */
+    border-radius: 0.3125em;
+    }
+
+  #site-title > a,
+  #site-title > a > h1 > u { text-decoration: none; }
+
+  #site-title > a > h1 { font-size: 2.5em; }
+
+  #site-title > a > h2 { display: block; }
+  /* ------------------ */
+
 
   main { min-height: calc( 100vh - 18.25em ); }
   }
