@@ -7,7 +7,6 @@ html { background-color: #F8F8FF; } /* ghostwhite */
 body { margin: 0; }
 
 
-
 /*
  * Set the look and feel of top-level elements
  */
@@ -28,7 +27,7 @@ main {
   }
 
 main,
-footer { padding: 0.625em; }
+footer { padding: 1.25em; }
 
 footer { text-align: center; }
 
@@ -40,30 +39,33 @@ footer { text-align: center; }
 
 
 /* --- links in p --- */
-p > a:link { color: #6A5ACD; } /* slateblue */
+p a:link { color: #6A5ACD; } /* slateblue */
 
-p > a:visited { color: #663399; } /* rebeccapurple */
+p a:visited { color: #663399; } /* rebeccapurple */
 
-p > a:hover { text-decoration: none; }
+p a:hover { text-decoration: none; }
 
-p > a:active { color: #FF00FF; } /* magenta */
+p a:active { color: #FF00FF; } /* magenta */
 /* ------------------ */
 
 
 /* --- site title --- */
-#site-title {
+header div#site-title {
   display: inline-block;
   padding: 0.625em;
+  color: #DEB887; /* burlywood */
   }
 
-#site-title > * {
+header div#site-title > *:is( h1, h2, h3, h4, h5, h6 ) {
   margin: 0.1em;
   font-size: 1.5em;
   }
 
-#site-title > h1 { color: #FAEBD7; } /* antiquewhite */
+header div#site-title h1 { color: #FAEBD7; } /* antiquewhite */
 
-#site-title > h2 { display: none; }
+header div#site-title > *:not( h1 ) { display: none; }
+
+header div#site-title:hover { background-color: hsl( 19, 56%, 45% ); } /* sienna + 5% lightness */
 /* ------------------ */
 
 
@@ -74,10 +76,11 @@ p > a:active { color: #FF00FF; } /* magenta */
  */
 
 @media only screen
-  and ( min-width: 1080px ) {
+  and ( min-width: 720px ) {
 
   body {
-    width: 70%;
+    min-width: 720px;
+    max-width: 70%;
     margin: 1em auto;
     }
 
@@ -85,7 +88,6 @@ p > a:active { color: #FF00FF; } /* magenta */
   footer,
   main {
     width: auto;
-    padding: 1.25em;
     margin: 1em auto;
     border-radius: 0.3125em;
     box-shadow: 0 0.3125em 0.3125em #D3D3D3; /* lightgray */
@@ -98,18 +100,13 @@ p > a:active { color: #FF00FF; } /* magenta */
 
 
   /* --- site title --- */
-  #site-title:hover {
-    background-color: hsl( 19, 56%, 45% ); /* sienna + 5% lightness */
-    border-radius: 0.3125em;
-    }
+  header div#site-title h1 { font-size: 2.5em; }
 
-  #site-title { color: #DEB887; } /* burlywood */
+  header div#site-title h1 > u { text-decoration: none; }
 
-  #site-title > h1 { font-size: 2.5em; }
+  header div#site-title h2 { display: block; }
 
-  #site-title > h1 > u { text-decoration: none; }
-
-  #site-title > h2 { display: block; }
+  header div#site-title:hover { border-radius: 0.3125em; }
   /* ------------------ */
 
 
