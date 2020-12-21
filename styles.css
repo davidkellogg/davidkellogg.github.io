@@ -5,15 +5,10 @@
 html { background-color: #F8F8FF; } /* ghostwhite */
 
 body,
+body > *,
 #site-title {
   width: 100%;
-  margin-right: auto;
-  margin-left: auto;
-  }
-
-body, body > * {
-  margin-top: 0;
-  margin-bottom: 0;
+  margin: 0 auto;
   }
 
 
@@ -24,10 +19,10 @@ body, body > * {
 
 header,
 footer,
-main { padding: 0.5em; }
+main { padding: 0.5em 0; }
 
 header,
-#site-title > *,
+#site-title,
 footer {
   font-family: Optima;
   background-color: #A0522D; /* sienna */
@@ -36,9 +31,11 @@ footer {
 
 
 /* --- site title --- */
+#site-title,
+section { width: calc( 100% - 1em ); }
+
 #site-title > a > * {
-  margin-top: 0.1em;
-  margin-bottom: 0.1em;
+  margin: 0.1em auto;
   font-size: 1.5em;
   }
 
@@ -50,8 +47,19 @@ footer {
 
 main {
   background-color: #FFE4C4; /* bisque */
+  color: #443322; /* dark gray, custom */
   min-height: calc( 100vh - 6.3em );
   }
+
+section { margin: auto auto; }
+
+p > a:link { color: #6A5ACD; } /* slateblue */
+
+p > a:visited { color: #663399; } /* rebeccapurple */
+
+p > a:hover { text-decoration: none; }
+
+p > a:active { color: #FF00FF; } /* magenta */
 
 footer { text-align: center; }
 
@@ -65,15 +73,17 @@ footer { text-align: center; }
 @media only screen
   and ( min-width: 1080px ) {
 
-  body { width: 70%; }
-
-  body,
-  body > * { margin-top: 1em; }
+  body {
+    width: 70%;
+    margin: 1em auto;
+    }
 
   header,
   footer,
   main {
+    width: auto;
     padding: 1.25em;
+    margin: 1em auto;
     border-style: solid;
     border-width: 0;
     border-radius: 0.3125em;
@@ -81,7 +91,7 @@ footer { text-align: center; }
     }
 
   header {
-    padding: 0.625em;
+    padding: 0.625em 1.25em;
     text-align: center;
     }
 
@@ -96,6 +106,8 @@ footer { text-align: center; }
     background-color: hsl( 19, 56%, 45% ); /* sienna + 5% lightness */
     border-radius: 0.3125em;
     }
+
+  #site-title > a { color: #DEB887; } /* burlywood */
 
   #site-title > a,
   #site-title > a > h1 > u { text-decoration: none; }
