@@ -1,8 +1,23 @@
 /*
  * Set site background color and rules for top-level element stretching
  */
-html { background-color: #F8F8FF; } /* ghostwhite */
-body { margin: 0; }
+html {
+  background-color: #F8F8FF;
+  box-sizing: border-box;
+  } /* ghostwhite */
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+  }
+
+body {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  }
 
 
 /*
@@ -22,7 +37,7 @@ footer a {
 main {
   background-color: #FFE4C4; /* bisque */
   color: #443322; /* dark gray, custom */
-  min-height: calc( 100vh - 9.55em );
+  flex: 1;
   }
 
 main,
@@ -35,7 +50,6 @@ footer a {
   text-decoration: none;
   }
 
-footer a:link  { color: #6A5ACD; } /* slateblue */
 footer a:hover {
   background-color: hsl( 19, 56%, 45% ); /* sienna + 5% lightness */
   border-radius: 0.25em;
@@ -86,14 +100,14 @@ header a#site-title:hover         { background-color: hsl( 19, 56%, 45% ); } /* 
   body {
     min-width: 720px;
     max-width: 70%;
-    margin: 1em auto;
+    margin: auto;
     }
 
   header,
   footer,
   main {
-    width: auto;
-    margin: 1em auto;
+    width: 100%;
+    margin: 0.5em auto;
     border-radius: 0.3125em;
     box-shadow: 0 0.3125em 0.3125em #D3D3D3; /* lightgray */
     }
@@ -103,12 +117,13 @@ header a#site-title:hover         { background-color: hsl( 19, 56%, 45% ); } /* 
     text-align: center;
     }
 
-  main { min-height: calc( 100vh - 18.25em ); }
-
   /* --- site title --- */
   header a#site-title       { text-decoration: none; }
-  header a#site-title h1    { font-size: 2.5em; }
-  header a#site-title h2    { display: block; }
   header a#site-title:hover { border-radius: 0.3125em; }
+  header a#site-title h1    { font-size: 2.5em; }
+  header a#site-title h2    {
+    display: block;
+    font-weight: 400;
+    }
   /* ------------------ */
   }
