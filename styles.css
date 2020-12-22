@@ -12,7 +12,8 @@ header { padding: 0 0.625em 0 0; }
 
 header,
 header a#site-title,
-footer {
+footer,
+footer a {
   font-family: Optima, sans-serif;
   background-color: #A0522D; /* sienna */
   color: #DEB887; /* burlywood */
@@ -25,13 +26,31 @@ main {
   }
 
 main,
-footer { padding: 1.25em; }
-footer { text-align: center; }
+footer.  { padding: 1.25em; }
+footer   { text-align: center; }
+footer a {
+  display: inline-block;
+  padding: 0.5em;
+  font-size: 0.75em;
+  text-decoration: none;
+  }
+
+footer a:link  { color: #6A5ACD; } /* slateblue */
+footer a:hover {
+  background-color: hsl( 19, 56%, 45% ); /* sienna + 5% lightness */
+  border-radius: 0.25em;
+  }
+
+small  {
+  display: block;
+  margin: 0.5em 0 0;
+  }
 
 
 /*
  * set the look and feel of inline elements
  */
+
 /* --- links in p --- */
 p a:link    { color: #6A5ACD; } /* slateblue */
 p a:visited { color: #663399; } /* rebeccapurple */
