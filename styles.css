@@ -26,7 +26,7 @@ main {
   }
 
 main,
-footer.  { padding: 1.25em; }
+footer   { padding: 1.25em; }
 footer   { text-align: center; }
 footer a {
   display: inline-block;
