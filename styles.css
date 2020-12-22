@@ -1,20 +1,17 @@
 /*
  * Set site background color and rules for top-level element stretching
  */
-
 html { background-color: #F8F8FF; } /* ghostwhite */
-
 body { margin: 0; }
 
 
 /*
  * Set the look and feel of top-level elements
  */
-
 header { padding: 0 0.625em 0 0; }
 
 header,
-header > a,
+header a#site-title,
 footer {
   font-family: Optima, sans-serif;
   background-color: #A0522D; /* sienna */
@@ -29,45 +26,34 @@ main {
 
 main,
 footer { padding: 1.25em; }
-
 footer { text-align: center; }
-
 
 
 /*
  * set the look and feel of inline elements
  */
-
-
 /* --- links in p --- */
-p a:link { color: #6A5ACD; } /* slateblue */
-
+p a:link    { color: #6A5ACD; } /* slateblue */
 p a:visited { color: #663399; } /* rebeccapurple */
-
-p a:hover { text-decoration: none; }
-
-p a:active { color: #FF00FF; } /* magenta */
+p a:hover   { text-decoration: none; }
+p a:active  { color: #FF00FF; } /* magenta */
 /* ------------------ */
 
-
 /* --- site title --- */
-header div#site-title {
+header a#site-title {
   display: inline-block;
   padding: 0.625em;
   }
 
-header div#site-title > *:is( h1, h2, h3, h4, h5, h6 ) {
+header a#site-title > *:is( h1, h2, h3, h4, h5, h6 ) {
   margin: 0.1em;
   font-size: 1.5em;
   }
 
-header div#site-title h1 { color: #FAEBD7; } /* antiquewhite */
-
-header div#site-title > *:not( h1 ) { display: none; }
-
-header div#site-title:hover { background-color: hsl( 19, 56%, 45% ); } /* sienna + 5% lightness */
+header a#site-title > h1          { color: #FAEBD7; /* antiquewhite */ }
+header a#site-title > *:not( h1 ) { display: none; }
+header a#site-title:hover         { background-color: hsl( 19, 56%, 45% ); } /* sienna + 5% lightness */
 /* ------------------ */
-
 
 
 /*
@@ -98,17 +84,12 @@ header div#site-title:hover { background-color: hsl( 19, 56%, 45% ); } /* sienna
     text-align: center;
     }
 
+  main { min-height: calc( 100vh - 18.25em ); }
 
   /* --- site title --- */
-  header div#site-title h1 { font-size: 2.5em; }
-
-  header div#site-title h1 > u { text-decoration: none; }
-
-  header div#site-title h2 { display: block; }
-
-  header div#site-title:hover { border-radius: 0.3125em; }
+  header a#site-title       { text-decoration: none; }
+  header a#site-title h1    { font-size: 2.5em; }
+  header a#site-title h2    { display: block; }
+  header a#site-title:hover { border-radius: 0.3125em; }
   /* ------------------ */
-
-
-  main { min-height: calc( 100vh - 18.25em ); }
   }
