@@ -50,7 +50,14 @@ footer a {
   text-decoration: none;
   }
 
-footer a:hover {
+footer nav#footer-nav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  }
+
+footer nav#footer-nav ul li         { display: inline-block; }
+footer nav#footer-nav ul li a:hover {
   background-color: hsl( 19, 56%, 45% ); /* sienna + 5% lightness */
   border-radius: 0.25em;
   }
@@ -66,6 +73,7 @@ small  {
  */
 
 /* --- links in p --- */
+p a         { white-space: nowrap; }
 p a:link    { color: #6A5ACD; } /* slateblue */
 p a:visited { color: #663399; } /* rebeccapurple */
 p a:hover   { text-decoration: none; }
@@ -95,7 +103,7 @@ header a#site-title:hover         { background-color: hsl( 19, 56%, 45% ); } /* 
  */
 
 @media only screen
-  and ( min-width: 720px ) {
+  and ( min-width: 721px ) {
 
   body {
     min-width: 720px;
