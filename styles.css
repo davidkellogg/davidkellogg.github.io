@@ -119,7 +119,7 @@ small  {
 
   body {
     grid-template-columns: auto minmax( 720px, 70% ) auto;
-    gap: 1em;
+    grid-row-gap: 1em;
     }
 
   header,
