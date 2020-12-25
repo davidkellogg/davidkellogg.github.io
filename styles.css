@@ -14,8 +14,8 @@ html {
 
 body {
   height: 100vh;
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
   margin: 0;
   }
 
@@ -24,7 +24,7 @@ body {
  * Set the look and feel of top-level elements
  */
 header {
-  display: grid;
+  display: inline-grid;
   grid-template-columns: auto 1fr;
   align-items: center;
   padding: 0 0.625em 0 0;
@@ -55,58 +55,57 @@ footer a {
   text-decoration: none;
   }
 
+
+/*
+ * set the look and feel of inline elements
+ */
+
 section h3 {
   font-size: 1.5em;
   margin: 0.83em 0;
 }
-
-/* footer navigation */
-footer nav#footer-nav ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  }
-
-footer nav#footer-nav ul li         { display: inline-block; }
-footer nav#footer-nav ul li a:hover {
-  background-color: hsl( 19, 56%, 45% ); /* sienna + 5% lightness */
-  border-radius: 0.25em;
-  }
-/* ------------------ */
-
 
 small  {
   display: block;
   margin: 0.5em 0 0;
   }
 
-
-/*
- * set the look and feel of inline elements
- */
-
 /* --- links in p --- */
-p a         { white-space: nowrap; }
-p a:link    { color: #6A5ACD; } /* slateblue */
-p a:visited { color: #663399; } /* rebeccapurple */
-p a:hover   { text-decoration: none; }
-p a:active  { color: #FF00FF; } /* magenta */
+  p a         { white-space: nowrap; }
+  p a:link    { color: #6A5ACD; } /* slateblue */
+  p a:visited { color: #663399; } /* rebeccapurple */
+  p a:hover   { text-decoration: none; }
+  p a:active  { color: #FF00FF; } /* magenta */
 /* ------------------ */
 
 /* --- site title --- */
-header a#site-title {
-  display: inline-block;
-  padding: 0.625em;
-  }
+  header a#site-title {
+    display: inline-block;
+    padding: 0.625em;
+    }
 
-header a#site-title > *:is( h1, h2, h3, h4, h5, h6 ) {
-  margin: 0.1em;
-  font-size: 1.5em;
-  }
+  header a#site-title > *:is( h1, h2, h3, h4, h5, h6 ) {
+    margin: 0.1em;
+    font-size: 1.5em;
+    }
 
-header a#site-title > h1          { color: #FAEBD7; /* antiquewhite */ }
-header a#site-title > *:not( h1 ) { display: none; }
-header a#site-title:hover         { background-color: hsl( 19, 56%, 45% ); } /* sienna + 5% lightness */
+  header a#site-title > h1          { color: #FAEBD7; /* antiquewhite */ }
+  header a#site-title > *:not( h1 ) { display: none; }
+  header a#site-title:hover         { background-color: hsl( 19, 56%, 45% ); } /* sienna + 5% lightness */
+/* ------------------ */
+
+/* footer navigation  */
+  footer nav#footer-nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    }
+
+  footer nav#footer-nav ul li         { display: inline-block; }
+  footer nav#footer-nav ul li a:hover {
+    background-color: hsl( 19, 56%, 45% ); /* sienna + 5% lightness */
+    border-radius: 0.25em;
+    }
 /* ------------------ */
 
 
@@ -119,39 +118,45 @@ header a#site-title:hover         { background-color: hsl( 19, 56%, 45% ); } /* 
   and ( min-width: 721px ) {
 
   body {
-    min-width: 720px;
-    max-width: 70%;
-    margin: auto;
+    grid-template-columns: auto minmax( 720px, 70% ) auto;
+    gap: 1em;
     }
 
   header,
   footer,
   main {
+    grid-column: 2 / 3;
     width: 100%;
-    margin: 0.5em auto;
     border-radius: 0.3125em;
     box-shadow: 0 0.3125em 0.3125em #D3D3D3; /* lightgray */
     }
 
   header {
+    grid-row: 1 / 2;
+    margin-top: 1em;
+    padding: 0.625em 1.25em;
     grid-template-columns: 1fr auto 1fr;
     justify-items: center;
-    padding: 0.625em 1.25em;
-    text-align: center;
+    }
+
+  main   { grid-row: 2 / 3; }
+  footer {
+    grid-row: 3 / 4;
+    margin-bottom: 1em;
     }
 
   /* --- site title --- */
-  header a#site-title       {
-    grid-column-start: 2;
-    grid-column-end: 3;
-    text-decoration: none;
-    }
+    header a#site-title       {
+      grid-column: 2 / 3;
+      text-align: center;
+      text-decoration: none;
+      }
 
-  header a#site-title:hover { border-radius: 0.3125em; }
-  header a#site-title h1    { font-size: 2.5em; }
-  header a#site-title h2    {
-    display: block;
-    font-weight: 400;
-    }
+    header a#site-title:hover { border-radius: 0.3125em; }
+    header a#site-title h1    { font-size: 2.5em; }
+    header a#site-title h2    {
+      display: block;
+      font-weight: 400;
+      }
   /* ------------------ */
   }
