@@ -1,212 +1,207 @@
 /*
+ * #F8F8FF ghostwhite    site background
+ *
+ * #A0522D sienna        header, footer background
+ * #DEB887 burlywood     header, footer text color
+ *
+ * #FFE4C4 bisque        main background
+ * #443322 dark gray     main text color
+ * #663399 rebeccapurple main a:visited
+ * #6A5ACD slateblue     main a:link
+ * #FF00FF magenta       main a:active
+ */
+
+
+/*
  * Set site background color and rules for top-level element stretching
  */
 html {
+  box-sizing:        border-box;
   background-color: #F8F8FF; /* ghostwhite */
-  box-sizing: border-box;
   }
 
 *,
 *:before,
-*:after {
-  box-sizing: inherit;
-  }
+*:after { box-sizing: inherit; }
 
 body {
-  height: 100vh;
-  min-width: 360px;
-  display: grid;
-  grid-template-columns: auto 1fr;
-  grid-template-rows: auto auto 1fr auto;
-  margin: 0;
-  background-color: #A0522D; /* sienna */
+  display:     grid;
+  grid:       "header navigation" auto
+              "main   main      " 1fr
+              "footer footer    " auto
+             / auto   1fr;
+  min-width:   360px;
+  height:      100vh;
+  margin:      0;
+  font-family: Optima, sans-serif;
   }
 
 
 /*
  * Set the look and feel of top-level elements
  */
-header { padding: 0 0.625em 0 0; }
+header { grid-area: header; }
 
 header,
-header a,
-footer,
-nav a {
-  font-family: Optima, sans-serif;
-  color: #DEB887; /* burlywood */
-  text-align: center;
-  white-space: nowrap;
+footer {
+  text-align:        center;
+  background-color: #A0522D; /* sienna */
+  color:            #DEB887; /* burlywood */
   }
 
 main {
-  grid-column: 1 / 3;
-  grid-row: 3 / 4;
+  grid-area:         main;
+  color:            #443322; /* dark gray, custom */
   background-color: #FFE4C4; /* bisque */
-  color: #443322; /* dark gray, custom */
-  flex: 1;
   }
 
 main,
-footer   { padding: 1.25em; }
-footer   {
-  grid-column: 1 / 3;
-  grid-row: 4 / 5;
-  text-align: center;
-  }
+footer   { padding:   1.25em; }
 
-footer a {
-  display: inline-block;
-  padding: 0.5em;
-  font-size: 0.75em;
-  text-decoration: none;
-  }
+footer   { grid-area: footer; }
 
 
 /*
  * set the look and feel of inline elements
  */
 
-section h3 {
-  font-size: 1.5em;
-  margin: 0.83em 0;
-}
+a {
+  white-space: nowrap;
+  color:      #DEB887; /* burlywood */
+  }
 
-small  {
+main h3 {
+  font-size: 1.500em;
+  margin:    0.833em 0;
+  }
+
+footer small  {
   display: block;
-  margin: 0.5em 0 0;
+  margin:  0.5em 0 0;
   }
 
 /* --- links in p --- */
-  p a         { white-space: nowrap; }
-  p a:link    { color: #6A5ACD; } /* slateblue */
-  p a:visited { color: #663399; } /* rebeccapurple */
+  p a:link    { color:          #6A5ACD; } /* slateblue */
+  p a:visited { color:          #663399; } /* rebeccapurple */
   p a:hover   { text-decoration: none; }
-  p a:active  { color: #FF00FF; } /* magenta */
+  p a:active  { color:          #FF00FF; } /* magenta */
 /* ------------------ */
 
 /* --- navigation --- */
   nav ul {
     list-style-type: none;
-    margin: 0;
-    padding: 0;
+    margin:          0;
+    padding:         0;
     }
 
-  nav ul li         { display: inline-block; }
-  nav ul li a:hover {
+  nav a       {
+    display:         block;
+    padding:         0.5em;
+    text-decoration: none;
+    }
+
+  nav a:hover {
     background-color: hsl( 19, 56%, 45% ); /* sienna + 5% lightness */
-    border-radius: 0.25em;
+    border-radius:    0.25em;
     }
 /* ------------------ */
 
 /* --- site title --- */
   header a#site-title {
-    grid-column: 1 / 2;
     display: inline-block;
     padding: 0.625em;
     }
 
   header a#site-title > *:is( h1, h2, h3, h4, h5, h6 ) {
-    margin: 0.1em;
-    font-size: 1.5em;
+    margin:    0.125em;
+    font-size: 1.500em;
     }
 
-  header a#site-title >        h1   { color: #FAEBD7; /* antiquewhite */ }
+  header a#site-title >        h1   { color: #FAEBD7; } /* antiquewhite */
   header a#site-title > *:not( h1 ) { display: none; }
   header a#site-title:hover         { background-color: hsl( 19, 56%, 45% ); } /* sienna + 5% lightness */
 /* ------------------ */
 
 /* header navigation  */
   nav#header-nav {
-    grid-column: 2 / 3;
-    align-self: start;
-    justify-self: end;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
+    grid-area:         navigation;
+    display:           flex;
+    flex-direction:    column;
+    flex:              none;
+    align-items:       flex-end;
+    align-self:        flex-start;
+    justify-self:      self-start;
+    width:             100%;
+    background-color: #A0522D; /* sienna */
     }
 
-  nav#header-nav ul    { display: none; }
-  nav#header-nav ul li { display: block; }
-  nav#header-nav a     {
-    display: block;
-    padding: 0.5em;
-    text-decoration: none;
-    text-align: right;
-    white-space: nowrap;
-    }
+  nav#header-nav > ul          { display: none; }
+  nav#header-nav > ul > li     { display: block; }
+  nav#header-nav > ul > li > a { text-align: right; }
 
-  input[type=checkbox]#header-nav-toggle {
+  nav#header-nav > input[type=checkbox]#header-nav-toggle {
     -webkit-appearance: none;
-    margin: 1.25em;
-    width:  2.25em;
-    height: 2.25em;
-    border: 1px solid #443322; /* dark gray, custom */
-    border-radius: 0.3125em;
+    width:              2.25em;
+    height:             2.25em;
+    margin:             1.25em;
+    border:             1px solid #443322; /* dark gray, custom */
+    border-radius:      0.3125em;
     }
 
-  input[type=checkbox]:checked#header-nav-toggle      { background-color: #FFE4C4; } /* bisque */
-  input[type=checkbox]:checked#header-nav-toggle + ul { display: block; }
+  nav#header-nav > input[type=checkbox]:checked#header-nav-toggle      { background-color: #FFE4C4; } /* bisque */
+  nav#header-nav > input[type=checkbox]:checked#header-nav-toggle + ul { display: block; }
 /* ------------------ */
 
+/* footer navigation  */
+  nav#footer-nav > ul > li {
+    display:   inline-block;
+    font-size: 0.75em;
+    }
+/* ------------------ */
 
 /*
  * Modifications to elements
- * Applies to screens with resolution equal to or greater than 1080px
  */
 
-@media only screen
+@media screen
   and ( min-width: 481px )
   and ( max-width: 960px ) {
 
     nav#header-nav {
       flex-direction: row-reverse;
-      align-items: center;
+      align-items:    center;
       }
 
-    nav#header-nav a,
-    nav#header-nav ul li,
-    input[type=checkbox]:checked#header-nav-toggle,
-    input[type=checkbox]:checked#header-nav-toggle + ul { display: inline-block; }
+    nav#header-nav > ul > li { display: inline-block; }
   }
 
-@media only screen
-  and ( min-width: 721px ) {
+@media screen and ( max-width: 720px ) { nav#header-nav { height: 100% } }
+@media screen and ( min-width: 721px ) {
 
   body {
-    grid-template-columns: 1fr minmax( 720px, 70% ) 1fr;
-    background-color: rgba( 255, 255, 255, 100 );
+    grid: "empty-left header       empty-right" auto
+          "empty-left navigation   empty-right" auto
+          "empty-left main         empty-right" 1fr
+          "empty-left footer       empty-right" auto
+         / 1fr        minmax( 720px, 70% ) 1fr;
     }
 
   header {
-    grid-column: 2 / 3;
-    margin-top: 1em;
-    padding: 0.625em 1.25em;
-    grid-template-columns: 1fr auto 1fr;
-    text-align: center;
-    border-radius: 0.3125em 0.3125em 0 0;
+    padding:    0.6250em;
+    margin-top: 1.0000em;
     }
 
   header,
   nav#header-nav,
+  main,
   footer {
-    background-color: #A0522D; /* sienna */
-    }
-
-  footer,
-  main {
-    grid-column: 2 / 3;
-    width: 100%;
-    border-radius: 0.3125em;
-    margin-bottom: 1em;
-    box-shadow: 0 0.3125em 0.3125em #D3D3D3; /* lightgray */
+    border-radius:   0.3125em;
+    margin-bottom:   1.0000em;
+    box-shadow:    0 0.3125em 0.3125em #D3D3D3; /* lightgray */
     }
 
   /* --- site title --- */
-    header a#site-title       {
-      text-align: center;
-      text-decoration: none;
-      }
-
+    header a#site-title       { text-decoration: none; }
     header a#site-title:hover { border-radius: 0.3125em; }
     header a#site-title h1    { font-size: 2.5em; }
     header a#site-title h2    {
@@ -215,52 +210,47 @@ small  {
       }
   /* ------------------ */
 
+@media screen
+  and ( min-width: 721px )
+  and ( max-width: 960px ) {
+
+  header {
+    margin-bottom: 0;
+    border-radius: 0.3125em 0.3125em 0 0;
+  }
+
   /* header navigation  */
-    nav#header-nav {
-      grid-row: 2 / 3;
-      grid-column: 2 / 3;
-      width: 100%;
-      margin-bottom: 1em;
-      border-radius: 0 0 0.3125em 0.3125em;
-      box-shadow: 0 0.3125em 0.3125em #D3D3D3; /* lightgray */
-      }
+    nav#header-nav { border-radius: 0 0 0.3125em 0.3125em; }
   /* ------------------ */
   }
 
 @media only screen
   and ( min-width: 961px ) {
 
-  header,
-  nav#header-nav {
-    border-radius: 0.3125em;
-    box-shadow: 0 0.3125em 0.3125em #D3D3D3; /* lightgray */
-    margin-bottom: 1em;
+  body {
+    grid: "empty-left header    empty-top-right" auto
+          "empty-left main           navigation" 1fr
+          "empty-left footer empty-bottom-right" auto
+         / 1fr        minmax( 720px, 70% )  1fr;
     }
 
   /* header navigation  */
     nav#header-nav {
-      grid-row: 3 / 4;
-      grid-column: 3 / 4;
-      width: auto;
-      margin: 0 1em;
-      justify-self: start;
-      align-items: start;
+      width:        auto;
+      margin:       0 1em;
+      align-items:  flex-start;
       }
 
-  input[type=checkbox]:checked#header-nav-toggle + ul {
-    width: 100%;
-    background-color: #FFE4C4; /* bisque */
+  nav#header-nav > input[type=checkbox]:checked#header-nav-toggle + ul { background-color: #FFE4C4; } /* bisque */
+
+  nav#header-nav > ul > li > a {
+    color:     #443322;
+    text-align: left; /* dark gray, custom */
     }
 
-  nav#header-nav a {
-    display: block;
-    text-align: left;
-    color: #443322; /* dark gray, custom */
-    }
-
-  nav#header-nav a:hover {
+  nav#header-nav > ul > li > a:hover {
     background-color: hsl( 33, 100%, 83% ); /* bisque - 5% lightness */
-    border-radius: 0;
+    border-radius:    0;
     }
   /* ------------------ */
 }
