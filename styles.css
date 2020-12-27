@@ -5,16 +5,20 @@
  * #DEB887 burlywood     header, footer text color
  *
  * #FFE4C4 bisque        main background
- * #443322 dark gray     main text color
+ * #443322 dark gray     main text color (custom)
  * #663399 rebeccapurple main a:visited
  * #6A5ACD slateblue     main a:link
  * #FF00FF magenta       main a:active
+ *
+ * hsl( 19,  56%, 45% )  sienna + 5% lightness
+ * hsl( 33, 100%, 83% )  bisque - 5% lightness
  */
 
 
 /*
- * Set site background color and rules for top-level element stretching
+ * Set the look and feel of the site
  */
+
 html {
   box-sizing:        border-box;
   background-color: #F8F8FF; /* ghostwhite */
@@ -38,8 +42,10 @@ body {
 
 
 /*
- * Set the look and feel of top-level elements
+ * Set the look and feel of header, main content area, and footer
+ * --------------------------------------------------------------
  */
+
 header { grid-area: header; }
 
 header,
@@ -56,13 +62,13 @@ main {
   }
 
 main,
-footer   { padding:   1.25em; }
-
-footer   { grid-area: footer; }
+footer { padding:   1.25em; }
+footer { grid-area: footer; }
 
 
 /*
- * set the look and feel of inline elements
+ * set the look and feel of generic inline elements
+ * ------------------------------------------------
  */
 
 a {
@@ -75,7 +81,7 @@ main h3 {
   margin:    0.833em 0;
   }
 
-footer small  {
+footer small {
   display: block;
   margin:  0.5em 0 0;
   }
@@ -83,7 +89,7 @@ footer small  {
 /* --- links in p --- */
   p a:link    { color:          #6A5ACD; } /* slateblue */
   p a:visited { color:          #663399; } /* rebeccapurple */
-  p a:hover   { text-decoration: none; }
+  p a:hover   { text-decoration: none;   }
   p a:active  { color:          #FF00FF; } /* magenta */
 /* ------------------ */
 
@@ -94,7 +100,7 @@ footer small  {
     padding:         0;
     }
 
-  nav a       {
+  nav a {
     display:         block;
     padding:         0.5em;
     text-decoration: none;
@@ -106,20 +112,26 @@ footer small  {
     }
 /* ------------------ */
 
+
+/*
+ * set the look and feel of id-bound inline elements
+ * -------------------------------------------------
+ */
+
 /* --- site title --- */
   header a#site-title {
     display: inline-block;
     padding: 0.625em;
     }
 
+  header a#site-title:hover         { background-color: hsl( 19, 56%, 45% ); } /* sienna + 5% lightness */
+
+  header a#site-title >        h1   { color: #FAEBD7; } /* antiquewhite */
+  header a#site-title > *:not( h1 ) { display: none;  }
   header a#site-title > *:is( h1, h2, h3, h4, h5, h6 ) {
     margin:    0.125em;
     font-size: 1.500em;
     }
-
-  header a#site-title >        h1   { color: #FAEBD7; } /* antiquewhite */
-  header a#site-title > *:not( h1 ) { display: none; }
-  header a#site-title:hover         { background-color: hsl( 19, 56%, 45% ); } /* sienna + 5% lightness */
 /* ------------------ */
 
 /* header navigation  */
@@ -135,8 +147,8 @@ footer small  {
     background-color: #A0522D; /* sienna */
     }
 
-  nav#header-nav > ul          { display: none; }
-  nav#header-nav > ul > li     { display: block; }
+  nav#header-nav > ul          { display:    none;  }
+  nav#header-nav > ul > li     { display:    block; }
   nav#header-nav > ul > li > a { text-align: right; }
 
   nav#header-nav > input[type=checkbox]#header-nav-toggle {
@@ -159,23 +171,35 @@ footer small  {
     }
 /* ------------------ */
 
+
 /*
- * Modifications to elements
+ * Responsive design modifications to header and generic & id-bound inline elements
+ * --------------------------------------------------------------------------------
+ *
+ * media query layout
+ *
+ * |xxxxx----|  | 360 - 720 |  body { min-width: 360px; }
+ * |---xxxx--|  | 481 - 960 |
+ * |-----xxxx|  | 721 - inf |  inf = infinite
+ * |-------xx|  | 961 - inf |
  */
+
+@media screen and ( max-width: 720px ) { nav#header-nav { height: 100% } }
 
 @media screen
   and ( min-width: 481px )
   and ( max-width: 960px ) {
 
+  /* header navigation  */
     nav#header-nav {
       flex-direction: row-reverse;
       align-items:    center;
       }
 
     nav#header-nav > ul > li { display: inline-block; }
+  /* ------------------ */
   }
 
-@media screen and ( max-width: 720px ) { nav#header-nav { height: 100% } }
 @media screen and ( min-width: 721px ) {
 
   body {
@@ -201,9 +225,9 @@ footer small  {
     }
 
   /* --- site title --- */
-    header a#site-title       { text-decoration: none; }
+    header a#site-title       { text-decoration: none;   }
     header a#site-title:hover { border-radius: 0.3125em; }
-    header a#site-title h1    { font-size: 2.5em; }
+    header a#site-title h1    { font-size: 2.5em;        }
     header a#site-title h2    {
       display: block;
       font-weight: 400;
@@ -241,16 +265,16 @@ footer small  {
       align-items:  flex-start;
       }
 
-  nav#header-nav > input[type=checkbox]:checked#header-nav-toggle + ul { background-color: #FFE4C4; } /* bisque */
+    nav#header-nav > input[type=checkbox]:checked#header-nav-toggle + ul { background-color: #FFE4C4; } /* bisque */
 
-  nav#header-nav > ul > li > a {
-    color:     #443322;
-    text-align: left; /* dark gray, custom */
-    }
+    nav#header-nav > ul > li > a {
+      color:     #443322;
+      text-align: left; /* dark gray, custom */
+      }
 
-  nav#header-nav > ul > li > a:hover {
-    background-color: hsl( 33, 100%, 83% ); /* bisque - 5% lightness */
-    border-radius:    0;
-    }
+    nav#header-nav > ul > li > a:hover {
+      background-color: hsl( 33, 100%, 83% ); /* bisque - 5% lightness */
+      border-radius:    0;
+      }
   /* ------------------ */
 }
