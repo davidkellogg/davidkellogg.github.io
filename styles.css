@@ -128,7 +128,7 @@ footer small {
 
   header a#site-title >        h1   { color: #FAEBD7; } /* antiquewhite */
   header a#site-title > *:not( h1 ) { display: none;  }
-  header a#site-title > *:is( h1, h2, h3, h4, h5, h6 ) {
+  header a#site-title > *:is(  h1, h2, h3, h4, h5, h6 ) {
     margin:    0.125em;
     font-size: 1.500em;
     }
@@ -176,12 +176,14 @@ footer small {
  * Responsive design modifications to header and generic & id-bound inline elements
  * --------------------------------------------------------------------------------
  *
- * media query layout
+ * media queries layout:
  *
- * |xxxxx----|  | 360 - 720 |  body { min-width: 360px; }
- * |---xxxx--|  | 481 - 960 |
- * |-----xxxx|  | 721 - inf |  inf = infinite
- * |-------xx|  | 961 - inf |
+ * +360 480 600 720 840 960+
+ * +xxxxxxxxxxxx-----------
+ *  ----xxxxxxxxxxxxxxxx---
+ *  ------------xxxxxxxx---
+ *  ------------xxxxxxxxxxx+
+ *  --------------------xxx+
  */
 
 @media screen and ( max-width: 720px ) { nav#header-nav { height: 100% } }
@@ -197,6 +199,20 @@ footer small {
       }
 
     nav#header-nav > ul > li { display: inline-block; }
+  /* ------------------ */
+  }
+
+@media screen
+  and ( min-width: 721px )
+  and ( max-width: 960px ) {
+
+  header {
+    margin-bottom: 0;
+    border-radius: 0.3125em 0.3125em 0 0;
+  }
+
+  /* header navigation  */
+    nav#header-nav { border-radius: 0 0 0.3125em 0.3125em; }
   /* ------------------ */
   }
 
@@ -227,26 +243,12 @@ footer small {
   /* --- site title --- */
     header a#site-title       { text-decoration: none;   }
     header a#site-title:hover { border-radius: 0.3125em; }
-    header a#site-title h1    { font-size: 2.5em;        }
-    header a#site-title h2    {
+    header a#site-title > h1  { font-size: 2.5em;        }
+    header a#site-title > h2  {
       display: block;
       font-weight: 400;
       }
   /* ------------------ */
-
-@media screen
-  and ( min-width: 721px )
-  and ( max-width: 960px ) {
-
-  header {
-    margin-bottom: 0;
-    border-radius: 0.3125em 0.3125em 0 0;
-  }
-
-  /* header navigation  */
-    nav#header-nav { border-radius: 0 0 0.3125em 0.3125em; }
-  /* ------------------ */
-  }
 
 @media only screen
   and ( min-width: 961px ) {
