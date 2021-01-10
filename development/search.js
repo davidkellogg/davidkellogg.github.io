@@ -5,29 +5,33 @@
  * [X] Add empty keyword search returns to default
  *
  * noscript fallback in dev.html
+ * add { display: block; } to JS dependent elemtents? form#searchForm, p#querySpeed, a#prev, a#next
+ *
  */
-
-document.getElementById( "searchForm" ).setAttribute( "style", "" );
 
 // global variables
 var           startQuery =  0;
 var             endQuery = 10;
 var       relevanceArray = [];
 var sortedRelevanceArray = [];
+var      relevantEntries = 0;
 
-const MONTHS = [ "",
-                 "January",
-                 "February",
-                 "March",
-                 "April",
-                 "May",
-                 "June",
-                 "July",
-                 "August",
-                 "September",
-                 "October",
-                 "November",
-                 "December" ];
+/* <link rel="stylesheet" href="development.css"> */
+document.querySelector("head").insertAdjacentHTML( 'beforeend', '<link rel="stylesheet" href="navigation.css">' );
+
+
+// insert navigation items
+document.getElementById( "resultList" ).insertAdjacentHTML( 'beforebegin', '\
+  <form id="searchForm" onsubmit="QueryIndex()">\
+    <input type="text" id="search" placeholder="Search for keywords..."></input><input type="submit" value="Search"></input>\
+  </form>\
+  <p id="querySpeed" style="visibility: hidden;">0 records found in 0 milliseconds</p>\
+');
+
+document.getElementById( "resultList" ).insertAdjacentHTML( 'afterend', '\
+  <a id="prev" class="displayPageNavigation" style="display: none;" href="javascript:PrevPage()">Prev</a>\
+  <a id="next" class="displayPageNavigation" style="display: none;" href="javascript:NextPage()">Next</a>\
+');
 
 // preventDefault
 document.getElementById( "searchForm" ).addEventListener( 'submit',  ( event ) => event.preventDefault() );
@@ -39,49 +43,40 @@ function DisplayPage() {
   document.getElementById("resultList").innerHTML = "";
 
   // change behavior of next and prev links
+  // prev link behavior
+  document.getElementById( "prev" ).setAttribute( "style", startQuery > 0 ? "" : "visibility: hidden;" )
 
-  // prev link
-  // show
-  if ( startQuery >= 10
-       && document.getElementById( "prev" ).getAttribute( "href" ) == "" ) {
-    document.getElementById( "prev" ).setAttribute( "href", "javascript:PrevPage()" );
-    document.getElementById( "prev" ).setAttribute( "style", "" );
-  }
+  // next link behavior
+  document.getElementById( "next" ).setAttribute( "style", endQuery < relevantEntries ? "" : "visibility: hidden;" )
 
-  // hide
-  if ( startQuery < 10
-       && document.getElementById( "prev" ).getAttribute( "href" ) != "" ) {
-    document.getElementById( "prev" ).setAttribute( "href", "" );
-    document.getElementById( "prev" ).setAttribute( "style", "visibility: hidden;" );
-  }
-
-  // next link
-  // show
-  if ( startQuery < sortedRelevanceArray.length
-       && document.getElementById( "next" ).getAttribute( "href" ) == "" ) {
-    document.getElementById( "next" ).setAttribute( "href", "javascript:NextPage()" );
-    document.getElementById( "next" ).setAttribute( "style", "" );
-  }
-
-  // hide
-  if ( sortedRelevanceArray.length < endQuery
-       && document.getElementById( "next" ).getAttribute( "href" ) != "" ) {
-    document.getElementById( "next" ).setAttribute( "href", "" );
-    document.getElementById( "next" ).setAttribute( "style", "visibility: hidden;" );
-  }
-
-  for ( i = startQuery; i < Math.min( sortedRelevanceArray.length, endQuery ); i++ ) {
-    document.getElementById( "resultList" ).innerHTML += `
-      <li>
-        <a href="${index[ sortedRelevanceArray[i] ].url}">
+  // construct Query results
+  const QUERYLIST = document.getElementById( "resultList" );
+  const MONTHS = [ "",
+                   "January",
+                   "February",
+                   "March",
+                   "April",
+                   "May",
+                   "June",
+                   "July",
+                   "August",
+                   "September",
+                   "October",
+                   "November",
+                   "December" ];
+  for ( let i = startQuery, len = Math.min( relevantEntries, endQuery ); i < len; i++ ) {
+    const LISTITEM  = index[ sortedRelevanceArray[i] ];
+    QUERYLIST.innerHTML +=
+      `<li>
+        <a href="${LISTITEM.url}">
           <article>
-            <h4>${index[ sortedRelevanceArray[i] ].name}</h4><time
-      datetime="${index[ sortedRelevanceArray[i] ].datetime}">
-        ${MONTHS[ index[ sortedRelevanceArray[i] ].datetime.substring( 5,  7 ) ]}
-                ${index[ sortedRelevanceArray[i] ].datetime.substring( 8, 10 )},
-                ${index[ sortedRelevanceArray[i] ].datetime.substring( 0,  4 )}</time>
+            <h4>${LISTITEM.name}</h4><time
+      datetime="${LISTITEM.datetime}">
+        ${MONTHS[ LISTITEM.datetime.substring( 5,  7 ) ]}
+                ${LISTITEM.datetime.substring( 8, 10 )},
+                ${LISTITEM.datetime.substring( 0,  4 )}</time>
             <hr>
-            <p>${index[ sortedRelevanceArray[i] ].description}</p>
+            <p>${LISTITEM.description}</p>
           </article>
         </a>
       </li>`;
@@ -90,16 +85,20 @@ function DisplayPage() {
 
 // go back a page
 function PrevPage() {
-  startQuery = Math.max( startQuery -= 10,  0 );
-    endQuery = Math.max(   endQuery -= 10, 10 );
-  DisplayPage();
+  if ( relevantEntries > 0 ) {
+        endQuery = Math.max(   endQuery -= Math.min( endQuery - startQuery, 10 ), 10 );
+      startQuery = Math.max( startQuery -= 10,  0 );
+    DisplayPage();
+  }
 }
 
 // go forward a page
 function NextPage() {
-  startQuery += 10;
-    endQuery += 10;
-  DisplayPage();
+  if ( relevantEntries > 0 ) {
+    startQuery = Math.min( startQuery += 10, relevantEntries - ( relevantEntries % 10 ) );
+      endQuery = Math.min(   endQuery += 10, relevantEntries );
+    DisplayPage();
+  }
 }
 
 // construct the query results
@@ -113,56 +112,51 @@ function QueryIndex() {
 
   //
   if ( document.getElementById("search").value == "" ) {
-    for ( i = 0; i < index.length; i++ ) {
-      relevanceArray.push( index[i].datetime );
-    }
-    sortedRelevanceArray = Array.from( Array( relevanceArray.length ).keys() ).sort( ( a, b ) => relevanceArray[a] > relevanceArray[b] ? -1 : ( relevanceArray[b] > relevanceArray[a] ) | 0 );
-    console.log( sortedRelevanceArray );
+    for ( i = 0, len = index.length; i < len; i++ ) { relevanceArray.push( index[i].datetime ); }
+    sortedRelevanceArray =  Array.from( Array(  relevanceArray.length ).keys() ).sort(
+                ( a, b ) => relevanceArray[a] > relevanceArray[b] ? -1 :
+                          ( relevanceArray[b] > relevanceArray[a] ) | 0 );
   } else {
     // construct relevanceArray
-    for (i = 0; i < index.length; i++) {
-      index[i].relevance = 0;
-      const TMPARR = index[i].keywords;
+    for ( i = 0, len = index.length; i < len; i++ ) {
+      const searchItem = index[i];
+      searchItem.relevance = 0;
       const CURRENTKEYWORD = document.getElementById("search").value.toLowerCase();
 
       // evaluate name
-      if ( index[i].name.toLowerCase().includes(CURRENTKEYWORD) ) { index[i].relevance += 2; }
+      searchItem.relevance += searchItem.name.toLowerCase().includes(CURRENTKEYWORD) ? 2 : 0;
 
       // evaluate url
-      if ( index[i].url.toLowerCase().includes(CURRENTKEYWORD) ) { index[i].relevance += 2; }
+      searchItem.relevance += searchItem.url.toLowerCase().includes(CURRENTKEYWORD) ? 2 : 0;
 
       // evaluate keywords
-      for ( j = 0; j < TMPARR.length; j++ ) {
-        if ( CURRENTKEYWORD === TMPARR[j].toLowerCase() ) {
-          index[i].relevance += 2;
-        }
-      }
+      searchItem.relevance += searchItem.keywords.includes(CURRENTKEYWORD) ? 2 : 0;
 
       // evaluate description
-      if ( index[i].description.toLowerCase().includes( CURRENTKEYWORD ) ) {
-        var n = 0, pos = 0;
-        while (true) {
-          pos = index[i].description.toLowerCase().indexOf( CURRENTKEYWORD, pos );
-          if ( pos >= 0 ) {
-            n++;
-            pos += CURRENTKEYWORD.length;
-          } else break;
-        }
-        index[i].relevance += n;
-      }
+      searchItem.relevance += searchItem.description.toLowerCase().includes(CURRENTKEYWORD)
+                          ? ( searchItem.description.toLowerCase().match( new RegExp( CURRENTKEYWORD,'gi' ) ) || [] ).length
+                          : 0;
 
-      relevanceArray.push( index[i].relevance );
+      relevanceArray.push( searchItem.relevance );
     }
 
     // sort relevanceArray into sortedRelevanceArray
-    sortedRelevanceArray = Array.from( Array( relevanceArray.length ).keys() ).sort( ( a, b ) => relevanceArray[a] > relevanceArray[b] ? -1 : ( relevanceArray[b] > relevanceArray[a] ) | 0 );
-
-    // remove irrelevant entries
-    while ( relevanceArray[ sortedRelevanceArray[ sortedRelevanceArray.length - 1 ] ] == 0 ) { sortedRelevanceArray.pop(); }
+    sortedRelevanceArray = function() {
+      let tmpArr = [];
+      for ( let i = 0, len = relevanceArray.length; i < len; i++ ) {
+        if ( relevanceArray[i] != 0 ) { tmpArr.push(i) };
+      }
+      return tmpArr;
+    }().sort( ( a, b ) => relevanceArray[a] > relevanceArray[b] ? -1 :
+                        ( relevanceArray[b] > relevanceArray[a] ) | 0 );
   }
+
+  relevantEntries = sortedRelevanceArray.length;
 
   // display search results by sortedRelevanceArray
   DisplayPage();
   document.getElementById( "querySpeed" ).setAttribute( "style", "" );
-  document.getElementById( "querySpeed" ).innerHTML = `${sortedRelevanceArray.length} records found in ${( timestamp - Date.now() ) * -1} milliseconds`;
+  document.getElementById( "querySpeed" ).innerHTML =
+    `${relevantEntries} records found in ${( timestamp - Date.now() ) * -1} milliseconds`;
+  console.log(`${relevantEntries} records found in ${( timestamp - Date.now() ) * -1} milliseconds`);
 }

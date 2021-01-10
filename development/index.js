@@ -6,8 +6,7 @@ var index = [
     "keywords"    : [ "home",
                       "david",
                       "kellogg"],
-    "description" : "This is the home of the site.",
-    "relevance"   : 0
+    "description" : "This is the home of the site."
   },
   { "name"        : "About",
     "datetime"    : "2020-12-24 08:54-08:00",
@@ -15,8 +14,7 @@ var index = [
     "keywords"    : [ "about",
                       "david",
                       "kellogg"],
-    "description" : "This is the about page for the site.",
-    "relevance"   : 0
+    "description" : "This is the about page for the site."
   },
   { "name"        : "Privacy Policy",
     "datetime"    : "2020-12-20 20:53-08:00",
@@ -24,35 +22,31 @@ var index = [
     "keywords"    : [ "privacy",
                       "policy",
                       "github"],
-    "description" : "This is the privacy policy for this site and github.",
-    "relevance"   : 0
-  }/*, // duplicates below
-   { "name"        : "Home 1",
+    "description" : "This is the privacy policy for this site and github."
+  }, // duplicates below
+  { "name"        : "Home 01",
     "datetime"    : "2020-12-10 15:04-08:00",
     "url"         : "../index.html",
     "keywords"    : [ "home",
                       "david",
                       "kellogg"],
-    "description" : "This is the home of the site.",
-    "relevance"   : 0
+    "description" : "This is the home of the site."
   },
-  { "name"        : "About 1",
+  { "name"        : "About 01",
     "datetime"    : "2020-12-24 08:54-08:00",
     "url"         : "../about.html",
     "keywords"    : [ "about",
                       "david",
                       "kellogg"],
-    "description" : "This is the about page for the site.",
-    "relevance"   : 0
+    "description" : "This is the about page for the site."
   },
-  { "name"        : "Privacy Policy 1",
+  { "name"        : "Privacy Policy 01",
     "datetime"    : "2020-12-20 20:53-08:00",
     "url"         : "../privacy-policy.html",
     "keywords"    : [ "privacy",
                       "policy",
                       "github"],
-    "description" : "This is the privacy policy for this site and github.",
-    "relevance"   : 0
+    "description" : "This is the privacy policy for this site and github."
   },
   { "name"        : "Home 02",
     "datetime"    : "2020-12-10 15:04-08:00",
@@ -60,8 +54,7 @@ var index = [
     "keywords"    : [ "home",
                       "david",
                       "kellogg"],
-    "description" : "This is the home of the site.",
-    "relevance"   : 0
+    "description" : "This is the home of the site."
   },
   { "name"        : "About 02",
     "datetime"    : "2020-12-24 08:54-08:00",
@@ -69,8 +62,7 @@ var index = [
     "keywords"    : [ "about",
                       "david",
                       "kellogg"],
-    "description" : "This is the about page for the site.",
-    "relevance"   : 0
+    "description" : "This is the about page for the site."
   },
   { "name"        : "Privacy Policy 02",
     "datetime"    : "2020-12-20 20:53-08:00",
@@ -78,8 +70,7 @@ var index = [
     "keywords"    : [ "privacy",
                       "policy",
                       "github"],
-    "description" : "This is the privacy policy for this site and github.",
-    "relevance"   : 0
+    "description" : "This is the privacy policy for this site and github."
   },
   { "name"        : "Home 03",
     "datetime"    : "2020-12-10 15:04-08:00",
@@ -87,8 +78,7 @@ var index = [
     "keywords"    : [ "home",
                       "david",
                       "kellogg"],
-    "description" : "This is the home of the site.",
-    "relevance"   : 0
+    "description" : "This is the home of the site."
   },
   { "name"        : "About 03",
     "datetime"    : "2020-12-24 08:54-08:00",
@@ -96,8 +86,7 @@ var index = [
     "keywords"    : [ "about",
                       "david",
                       "kellogg"],
-    "description" : "This is the about page for the site.",
-    "relevance"   : 0
+    "description" : "This is the about page for the site."
   },
   { "name"        : "Privacy Policy 03",
     "datetime"    : "2020-12-20 20:53-08:00",
@@ -105,8 +94,7 @@ var index = [
     "keywords"    : [ "privacy",
                       "policy",
                       "github"],
-    "description" : "This is the privacy policy for this site and github.",
-    "relevance"   : 0
+    "description" : "This is the privacy policy for this site and github."
   },
   { "name"        : "Home 04",
     "datetime"    : "2020-12-10 15:04-08:00",
@@ -114,8 +102,7 @@ var index = [
     "keywords"    : [ "home",
                       "david",
                       "kellogg"],
-    "description" : "This is the home of the site.",
-    "relevance"   : 0
+    "description" : "This is the home of the site."
   },
   { "name"        : "About 04",
     "datetime"    : "2020-12-24 08:54-08:00",
@@ -123,8 +110,7 @@ var index = [
     "keywords"    : [ "about",
                       "david",
                       "kellogg"],
-    "description" : "This is the about page for the site.",
-    "relevance"   : 0
+    "description" : "This is the about page for the site."
   },
   { "name"        : "Privacy Policy 04",
     "datetime"    : "2020-12-20 20:53-08:00",
@@ -132,8 +118,7 @@ var index = [
     "keywords"    : [ "privacy",
                       "policy",
                       "github"],
-    "description" : "This is the privacy policy for this site and github.",
-    "relevance"   : 0
+    "description" : "This is the privacy policy for this site and github."
   },
   { "name"        : "Home 05",
     "datetime"    : "2020-12-10 15:04-08:00",
@@ -141,8 +126,7 @@ var index = [
     "keywords"    : [ "home",
                       "david",
                       "kellogg"],
-    "description" : "This is the home of the site.",
-    "relevance"   : 0
+    "description" : "This is the home of the site."
   },
   { "name"        : "About 05",
     "datetime"    : "2020-12-24 08:54-08:00",
@@ -150,8 +134,7 @@ var index = [
     "keywords"    : [ "about",
                       "david",
                       "kellogg"],
-    "description" : "This is the about page for the site.",
-    "relevance"   : 0
+    "description" : "This is the about page for the site."
   },
   { "name"        : "Privacy Policy 05",
     "datetime"    : "2020-12-20 20:53-08:00",
@@ -159,8 +142,7 @@ var index = [
     "keywords"    : [ "privacy",
                       "policy",
                       "github"],
-    "description" : "This is the privacy policy for this site and github.",
-    "relevance"   : 0
+    "description" : "This is the privacy policy for this site and github."
   },
   { "name"        : "Home 06",
     "datetime"    : "2020-12-10 15:04-08:00",
@@ -168,8 +150,7 @@ var index = [
     "keywords"    : [ "home",
                       "david",
                       "kellogg"],
-    "description" : "This is the home of the site.",
-    "relevance"   : 0
+    "description" : "This is the home of the site."
   },
   { "name"        : "About 06",
     "datetime"    : "2020-12-24 08:54-08:00",
@@ -177,8 +158,7 @@ var index = [
     "keywords"    : [ "about",
                       "david",
                       "kellogg"],
-    "description" : "This is the about page for the site.",
-    "relevance"   : 0
+    "description" : "This is the about page for the site."
   },
   { "name"        : "Privacy Policy 06",
     "datetime"    : "2020-12-20 20:53-08:00",
@@ -186,8 +166,7 @@ var index = [
     "keywords"    : [ "privacy",
                       "policy",
                       "github"],
-    "description" : "This is the privacy policy for this site and github.",
-    "relevance"   : 0
+    "description" : "This is the privacy policy for this site and github."
   },
   { "name"        : "Home 07",
     "datetime"    : "2020-12-10 15:04-08:00",
@@ -195,8 +174,7 @@ var index = [
     "keywords"    : [ "home",
                       "david",
                       "kellogg"],
-    "description" : "This is the home of the site.",
-    "relevance"   : 0
+    "description" : "This is the home of the site."
   },
   { "name"        : "About 07",
     "datetime"    : "2020-12-24 08:54-08:00",
@@ -204,8 +182,7 @@ var index = [
     "keywords"    : [ "about",
                       "david",
                       "kellogg"],
-    "description" : "This is the about page for the site.",
-    "relevance"   : 0
+    "description" : "This is the about page for the site."
   },
   { "name"        : "Privacy Policy 07",
     "datetime"    : "2020-12-20 20:53-08:00",
@@ -213,8 +190,7 @@ var index = [
     "keywords"    : [ "privacy",
                       "policy",
                       "github"],
-    "description" : "This is the privacy policy for this site and github.",
-    "relevance"   : 0
+    "description" : "This is the privacy policy for this site and github."
   },
   { "name"        : "Home 08",
     "datetime"    : "2020-12-10 15:04-08:00",
@@ -222,8 +198,7 @@ var index = [
     "keywords"    : [ "home",
                       "david",
                       "kellogg"],
-    "description" : "This is the home of the site.",
-    "relevance"   : 0
+    "description" : "This is the home of the site."
   },
   { "name"        : "About 08",
     "datetime"    : "2020-12-24 08:54-08:00",
@@ -231,8 +206,7 @@ var index = [
     "keywords"    : [ "about",
                       "david",
                       "kellogg"],
-    "description" : "This is the about page for the site.",
-    "relevance"   : 0
+    "description" : "This is the about page for the site."
   },
   { "name"        : "Privacy Policy 08",
     "datetime"    : "2020-12-20 20:53-08:00",
@@ -240,8 +214,7 @@ var index = [
     "keywords"    : [ "privacy",
                       "policy",
                       "github"],
-    "description" : "This is the privacy policy for this site and github.",
-    "relevance"   : 0
+    "description" : "This is the privacy policy for this site and github."
   },
   { "name"        : "Home 09",
     "datetime"    : "2020-12-10 15:04-08:00",
@@ -249,8 +222,7 @@ var index = [
     "keywords"    : [ "home",
                       "david",
                       "kellogg"],
-    "description" : "This is the home of the site.",
-    "relevance"   : 0
+    "description" : "This is the home of the site."
   },
   { "name"        : "About 09",
     "datetime"    : "2020-12-24 08:54-08:00",
@@ -258,8 +230,7 @@ var index = [
     "keywords"    : [ "about",
                       "david",
                       "kellogg"],
-    "description" : "This is the about page for the site.",
-    "relevance"   : 0
+    "description" : "This is the about page for the site."
   },
   { "name"        : "Privacy Policy 09",
     "datetime"    : "2020-12-20 20:53-08:00",
@@ -267,8 +238,7 @@ var index = [
     "keywords"    : [ "privacy",
                       "policy",
                       "github"],
-    "description" : "This is the privacy policy for this site and github.",
-    "relevance"   : 0
+    "description" : "This is the privacy policy for this site and github."
   },
   { "name"        : "Home 10",
     "datetime"    : "2020-12-10 15:04-08:00",
@@ -276,8 +246,7 @@ var index = [
     "keywords"    : [ "home",
                       "david",
                       "kellogg"],
-    "description" : "This is the home of the site.",
-    "relevance"   : 0
+    "description" : "This is the home of the site."
   },
   { "name"        : "About 10",
     "datetime"    : "2020-12-24 08:54-08:00",
@@ -285,8 +254,7 @@ var index = [
     "keywords"    : [ "about",
                       "david",
                       "kellogg"],
-    "description" : "This is the about page for the site.",
-    "relevance"   : 0
+    "description" : "This is the about page for the site."
   },
   { "name"        : "Privacy Policy 10",
     "datetime"    : "2020-12-20 20:53-08:00",
@@ -294,7 +262,6 @@ var index = [
     "keywords"    : [ "privacy",
                       "policy",
                       "github"],
-    "description" : "This is the privacy policy for this site and github.",
-    "relevance"   : 0
-  }*/
+    "description" : "This is the privacy policy for this site and github."
+  }
 ];
