@@ -23,7 +23,7 @@ var index = [
                       "policy",
                       "github"],
     "description" : "This is the privacy policy for this site and github."
-  }, // duplicates below
+  }/*, // duplicates below
   { "name"        : "Home 01",
     "datetime"    : "2020-12-10 15:04-08:00",
     "url"         : "../index.html",
@@ -263,5 +263,5 @@ var index = [
                       "policy",
                       "github"],
     "description" : "This is the privacy policy for this site and github."
-  }
+  }*/
 ];
