@@ -1,5 +1,5 @@
 /* displayPageNavigation */
-a.displayPageNavigation {
+a.insertPagination {
   display:           inline-block;
   margin:            1em;
   padding:           1em;
@@ -14,16 +14,15 @@ a.displayPageNavigation {
   text-align:        center;
   }
 
-a.displayPageNavigation:hover,
-ol#resultList > li:hover {
+a.insertPagination:hover {
   transform:  scale(1.01);
   transition: 50ms linear;
   box-shadow: 0 0.5em 0.5em #333;
   }
 /* --------------------- */
 
-/* searchForm */
-form#searchForm {
+/* search */
+form#search {
   display: block;
   margin:        0 1em;
   padding:       0;
@@ -31,7 +30,7 @@ form#searchForm {
   box-shadow:  0 0.3125em 0.3125em #333;
   }
 
-form#searchForm > input {
+form#search > input {
   display:   inline-block;
   padding:   0.5em 1em;
   margin:    0;
@@ -41,12 +40,12 @@ form#searchForm > input {
   outline:   none;
   }
 
-form#searchForm > input[type="text"] {
+form#search > input[type="text"] {
   width:         80%;
   border-radius: 0.3125em 0 0 0.3125em;
   }
 
-form#searchForm > input[type="submit"] {
+form#search > input[type="submit"] {
   width:             20%;
   border-radius:     0 0.3125em 0.3125em 0;
   background-color: #DDD;
