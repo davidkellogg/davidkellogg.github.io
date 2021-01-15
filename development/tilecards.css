@@ -1,5 +1,5 @@
-/* resultList */
-ol#resultList {
+/* results */
+ol#results {
   display:         flex;
   flex-direction:  column;
   justify-content: flex-start;
@@ -11,36 +11,36 @@ ol#resultList {
   list-style-type: none;
 }
 
-ol#resultList > li {
+ol#results > li {
   margin:            1em;
   background-color: #FFF;
   border-radius:     0.3125em;
   box-shadow:      0 0.3125em 0.3125em #333;
   }
 
-ol#resultList > li:hover {
+ol#results > li:hover {
   transform:  scale(1.01);
   transition: 50ms linear;
   box-shadow: 0 0.5em 0.5em #333;
   }
 
-ol#resultList > li * {
+ol#results > li * {
   margin:          0;
   color:          #333;
   text-decoration: none;
 }
 
-ol#resultList > li > a > article      { padding: 1em; }
-ol#resultList > li > a > article > h4 {
+ol#results > li > a > article      { padding: 1em; }
+ol#results > li > a > article > h4 {
   padding-left: 1.0em;
   font-size:    1.5em;
   width:  calc( 100% - 240px );
   min-width:     50%;
   }
 
-ol#resultList > li > a > article > h4,
-ol#resultList > li > a > article > time { display: inline-block; }
-ol#resultList > li > a > article > time {
+ol#results > li > a > article > h4,
+ol#results > li > a > article > time { display: inline-block; }
+ol#results > li > a > article > time {
   padding-right: 2.00em;
   font-size:     0.75em;
   text-align:    right;
@@ -48,11 +48,11 @@ ol#resultList > li > a > article > time {
   max-width:     240px;
   }
 
-ol#resultList > li > a > article > hr {
+ol#results > li > a > article > hr {
   margin:       0.5em 0;
   border:       1px solid #333;
   border-style: solid hidden hidden;
   }
 
-ol#resultList > li > a > article > p { padding: 0 1em 0.5em; }
+ol#results > li > a > article > p { padding: 0 1em 0.5em; }
 /* ---------- */

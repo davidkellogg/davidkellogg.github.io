@@ -1,121 +1,47 @@
-import index from './index.js'
+"use strict";
 
-export default function DOMbot(value = undefined) {
-  // key for Search and DOMbot to talk to each other
-  let _secret = value;
-
+export default function DOMbot( blueprints = undefined, secret = undefined ) {
   // declare private variables
-  const RESULTLIST = document.querySelector( "#resultList" );
-  const MONTHS    = [ "",
-                   "January",
-                   "February",
-                   "March",
-                   "April",
-                   "May",
-                   "June",
-                   "July",
-                   "August",
-                   "September",
-                   "October",
-                   "November",
-                   "December" ];
-
-  let _entries   =  0;
-  let _sortedRel = [];
-  let _timestamp =  0;
+  const _secret = secret;
+  const _id = `#${blueprints.id}`;
 
   // declare public interface
   Object.defineProperties( this, {
-    entries: {
-      get: () => _entries,
-      set: ( undefined ) => console.info( "cannot set the value of `entries`" )
-    },
-    sortRelevance: {
-      get: () => console.info( "cannot retrieve the value of `sortRelevance`" ),
+    id: {
+      get: () => _id,
       set: ( value ) => {
-        if ( value.pop() == _secret ) {
-          _timestamp = value.pop();
-          _sortedRel = value;
-          _entries = _sortedRel.length;
+        if ( value.secret === _secret ) {
+          Action( value.data );
         } else {
-          console.info( "cannot set the value of `sortRelevance`" )
+          console.info( "cannot set value of `id`" );
         }
       }
     }
   } );
 
-  // insert beginning InsertJSElements
-  let InsertJSElements = function() {
+  let Action = undefined;
 
-    // insert navigation.css
-    document.querySelector( "head" ).insertAdjacentHTML( 'beforeend', '<link rel="stylesheet" href="navigation.css">' );
+  // insert JS into DOM
+  if ( blueprints.insert != undefined ) {
+    document.querySelector( blueprints.insert.nearbyId ).insertAdjacentHTML( blueprints.insert.position, blueprints.insert.text );
+  } // else { console.info( `${_id}_BOT did not insert any JavaScript elements` ) }
 
-    // insert search box
-    RESULTLIST.insertAdjacentHTML( 'beforebegin', '\
-      <form id="search">\
-        <input type="text" id="keywords" placeholder="Search for keywords..."></input><input type="submit" value="Search"></input>\
-      </form>\
-      <p id="querySpeed" style="visibility: hidden;">0 records found in 0 milliseconds</p>\
-    ');
-
-    // insert navigation items
-    RESULTLIST.insertAdjacentHTML( 'afterend', '\
-      <a id="prev" class="insertPagination" style="display: none;" href="javascript:void(0)">Prev</a>\
-      <a id="next" class="insertPagination" style="display: none;" href="#">Next</a>\
-    ');
-
-    // preventDefault
-    document.querySelector( "#search" ).addEventListener( 'submit',  ( event ) => {
+  // attach event
+  if ( blueprints.event != undefined ) {
+    document.querySelector( _id ).addEventListener( `${blueprints.event.type}`, ( event ) => {
       event.preventDefault();
-      //search.Query();
-      search.keywords = document.querySelector("#keywords").value.toLowerCase();
+      blueprints.event.Listener();
     } );
-    document.querySelector( "#prev" ).addEventListener( 'click', ( event ) => {
-      event.preventDefault();
-      search.Decrement();
-      } ); // ch: preventDefault() not working
-    document.querySelector( "#next" ).addEventListener( 'click', function( event ) {
-      event.preventDefault();
-      search.Increment();
-    } );
-  }();
+  } // else { console.info( `${_id}_BOT did not set any events` ) }
 
-  // display page
-  this.Refresh = () => {
-    // change behavior of next and prev links
-    // prev link behavior
-    document.getElementById( "querySpeed" ).setAttribute( "style", "" );
-    document.getElementById( "querySpeed" ).innerHTML =
-      `${_entries} records found in ${_timestamp} milliseconds`
+  // declare Action
+  if ( typeof blueprints.Action === "function" ) {
+    Action = blueprints.Action;
+  } // else console.info( `${_id}_BOT contains no actions` );
 
-    document.querySelector( "#prev" ).setAttribute( "style", search.start > 0 ? "" : "visibility: hidden;" );
+  // this.SelfDestruct = () => document.querySelector("#search").remove()
+  // cannot delete bot, but can delete element bot is looking at + making bot = undefined
 
-    // next link behavior
-    document.querySelector( "#next" ).setAttribute( "style", search.start + search.delta < _entries ? "" : "visibility: hidden;" );
-
-    // construct Query results
-    RESULTLIST.innerHTML = "";
-    for ( let i = search.start, len = search.start + search.delta; i < len; i++ ) {
-      const LISTITEM  = index[ _sortedRel[i] ];
-      if ( LISTITEM === undefined ) { break } else { // maybe unneccessary error checking?
-      RESULTLIST.insertAdjacentHTML( 'beforeend',
-        `<li>
-          <a href="${LISTITEM.url}">
-            <article>
-              <h4>${LISTITEM.name}</h4><time
-        datetime="${LISTITEM.datetime}">
-          ${MONTHS[ LISTITEM.datetime.substring( 5,  7 ) ]}
-                  ${LISTITEM.datetime.substring( 8, 10 )},
-                  ${LISTITEM.datetime.substring( 0,  4 )}</time>
-              <hr>
-              <p>${LISTITEM.description}</p>
-            </article>
-          </a>
-        </li>`
-        );
-      }
-    }
-  }
-
-  Object.seal(this);
+  // lock bot from modification
+  Object.freeze(this);
 }

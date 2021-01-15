@@ -1,7 +1,10 @@
+"use strict";
+
 // blog index array
 const index = [
   { "name"        : "Home",
     "datetime"    : "2020-12-10 15:04-08:00",
+    // "datetime" : new Date("2020-12-10 15:04:00-08:00"),
     "url"         : "../index.html",
     "keywords"    : [ "home",
                       "david",

@@ -14,14 +14,15 @@ a.insertPagination {
   text-align:        center;
   }
 
-a.insertPagination:hover {
+a.insertPagination:hover,
+form#search:hover {
   transform:  scale(1.01);
   transition: 50ms linear;
   box-shadow: 0 0.5em 0.5em #333;
   }
 /* --------------------- */
 
-/* search */
+/* -search--- */
 form#search {
   display: block;
   margin:        0 1em;
@@ -52,8 +53,8 @@ form#search > input[type="submit"] {
   }
 /* ---------- */
 
-/* querySpeed */
-p#querySpeed {
+/* -speed---- */
+p#speed {
   margin:    1.00em 2em 0;
   font-size: 0.75em;
   color:    #333;
