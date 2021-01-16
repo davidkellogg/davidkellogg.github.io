@@ -138,7 +138,7 @@ const blueprints = [
       position: "beforebegin",
       text:
        `<form id="search">
-          <link rel="stylesheet" href="navigation.css">
+          <link rel="stylesheet" href="../css/navigation.css">
           <input type="text" placeholder="Search for keywords..."><input type="submit" value="Search"></input></input>
         </form>`
     },
