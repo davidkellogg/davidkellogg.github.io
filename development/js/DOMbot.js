@@ -19,25 +19,31 @@ export default function DOMbot( blueprints = undefined, secret = undefined ) {
     }
   } );
 
-  let Action = undefined;
-
   // insert JS into DOM
-  if ( blueprints.insert != undefined ) {
-    document.querySelector( blueprints.insert.nearbyId ).insertAdjacentHTML( blueprints.insert.position, blueprints.insert.text );
-  } // else { console.info( `${_id}_BOT did not insert any JavaScript elements` ) }
+  function Insert() {
+    if ( blueprints.Insert !== undefined ) {
+      document.querySelector( blueprints.Insert.nearbyId ).insertAdjacentHTML( blueprints.Insert.position, blueprints.Insert.text );
+    } else undefined;
+  }
+  Insert();
 
   // attach event
-  if ( blueprints.event != undefined ) {
-    document.querySelector( _id ).addEventListener( `${blueprints.event.type}`, ( event ) => {
-      event.preventDefault();
-      blueprints.event.Listener();
-    } );
-  } // else { console.info( `${_id}_BOT did not set any events` ) }
+  function Event() {
+    if ( blueprints.Event !== undefined ) {
+      document.querySelector( _id ).addEventListener( `${blueprints.Event.type}`, ( event ) => {
+        event.preventDefault();
+        blueprints.Event.Listener();
+      } );
+    } else undefined;
+  }
+  Event();
 
   // declare Action
-  if ( typeof blueprints.Action === "function" ) {
-    Action = blueprints.Action;
-  } // else console.info( `${_id}_BOT contains no actions` );
+  function Action() {
+    if ( typeof blueprints.Action === "function" ) {
+      Action = blueprints.Action;
+    } else undefined;
+  }
 
   // this.SelfDestruct = () => document.querySelector("#search").remove()
   // cannot delete bot, but can delete element bot is looking at + making bot = undefined

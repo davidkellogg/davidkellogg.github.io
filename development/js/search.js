@@ -133,7 +133,7 @@ function Search( secret = undefined ) {
 const blueprints = [
   { // #search
     id: "search",
-    insert: {
+    Insert: {
       nearbyId: "#results",
       position: "beforebegin",
       text:
@@ -142,7 +142,7 @@ const blueprints = [
           <input type="text" placeholder="Search for keywords..."><input type="submit" value="Search"></input></input>
         </form>`
     },
-    event: {
+    Event: {
       type: "submit",
       Listener: () => search.keywords = document.querySelector( `#search > input[type=text]` ).value.toLowerCase()
     },
@@ -150,12 +150,12 @@ const blueprints = [
   },
   { // #speed
     id: "speed",
-    insert: {
+    Insert: {
       nearbyId: "#results",
       position: "beforebegin",
       text: `<p id="speed" style="visibility: hidden;">0 records found in 0 milliseconds</p>`
     },
-    event: undefined,
+    Event: undefined,
     Action: ( data = undefined ) => {
       document.getElementById( "speed" ).setAttribute( "style", "" );
       document.getElementById( "speed" ).innerHTML = `${search.entries} records found in ${data} milliseconds`;
@@ -163,12 +163,12 @@ const blueprints = [
   },
   { // #next
     id: "next",
-    insert: {
+    Insert: {
       nearbyId: "#results",
       position: "afterend",
       text: `<a id="next" class="insertPagination" style="display: none;" href="javascript:void(0)">Next</a>`
     },
-    event: {
+    Event: {
       type: "click",
       Listener: () => search.Increment()
     },
@@ -178,12 +178,12 @@ const blueprints = [
   },
   { // #previous
     id: "previous",
-    insert: {
+    Insert: {
       nearbyId: "#results",
       position: "afterend",
       text: `<a id="previous" class="insertPagination" style="display: none;" href="javascript:void(0)">Prev</a>`
     },
-    event: {
+    Event: {
       type: "click",
       Listener: () => search.Decrement()
     },
@@ -193,8 +193,8 @@ const blueprints = [
   },
   { // #results
     id: "results",
-    insert: undefined,
-    event: undefined,
+    Insert: undefined,
+    Event: undefined,
     Action: ( data = undefined ) => {
       document.querySelector( "#results" ).innerHTML = "";
       const MONTHS = [ "",
