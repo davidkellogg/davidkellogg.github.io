@@ -24,7 +24,7 @@ form#search:hover {
 
 /* -search--- */
 form#search {
-  display: block;
+  display:       flex;
   margin:        0 1em;
   padding:       0;
   border-radius: 0.3125em;
@@ -42,12 +42,12 @@ form#search > input {
   }
 
 form#search > input[type="text"] {
-  width:         80%;
+  flex:          80%;
   border-radius: 0.3125em 0 0 0.3125em;
   }
 
 form#search > input[type="submit"] {
-  width:             20%;
+  flex:              20%;
   border-radius:     0 0.3125em 0.3125em 0;
   background-color: #DDD;
   }

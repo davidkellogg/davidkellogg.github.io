@@ -7,21 +7,34 @@
 */
 
 import DOMbot from "./DOMbot.js"
-import index  from "./index.js";
 
 
 // Search constructor
 function Search( secret = undefined ) {
   // key for Search and DOMbot to talk to each other
   const _secret = secret;
+  const _index  = (() => {
+    const li = document.querySelectorAll("li");
+    let tmpIndex = [];
+    for ( let i = 0, len = li.length; i < len; i++) {
+      let data = {
+        url: li[i].querySelector("a").getAttribute("href"),
+        name: li[i].querySelector("h4").textContent,
+        datetime: li[i].querySelector("time").getAttribute("datetime"),
+        description: li[i].querySelector("p").textContent
+      }
+      tmpIndex.push(data);
+    }
+    return tmpIndex;
+  })();
 
   // define private variables
-  var _delta    = 10;
-  var _entries  =  0;
-  var _keywords = [];
-  var _start    =  0;
+  let _delta    = 10;
+  let _entries  =  0;
+  let _keywords = [];
+  let _start    =  0;
 
-  var _relSorted = [];
+  let _relSorted = [];
 
   // define public interface
   Object.defineProperties( this, {
@@ -56,12 +69,14 @@ function Search( secret = undefined ) {
         let _relScores = [];
         let _relToSort = [];
 
-        // iterate through index
-        for ( let i = 0, len = index.length; i < len; i++ ) {
+        // iterate through _index
+        for ( let i = 0, len = _index.length; i < len; i++ ) {
           let n = 0;
-          let indexItem             = index[i];
-              indexItem.name        = indexItem.name.toLowerCase();
-              indexItem.description = indexItem.description.toLowerCase();
+          let indexItem = _index[i];
+          indexItem.name.toLowerCase();
+          indexItem.description.toLowerCase();
+
+          n += indexItem.name.includes( _keywords[j] ) ? 2 : 0;
 
           // iterate through _keywords
           for ( let j = _keywords.length - 1; j >= 0; j-- ) {
@@ -73,14 +88,11 @@ function Search( secret = undefined ) {
                 k++;
               } else break;
             }
-            n += indexItem.name.includes(     _keywords[j] ) ? 2 : 0;
-            n += indexItem.keywords.includes( _keywords[j] ) ? 2 : 0;
           } // end _keywords iterations
 
           _relScores.push( n );
           _relToSort.push( i );
-        } // end index iterations
-
+        } // end _index iterations
 
         // return filtered and sorted array
         _relSorted = _relToSort.filter( (a) => _relScores[a] > 0 ).sort( ( b, c ) => _relScores[c] - _relScores[b] );
@@ -90,7 +102,6 @@ function Search( secret = undefined ) {
         _start   = 0;
 
         speed_BOT.id = { secret : _secret, data : Date.now() - timestamp };
-
         Refresh();
       }
     },
@@ -107,16 +118,18 @@ function Search( secret = undefined ) {
   } );
 
   let Refresh = () => {
-    results_BOT.id = { secret : _secret, data : (() => {
+    results_BOT.id = {
+      secret : _secret, data : (() => {
         let _section = _relSorted.slice( _start, _start + _delta );
         let _tmparr = [];
         for ( let i = 0, len = _delta; i < len; i++ ) {
-          _tmparr.push( index[ _section[i] ] );
+          _tmparr.push( _index[ _section[i] ] );
         }
         return _tmparr;
-      })() };
+      })()
+    };
     previous_BOT.id = { secret : _secret, data : undefined };
-    next_BOT.id = { secret : _secret, data : undefined };
+    next_BOT.id     = { secret : _secret, data : undefined };
   }
 
   // go back a page
@@ -139,7 +152,8 @@ const blueprints = [
       text:
        `<form id="search">
           <link rel="stylesheet" href="../css/navigation.css">
-          <input type="text" placeholder="Search for keywords..."><input type="submit" value="Search"></input></input>
+          <input type="text" placeholder="Search for keywords..."></input>
+          <input type="submit" value="Search"></input>
         </form>`
     },
     Event: {
@@ -217,11 +231,8 @@ const blueprints = [
           `<li>
             <a href="${LISTITEM.url}">
               <article>
-                <h4>${LISTITEM.name}</h4><time
-          datetime="${LISTITEM.datetime}">
-            ${MONTHS[ LISTITEM.datetime.substring( 5,  7 ) ]}
-                    ${LISTITEM.datetime.substring( 8, 10 )},
-                    ${LISTITEM.datetime.substring( 0,  4 )}</time>
+                <h4>${LISTITEM.name}</h4>
+                <time datetime="${LISTITEM.datetime}">${MONTHS[ LISTITEM.datetime.substring( 5,  7 ) ]} ${LISTITEM.datetime.substring( 8, 10 )}, ${LISTITEM.datetime.substring( 0,  4 )}</time>
                 <hr>
                 <p>${LISTITEM.description}</p>
               </article>

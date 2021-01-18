@@ -29,7 +29,7 @@ export default function DOMbot( blueprints = undefined, secret = undefined ) {
 
   // attach event
   function Event() {
-    if ( blueprints.Event !== undefined ) {
+    if ( blueprints.Event !== undefined && typeof blueprints.Event.Listener == "function" ) {
       document.querySelector( _id ).addEventListener( `${blueprints.Event.type}`, ( event ) => {
         event.preventDefault();
         blueprints.Event.Listener();
@@ -44,6 +44,7 @@ export default function DOMbot( blueprints = undefined, secret = undefined ) {
       Action = blueprints.Action;
     } else undefined;
   }
+  Action();
 
   // this.SelfDestruct = () => document.querySelector("#search").remove()
   // cannot delete bot, but can delete element bot is looking at + making bot = undefined

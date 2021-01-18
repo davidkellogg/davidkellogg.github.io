@@ -30,29 +30,38 @@ ol#results > li * {
   text-decoration: none;
 }
 
-ol#results > li > a > article      { padding: 1em; }
-ol#results > li > a > article > h4 {
-  padding-left: 1.0em;
-  font-size:    1.5em;
-  width:  calc( 100% - 240px );
-  min-width:     50%;
+ol#results > li > a > article {
+  display: grid;
+  grid: "title       date       " auto
+        "divisor     divisor    " auto
+        "description description" auto
+      /  1fr         auto;
+  padding: 1em;
   }
 
-ol#results > li > a > article > h4,
-ol#results > li > a > article > time { display: inline-block; }
+ol#results > li > a > article > h4 {
+  grid-area:    title;
+  padding-left: 1.0em;
+  font-size:    1.5em;
+  }
+
 ol#results > li > a > article > time {
+  grid-area:     date;
+  align-self:    end;
   padding-right: 2.00em;
   font-size:     0.75em;
   text-align:    right;
-  width:         50%;
-  max-width:     240px;
   }
 
 ol#results > li > a > article > hr {
+  grid-area:    divisor;
   margin:       0.5em 0;
   border:       1px solid #333;
   border-style: solid hidden hidden;
   }
 
-ol#results > li > a > article > p { padding: 0 1em 0.5em; }
+ol#results > li > a > article > p {
+  grid-area: description;
+  padding:   0 1em 0.5em;
+  }
 /* ---------- */
