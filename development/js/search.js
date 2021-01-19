@@ -8,15 +8,6 @@
 
 import DOMbot from "./DOMbot.js"
 
-// returns the reordered `array` by `keys` or undefined if either array is empty
-function Reorder( array, keys ) {
-  let sortedArray = [];
-  for ( let i = 0, len = keys.length; i < len; i++ ) {
-    sortedArray.push( array[ keys[i] ] );
-  }
-  return sortedArray;
-}
-
 // Search constructor
 function Search( secret = undefined ) {
   // key for Search and DOMbot to talk to each other
@@ -44,6 +35,57 @@ function Search( secret = undefined ) {
 
   let _relSorted = [];
 
+  // returns keys of the array based on keyword prevelance
+  let Query = ( array, keywords ) => {
+    // declare private to `this.keywords`
+    let relScores = [];
+    let relToSort = [];
+
+    // iterate through _index
+    for ( let i = 0, len = array.length; i < len; i++ ) {
+      let n = 0;
+      let indexItem = array[i];
+      indexItem.name.toLowerCase();
+      indexItem.description.toLowerCase();
+
+      // iterate through _keywords
+      for ( let j = keywords.length - 1; j >= 0; j-- ) {
+        let k = 0;
+        while (true) {
+          k = indexItem.description.indexOf( keywords[j], k );
+          if (k >= 0) {
+            n++;
+            k++;
+          } else break;
+        }
+        n += indexItem.name.includes( keywords[j] ) ? 2 : 0;
+      } // end _keywords iterations
+
+      relScores.push( n );
+      relToSort.push( i );
+    } // end _index iterations
+
+    // return filtered and sorted array
+    return relToSort.filter( (a) => relScores[a] > 0 ).sort( ( b, c ) => relScores[c] - relScores[b] );
+  }
+
+  // returns the reordered `array` by `keys` or undefined if either array is empty
+  let Reorder = ( array, keys ) => {
+    let sortedArray = [];
+    for ( let i = 0, len = keys.length; i < len; i++ ) {
+      sortedArray.push( array[ keys[i] ] );
+    }
+    return sortedArray;
+  }
+
+  // send command to DOMbots
+  let SendCommand = ( bot, data ) => {
+    bot.id = {
+      secret : _secret,
+        data : data
+    }
+  }
+
   // define public interface
   Object.defineProperties( this, {
     delta: {
@@ -54,7 +96,9 @@ function Search( secret = undefined ) {
       set: ( value ) => {
         if ( _entries > 0 ) {
           _delta = value < 1 ? 1 : ( value > _entries ? _entries : value );
-          Refresh();
+          SendCommand( results_BOT,  Reorder( _index, _relSorted ).slice( _start, _start + _delta ) );
+          SendCommand( previous_BOT, undefined );
+          SendCommand( next_BOT,     undefined );
         }
       }
     },
@@ -74,36 +118,7 @@ function Search( secret = undefined ) {
                     : ( value instanceof String ? value.split(" ")   // if string, return array of substrings
                     : [ "" + value ] );                              // otherwise, return array of stringified value
 
-          // declare private to `this.keywords`
-          let relScores = [];
-          let _relToSort = [];
-
-          // iterate through _index
-          for ( let i = 0, len = _index.length; i < len; i++ ) {
-            let n = 0;
-            let indexItem = _index[i];
-            indexItem.name.toLowerCase();
-            indexItem.description.toLowerCase();
-
-            // iterate through _keywords
-            for ( let j = _keywords.length - 1; j >= 0; j-- ) {
-              let k = 0;
-              while (true) {
-                k = indexItem.description.indexOf( _keywords[j], k );
-                if (k >= 0) {
-                  n++;
-                  k++;
-                } else break;
-              }
-              n += indexItem.name.includes( _keywords[j] ) ? 2 : 0;
-            } // end _keywords iterations
-
-            relScores.push( n );
-            _relToSort.push( i );
-          } // end _index iterations
-
-          // return filtered and sorted array
-          _relSorted = _relToSort.filter( (a) => relScores[a] > 0 ).sort( ( b, c ) => relScores[c] - relScores[b] );
+          _relSorted = Query( _index, _keywords );
         } else {
           _relSorted.length = 0;
         }
@@ -112,12 +127,10 @@ function Search( secret = undefined ) {
         _entries = _relSorted.length;
         _start   = 0;
 
-        speed_BOT.id = {
-          secret : _secret,
-            data : Date.now() - timestamp
-        };
-
-        Refresh();
+        SendCommand( speed_BOT,    Date.now() - timestamp );
+        SendCommand( results_BOT,  Reorder( _index, _relSorted ).slice( _start, _start + _delta ) );
+        SendCommand( previous_BOT, undefined );
+        SendCommand( next_BOT,     undefined );
       }
     },
     start: {
@@ -127,31 +140,18 @@ function Search( secret = undefined ) {
       // otherwise, assign value
       set: ( value ) => {
         _start = value < 0 ? 0 : ( value > _entries ? _start : value );
-        Refresh();
+        SendCommand( results_BOT,  Reorder( _index, _relSorted ).slice( _start, _start + _delta ) );
+        SendCommand( previous_BOT, undefined );
+        SendCommand( next_BOT,     undefined );
       }
     }
   } );
 
-  let Refresh = () => {
-    results_BOT.id = {
-      secret : _secret,
-        data : Reorder( _index, _relSorted ).slice( _start, _start + _delta )
-    };
-    previous_BOT.id = {
-      secret : _secret,
-        data : undefined
-    };
-    next_BOT.id = {
-      secret : _secret,
-        data : undefined
-    };
-  }
-
   // go back a page
-  this.Decrement = () => this.start -= _delta; // references properties instead of private lets to utilize get:set:
+  this.Decrement = () => this.start -= _delta; // references properties instead of private lets to utilize data validation
 
   // go forward a page
-  this.Increment = () => this.start += _delta; // references properties instead of private lets to utilize get:set:
+  this.Increment = () => this.start += _delta; // references properties instead of private lets to utilize data validation
 
   // insulate object from defineProperty manipulations
   Object.seal(this);
