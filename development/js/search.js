@@ -8,6 +8,14 @@
 
 import DOMbot from "./DOMbot.js"
 
+// returns the reordered `array` by `keys` or undefined if either array is empty
+function Reorder( array, keys ) {
+  let sortedArray = [];
+  for ( let i = 0, len = keys.length; i < len; i++ ) {
+    sortedArray.push( array[ keys[i] ] );
+  }
+  return sortedArray;
+}
 
 // Search constructor
 function Search( secret = undefined ) {
@@ -57,51 +65,58 @@ function Search( secret = undefined ) {
     keywords: {
       get: () => _keywords,
       set: ( value ) => {
-        // data validation for keyword input
-        _keywords =   typeof value === typeof [] ? value              // if array, return array
-                  : ( typeof value === typeof "" ? value.split(" ")   // if string, return array of substrings
-                  : [ "" + value ] );                                 // otherwise, return array of stringified value
-
         // speed function
         let timestamp = Date.now();
 
-        // declare private to `this.keywords`
-        let _relScores = [];
-        let _relToSort = [];
+        if ( value !== "" ) {
+          // data validation for keyword input
+          _keywords =   value instanceof Array  ? value              // if array, return array
+                    : ( value instanceof String ? value.split(" ")   // if string, return array of substrings
+                    : [ "" + value ] );                              // otherwise, return array of stringified value
 
-        // iterate through _index
-        for ( let i = 0, len = _index.length; i < len; i++ ) {
-          let n = 0;
-          let indexItem = _index[i];
-          indexItem.name.toLowerCase();
-          indexItem.description.toLowerCase();
+          // declare private to `this.keywords`
+          let relScores = [];
+          let _relToSort = [];
 
-          n += indexItem.name.includes( _keywords[j] ) ? 2 : 0;
+          // iterate through _index
+          for ( let i = 0, len = _index.length; i < len; i++ ) {
+            let n = 0;
+            let indexItem = _index[i];
+            indexItem.name.toLowerCase();
+            indexItem.description.toLowerCase();
 
-          // iterate through _keywords
-          for ( let j = _keywords.length - 1; j >= 0; j-- ) {
-            let k = 0;
-            while (true) {
-              k = indexItem.description.indexOf( _keywords[j], k );
-              if (k >= 0) {
-                n++;
-                k++;
-              } else break;
-            }
-          } // end _keywords iterations
+            // iterate through _keywords
+            for ( let j = _keywords.length - 1; j >= 0; j-- ) {
+              let k = 0;
+              while (true) {
+                k = indexItem.description.indexOf( _keywords[j], k );
+                if (k >= 0) {
+                  n++;
+                  k++;
+                } else break;
+              }
+              n += indexItem.name.includes( _keywords[j] ) ? 2 : 0;
+            } // end _keywords iterations
 
-          _relScores.push( n );
-          _relToSort.push( i );
-        } // end _index iterations
+            relScores.push( n );
+            _relToSort.push( i );
+          } // end _index iterations
 
-        // return filtered and sorted array
-        _relSorted = _relToSort.filter( (a) => _relScores[a] > 0 ).sort( ( b, c ) => _relScores[c] - _relScores[b] );
+          // return filtered and sorted array
+          _relSorted = _relToSort.filter( (a) => relScores[a] > 0 ).sort( ( b, c ) => relScores[c] - relScores[b] );
+        } else {
+          _relSorted.length = 0;
+        }
 
         // update private variables
         _entries = _relSorted.length;
         _start   = 0;
 
-        speed_BOT.id = { secret : _secret, data : Date.now() - timestamp };
+        speed_BOT.id = {
+          secret : _secret,
+            data : Date.now() - timestamp
+        };
+
         Refresh();
       }
     },
@@ -119,17 +134,17 @@ function Search( secret = undefined ) {
 
   let Refresh = () => {
     results_BOT.id = {
-      secret : _secret, data : (() => {
-        let _section = _relSorted.slice( _start, _start + _delta );
-        let _tmparr = [];
-        for ( let i = 0, len = _delta; i < len; i++ ) {
-          _tmparr.push( _index[ _section[i] ] );
-        }
-        return _tmparr;
-      })()
+      secret : _secret,
+        data : Reorder( _index, _relSorted ).slice( _start, _start + _delta )
     };
-    previous_BOT.id = { secret : _secret, data : undefined };
-    next_BOT.id     = { secret : _secret, data : undefined };
+    previous_BOT.id = {
+      secret : _secret,
+        data : undefined
+    };
+    next_BOT.id = {
+      secret : _secret,
+        data : undefined
+    };
   }
 
   // go back a page
@@ -171,8 +186,8 @@ const blueprints = [
     },
     Event: undefined,
     Action: ( data = undefined ) => {
-      document.getElementById( "speed" ).setAttribute( "style", "" );
-      document.getElementById( "speed" ).innerHTML = `${search.entries} records found in ${data} milliseconds`;
+      document.querySelector( "#speed" ).setAttribute( "style", "" );
+      document.querySelector( "#speed" ).innerHTML = `${search.entries} records found in ${data >= 1 ? data : "<1"} millisecond${data > 1 ? "s" : ""}`;
     }
   },
   { // #next
@@ -211,34 +226,21 @@ const blueprints = [
     Event: undefined,
     Action: ( data = undefined ) => {
       document.querySelector( "#results" ).innerHTML = "";
-      const MONTHS = [ "",
-                       "January",
-                       "February",
-                       "March",
-                       "April",
-                       "May",
-                       "June",
-                       "July",
-                       "August",
-                       "September",
-                       "October",
-                       "November",
-                       "December" ];
-      for ( let i = 0, len = data.length; i < len; i++ ) {
-        const LISTITEM = data[i];
-        if ( LISTITEM === undefined ) { break } else {
-        document.querySelector( "#results" ).insertAdjacentHTML( 'beforeend',
-          `<li>
-            <a href="${LISTITEM.url}">
-              <article>
-                <h4>${LISTITEM.name}</h4>
-                <time datetime="${LISTITEM.datetime}">${MONTHS[ LISTITEM.datetime.substring( 5,  7 ) ]} ${LISTITEM.datetime.substring( 8, 10 )}, ${LISTITEM.datetime.substring( 0,  4 )}</time>
-                <hr>
-                <p>${LISTITEM.description}</p>
-              </article>
-            </a>
-          </li>`
-        ); }
+      if ( data !== undefined ) {
+        for ( let i = 0, len = data.length; i < len; i++ ) {
+          document.querySelector( "#results" ).insertAdjacentHTML( 'beforeend',
+            `<li>
+              <a href="${data[i].url}">
+                <article>
+                  <h4>${data[i].name}</h4>
+                  <time datetime="${data[i].datetime}">${new Date( data[i].datetime ).toLocaleDateString( "en-US", { year: 'numeric', month: 'long', day: 'numeric' } )}</time>
+                  <hr>
+                  <p>${data[i].description}</p>
+                </article>
+              </a>
+            </li>`
+          );
+        }
       }
     }
   }
