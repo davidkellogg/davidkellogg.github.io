@@ -15,8 +15,12 @@ class Mothership {
         set: ( value ) => blueprints.validations[i].action( value )
       } )
     }
+
+    // lock bot from modification
+    Object.seal(this);
   }
 }
+
 class DOMbot {
   constructor( blueprints = undefined, secret = undefined ) {
     // declare private variables
@@ -63,9 +67,6 @@ class DOMbot {
       } else undefined;
     }
     Action();
-
-    // this.SelfDestruct = () => document.querySelector("#search").remove()
-    // cannot delete bot, but can delete element bot is looking at + making bot = undefined
 
     // lock bot from modification
     Object.freeze(this);
