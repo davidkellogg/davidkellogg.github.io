@@ -13,20 +13,20 @@ ol#results {
 
 ol#results > li {
   margin:            1em;
-  background-color: #FFF;
+  background-color: #F8F8FF;
   border-radius:     0.3125em;
-  box-shadow:      0 0.3125em 0.3125em #333;
+  box-shadow:      0 0.3125em 0.3125em #333333;
   }
 
 ol#results > li:hover {
   transform:  scale(1.01);
   transition: 50ms linear;
-  box-shadow: 0 0.5em 0.5em #333;
+  box-shadow: 0 0.5em 0.5em #333333;
   }
 
 ol#results > li * {
   margin:          0;
-  color:          #333;
+  color:          #443322;
   text-decoration: none;
 }
 
@@ -56,8 +56,6 @@ ol#results > li > a > article > time {
 ol#results > li > a > article > hr {
   grid-area:    divisor;
   margin:       0.5em 0;
-  border:       1px solid #333;
-  border-style: solid hidden hidden;
   }
 
 ol#results > li > a > article > p {

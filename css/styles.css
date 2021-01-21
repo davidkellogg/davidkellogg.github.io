@@ -37,6 +37,7 @@ body {
   grid:       "header navigation" auto
               "main   main      " 1fr
               "footer footer    " auto
+              "empty  empty     " 0
              / auto   1fr;
   min-width:   360px;
   height:      100vh;
@@ -83,6 +84,12 @@ a {
 main h3 {
   font-size: 1.500em;
   margin:    0.833em 0;
+  }
+
+main hr {
+  margin:       0.5em 0;
+  border:       1px solid #333;
+  border-style: solid hidden hidden;
   }
 
 footer small {
@@ -192,7 +199,19 @@ footer small {
  * --------------------xxx+
  */
 
-@media screen and ( max-width: 720px ) { nav#header-nav { height: 100% } }
+@media screen and ( max-width: 720px ) {
+  nav#header-nav {
+    height: 100%;
+  }
+
+  /* to create space for footer shadow   *
+   * when main tag overflows screen size */
+  div#space {
+    display: none;
+    grid-area: empty;
+  }
+
+}
 
 @media screen
   and ( min-width: 481px )
@@ -211,10 +230,11 @@ footer small {
 @media screen and ( min-width: 721px ) {
 
   body {
-    grid: "empty-left header       empty-right" auto
-          "empty-left navigation   empty-right" auto
-          "empty-left main         empty-right" 1fr
-          "empty-left footer       empty-right" auto
+    grid: "empty-left header          empty-right" auto
+          "empty-left navigation      empty-right" auto
+          "empty-left main            empty-right" 1fr
+          "empty-left footer          empty-right" auto
+          "empty-bottom empty-bottom empty-bottom" 1px
          / 1fr        minmax( 720px, 70% ) 1fr;
     }
 
@@ -242,6 +262,9 @@ footer small {
       }
   /* ------------------ */
 
+  div#space { grid-area: empty-bottom; }
+}
+
 @media screen
   and ( min-width: 721px )
   and ( max-width: 960px ) {
@@ -260,9 +283,10 @@ footer small {
   and ( min-width: 961px ) {
 
   body {
-    grid: "empty-left header    empty-top-right" auto
-          "empty-left main           navigation" 1fr
-          "empty-left footer empty-bottom-right" auto
+    grid: "empty-left   header    empty-top-right" auto
+          "empty-left   main           navigation" 1fr
+          "empty-left   footer empty-bottom-right" auto
+          "empty-bottom empty-bottom empty-bottom" 1px
          / 1fr        minmax( 720px, 70% )  1fr;
     }
 
