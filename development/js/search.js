@@ -65,7 +65,7 @@ const blueprints = {
         datetime: li[i].querySelector("time").getAttribute("datetime"),
         description: li[i].querySelector("p").textContent
       }
-      tmpIndex.push(data);
+      tmpIndex.push( data );
     }
     return tmpIndex;
   })(),
@@ -91,7 +91,7 @@ const blueprints = {
       action : ( value ) => {
         if ( blueprints.variables.entries > 0 ) {
           blueprints.variables.delta = value < 1 ? 1 : ( value > blueprints.variables.entries ? blueprints.variables.entries : value );
-          SendCommand( results_BOT,  Reorder( _data, blueprints.variables.sorted ).slice( blueprints.variables.start, blueprints.variables.start + blueprints.variables.delta ) );
+          SendCommand( results_BOT,  Reorder( blueprints.data, blueprints.variables.sorted ).slice( blueprints.variables.start, blueprints.variables.start + blueprints.variables.delta ) );
           SendCommand( previous_BOT, undefined );
           SendCommand( next_BOT,     undefined );
         }

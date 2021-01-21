@@ -18,8 +18,10 @@
 
 /*
  * Set the look and feel of the site
+ * --------------------------------------------------------------
  */
 
+/* box-sizing fix */
 html {
   box-sizing:        border-box;
   background-color: #F8F8FF; /* ghostwhite */
@@ -28,6 +30,7 @@ html {
 *,
 *:before,
 *:after { box-sizing: inherit; }
+/* -------------- */
 
 body {
   display:     grid;
@@ -116,7 +119,7 @@ footer small {
 
 /*
  * set the look and feel of id-bound inline elements
- * -------------------------------------------------
+ * --------------------------------------------------------------
  */
 
 /* --- site title --- */
@@ -174,8 +177,9 @@ footer small {
 
 
 /*
- * Responsive design modifications to header and generic & id-bound inline elements
- * --------------------------------------------------------------------------------
+ * Responsive design modifications to header and generic &
+ * id-bound inline elements
+ * --------------------------------------------------------------
  *
  * media queries layout:
  * body { min-width: 360px; }
