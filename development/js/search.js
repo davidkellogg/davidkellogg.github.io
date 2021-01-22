@@ -7,7 +7,7 @@
 */
 
 // import functions
-import { _secret, SendCommand, Factory } from "./DOMbot.js"
+import { SendCommand, Factory } from "./DOMbot.js"
 
 // returns keys of the array based on keyword prevelance
 let Query = ( array, keywords ) => {
@@ -127,88 +127,100 @@ const blueprints = {
   bots: [
     { // #search
       id: "search",
-      Insert: {
-        nearbyId: "#results",
-        position: "beforebegin",
-        text:
-         `<form id="search">
-            <link rel="stylesheet" href="../css/navigation.css">
-            <input type="text" placeholder="Search for keywords..."></input>
-            <input type="submit" value="Search"></input>
-          </form>`
-      },
-      Event: {
-        type: "submit",
-        Listener: () => search.keywords = document.querySelector( `#search > input[type=text]` ).value.toLowerCase()
-      },
-      Action: undefined
+      action: [
+        () => document.querySelector( "#results" ).insertAdjacentHTML( "beforebegin",
+           `<form id="search">
+              <link rel="stylesheet" href="../css/navigation.css">
+              <input id="searchBar" type="text" placeholder="Search for keywords..."></input>
+              <input type="submit" value="Search"></input>
+            </form>`
+          ),
+        () => document.querySelector( "#search" ).addEventListener( "submit", ( event ) => {
+            event.preventDefault();
+            search.keywords = document.querySelector( `#search > input[type=text]` ).value.toLowerCase();
+          }
+        )
+      ]
     },
     { // #speed
       id: "speed",
-      Insert: {
-        nearbyId: "#results",
-        position: "beforebegin",
-        text: `<p id="speed" style="visibility: hidden;">0 records found in 0 milliseconds</p>`
-      },
-      Event: undefined,
-      Action: ( data = undefined ) => {
-        document.querySelector( "#speed" ).setAttribute( "style", "" );
-        document.querySelector( "#speed" ).innerHTML = `${search.entries} records found in ${data >= 1 ? data : "<1"} millisecond${data > 1 ? "s" : ""}`;
-      }
+      action: [
+        () => document.querySelector( "#results" ).insertAdjacentHTML( "beforebegin",
+          `<p id="speed" style="visibility: hidden;">0 records found in 0 milliseconds</p>`
+        ),
+        ( data = undefined ) => {
+          document.querySelector( "#speed" ).setAttribute( "style", "" );
+          document.querySelector( "#speed" ).innerHTML = `${search.entries} records found in ${data} millisecond${data !== 1 ? "s" : ""}`;
+        }
+      ],
+      executeFinal: false
     },
     { // #results
       id: "results",
-      Insert: undefined,
-      Event: undefined,
-      Action: ( data = undefined ) => {
-        document.querySelector( "#results" ).innerHTML = "";
-        if ( data !== undefined ) {
-          for ( let i = 0, len = data.length; i < len; i++ ) {
-            document.querySelector( "#results" ).insertAdjacentHTML( 'beforeend',
-              `<li>
-                <a href="${data[i].url}">
-                  <article>
-                    <h4>${data[i].name}</h4>
-                    <time datetime="${data[i].datetime}">${new Date( data[i].datetime ).toLocaleDateString( "en-US", { year: 'numeric', month: 'long', day: 'numeric' } )}</time>
-                    <hr>
-                    <p>${data[i].description}</p>
-                  </article>
-                </a>
-              </li>`
-            );
+      action: [
+        ( data = undefined ) => {
+          const results = document.querySelector( "#results" );
+          results.innerHTML = ""; // clear currently displayed results
+          if ( data !== undefined ) {
+            // destructure `article` object properties into variables
+            data.forEach( ( { url: url, name: name, datetime: datetime, description: description } ) => {
+              // insert `article` tilecard
+              results.insertAdjacentHTML( 'beforeend',
+                `<li>
+                  <a href="${url}">
+                    <article>
+                      <h4>${name}</h4>
+                      <time datetime="${datetime}">${
+                        // construct proper datetime display
+                        new Date( datetime ).toLocaleDateString( "en-US", {
+                          year:  'numeric',
+                          month: 'long',
+                          day:   'numeric'
+                        } )
+                      }</time>
+                      <hr>
+                      <p>${description}</p>
+                    </article>
+                  </a>
+                </li>`
+              );
+            } )
           }
         }
-      }
+      ],
+      executeFinal: false
     },
     { // #next
       id: "next",
-      Insert: {
-        nearbyId: "#results",
-        position: "afterend",
-        text: `<a id="next" class="insertPagination" style="display: none;" href="javascript:void(0)">Next</a>`
-      },
-      Event: {
-        type: "click",
-        Listener: () => search.start += search.delta
-      },
-      Action: ( data = undefined ) => {
-        document.querySelector( "#next" ).setAttribute( "style", search.start + search.delta < search.entries ? "" : "visibility: hidden;" );
-      }
+      action: [
+        () => document.querySelector( "#results" ).insertAdjacentHTML( "afterend",
+           `<a id="next" class="insertPagination" style="display: none;" href="javascript:void(0)">Next</a>`
+        ),
+        () => document.querySelector( "#next" ).addEventListener( "click", ( click ) => {
+            event.preventDefault();
+            () => search.start += search.delta;
+          }
+        ),
+        ( data = undefined ) => {
+          document.querySelector( "#next" ).setAttribute( "style", search.start + search.delta < search.entries ? "" : "visibility: hidden;" );
+        }
+      ],
     },
     { // #previous
       id: "previous",
-      Insert: {
-        nearbyId: "#results",
-        position: "afterend",
-        text: `<a id="previous" class="insertPagination" style="display: none;" href="javascript:void(0)">Prev</a>`
-      },
-      Event: {
-        type: "click",
-        Listener: () => search.start -= search.delta
-      },
-      Action: ( data = undefined ) => {
-        document.querySelector( "#previous" ).setAttribute( "style", search.start > 0 ? "" : "visibility: hidden;" );
-      }
+      action: [
+        () => document.querySelector( "#results" ).insertAdjacentHTML( "afterend",
+           `<a id="previous" class="insertPagination" style="display: none;" href="javascript:void(0)">Prev</a>`
+        ),
+        () => document.querySelector( "#previous" ).addEventListener( "click", ( click ) => {
+            event.preventDefault();
+            () => search.start -= search.delta;
+          }
+        ),
+        ( data = undefined ) => {
+          document.querySelector( "#previous" ).setAttribute( "style", search.start > 0 ? "" : "visibility: hidden;" );
+        }
+      ],
     }
   ]
 };

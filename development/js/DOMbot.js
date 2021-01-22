@@ -1,89 +1,74 @@
 "use strict";
 
-export let _secret = Math.floor( ( Math.random() * 100000000 + 10000000 ) );
+export const _secret = Math.floor( ( Math.random() * 100000000 + 10000000 ) );
 
+// Mothership class
 class Mothership {
-  constructor( blueprints, secret ) {
+  constructor( { data: data, variables: variables, validations: validations }, secret ) {
     const _secret = secret;
-    const _data = blueprints.data;
+    const _data = data;
 
-    let variables = blueprints.variables;
+    let _variables = variables;
 
-    for ( let i = blueprints.validations.length - 1; i >= 0; i-- ) {
-      Object.defineProperty( this, blueprints.validations[i].varIndex, {
-        get: () => variables[blueprints.validations[i].varIndex],
-        set: ( value ) => blueprints.validations[i].action( value )
+    validations.forEach( ( { varIndex: varIndex, action: action } ) =>
+      Object.defineProperty( this, varIndex, {
+        get: () => variables[varIndex],
+        set: ( value ) => action( value )
       } )
-    }
+    );
 
-    // lock bot from modification
     Object.seal(this);
   }
 }
 
+// DOMbot class
 class DOMbot {
-  constructor( blueprints = undefined, secret = undefined ) {
+  constructor( { action: methods, executeFinal: execute = true }, secret = undefined ) {
     // declare private variables
     const _secret = secret;
-    const _id = `#${blueprints.id}`;
 
     // declare public interface
     Object.defineProperties( this, {
-      id: {
-        get: () => _id,
-        set: ( value ) => {
-          if ( value.secret === _secret ) {
-            Action( value.data );
+      action: {
+        set: ( { secret: secret, data: data } ) => {
+          if ( secret === _secret ) {
+            action( data );
           } else {
-            console.info( "cannot set value of `id`" );
+            console.info( "cannot set value of `action`" );
           }
         }
       }
     } );
 
-    // insert JS into DOM
-    function Insert() {
-      if ( blueprints.Insert !== undefined ) {
-        document.querySelector( blueprints.Insert.nearbyId ).insertAdjacentHTML( blueprints.Insert.position, blueprints.Insert.text );
-      } else undefined;
-    }
-    Insert();
+    let action = () => { undefined }
 
-    // attach event
-    function Event() {
-      if ( blueprints.Event !== undefined && typeof blueprints.Event.Listener === "function" ) {
-        document.querySelector( _id ).addEventListener( `${blueprints.Event.type}`, ( event ) => {
-          event.preventDefault();
-          blueprints.Event.Listener();
-        } );
-      } else undefined;
+    if ( methods !== undefined ){
+      methods.forEach( ( method, index ) => {
+        // assign `function` to `action()`
+        if ( typeof method === "function" ) {
+          action = method;
+        } else undefined;
+        // if `executeFinal` is false, do not execute the final function in the sequence
+        if ( index < ( methods.length - 1 ) || execute ) {
+          action();
+        }
+      } );
     }
-    Event();
 
-    // declare Action
-    function Action() {
-      if ( typeof blueprints.Action === "function" ) {
-        Action = blueprints.Action;
-      } else undefined;
-    }
-    Action();
-
-    // lock bot from modification
-    Object.freeze(this);
+    Object.freeze( this );
   }
 }
 
 // send command to DOMbots
-export let SendCommand = ( bot, data ) => {
-  bot.id = {
+export const SendCommand = ( bot, data ) => {
+  bot.action = {
     secret : _secret,
       data : data
   }
 }
 
+// factory for creating Mothership and DOMbots
 export function Factory( blueprints ) {
   window[blueprints.name] = new Mothership( blueprints, _secret );
-  for ( let i = 0, len = blueprints.bots.length; i < len; i++ ) {
-    window[`${blueprints.bots[i].id}_BOT`] = new DOMbot( blueprints.bots[i], _secret );
-  }
+  blueprints.bots.forEach( ( bot ) => window[`${bot.id}_BOT`] = new DOMbot( bot, _secret ) );
 }
