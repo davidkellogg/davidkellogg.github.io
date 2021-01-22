@@ -1,6 +1,6 @@
 "use strict";
 
-export const _secret = Math.floor( ( Math.random() * 100000000 + 10000000 ) );
+const _secret = Math.floor( ( Math.random() * 100000000 + 10000000 ) );
 
 // Mothership class
 class Mothership {
@@ -40,19 +40,26 @@ class DOMbot {
       }
     } );
 
-    let action = () => { undefined }
-
-    if ( methods !== undefined ){
-      methods.forEach( ( method, index ) => {
-        // assign `function` to `action()`
-        if ( typeof method === "function" ) {
-          action = method;
-        } else undefined;
-        // if `executeFinal` is false, do not execute the final function in the sequence
-        if ( index < ( methods.length - 1 ) || execute ) {
+    // set the function for action
+    let action = undefined;
+    if ( methods !== undefined ) {
+      if ( Array.isArray( methods ) ) {
+        methods.forEach( ( method, index ) => {
+          // assign `function` to `action()`
+          if ( typeof method === "function" ) {
+            action = method;
+          } else undefined;
+          // if `executeFinal` is false, do not execute the final function in the sequence
+          if ( ( index < ( methods.length - 1 ) || execute ) && action !== undefined ) {
+            action();
+          }
+        } );
+      } else if ( typeof methods === "function" ) {
+        action = methods;
+        if ( execute ) {
           action();
         }
-      } );
+      }
     }
 
     Object.freeze( this );
@@ -60,7 +67,7 @@ class DOMbot {
 }
 
 // send command to DOMbots
-export const SendCommand = ( bot, data ) => {
+export const SendCommand = ( bot, data = undefined ) => {
   bot.action = {
     secret : _secret,
       data : data
