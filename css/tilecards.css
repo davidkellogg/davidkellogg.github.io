@@ -32,10 +32,11 @@ ol#results > li * {
 
 ol#results > li > a > article {
   display: grid;
-  grid: "title       date       " auto
-        "divisor     divisor    " auto
-        "description description" auto
-      /  1fr         auto;
+  grid: "title      " auto
+        "date       " auto
+        "divisor    " auto
+        "description" auto
+      /  auto;
   padding: 1em;
   }
 
@@ -48,9 +49,9 @@ ol#results > li > a > article > h4 {
 ol#results > li > a > article > time {
   grid-area:     date;
   align-self:    end;
-  padding-right: 2.00em;
+  padding-left:  2.00em;
   font-size:     0.75em;
-  text-align:    right;
+  text-align:    left;
   }
 
 ol#results > li > a > article > hr {
@@ -62,4 +63,18 @@ ol#results > li > a > article > p {
   grid-area: description;
   padding:   0 1em 0.5em;
   }
+
+@media screen and ( min-width: 720px ) {
+  ol#results > li > a > article {
+    grid: "title       date       " auto
+          "divisor     divisor    " auto
+          "description description" auto
+        /  1fr         auto;
+    }
+
+  ol#results > li > a > article > time {
+    padding-right: 2.00em;
+    text-align: right;
+    }
+}
 /* ---------- */

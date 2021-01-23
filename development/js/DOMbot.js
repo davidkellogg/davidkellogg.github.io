@@ -1,38 +1,54 @@
 "use strict";
 
-const _secret = Math.floor( ( Math.random() * 100000000 + 10000000 ) );
-
 // Mothership class
 class Mothership {
   constructor( { data: data, variables: variables, validations: validations }, secret ) {
+    // declare private variables
     const _secret = secret;
     const _data = data;
-
     let _variables = variables;
 
+    // declare public interface
     validations.forEach( ( { varIndex: varIndex, action: action } ) =>
       Object.defineProperty( this, varIndex, {
         get: () => variables[varIndex],
-        set: ( value ) => action( value )
+        set: ( { secret: secret, message: message } ) => {
+          if ( secret === _secret ) {
+            action( message, sendCommand )
+          } else {
+            console.info( "cannot set value of this property" )
+          }
+        }
       } )
     );
 
+    // communication channel to bots
+    const sendCommand = ( bot, data = undefined ) => {
+      window[`${bot}_BOT`].action = {
+        secret : _secret,
+        data : data
+      }
+    }
+
+    // prevent further changes to mothership
     Object.seal(this);
   }
 }
 
 // DOMbot class
 class DOMbot {
-  constructor( { action: methods, executeFinal: execute = true }, secret = undefined ) {
+  constructor( { id: id, action: methods }, secret = undefined, mothership = undefined ) {
     // declare private variables
     const _secret = secret;
+    const _mothership = mothership;
+    let _id = undefined;
 
     // declare public interface
     Object.defineProperties( this, {
       action: {
         set: ( { secret: secret, data: data } ) => {
           if ( secret === _secret ) {
-            action( data );
+            action( { id: _id, data: data, mothership: _mothership, relayMessage: relayMessage } );
           } else {
             console.info( "cannot set value of `action`" );
           }
@@ -40,42 +56,43 @@ class DOMbot {
       }
     } );
 
+    // communication channel to mothership
+    const relayMessage = ( property, message ) => {
+      _mothership[property] = {
+        secret: _secret,
+        message: message
+      }
+    }
+
     // set the function for action
     let action = undefined;
     if ( methods !== undefined ) {
+      // convert function to array
+      if ( typeof methods === "function" ) {
+        methods = [ methods ];
+      }
       if ( Array.isArray( methods ) ) {
         methods.forEach( ( method, index ) => {
+          // generate element reference
+          _id = document.querySelector( `#${id}` );
+
           // assign `function` to `action()`
           if ( typeof method === "function" ) {
             action = method;
           } else undefined;
-          // if `executeFinal` is false, do not execute the final function in the sequence
-          if ( ( index < ( methods.length - 1 ) || execute ) && action !== undefined ) {
-            action();
-          }
+          action( { id: _id, mothership: _mothership, relayMessage: relayMessage } );
         } );
-      } else if ( typeof methods === "function" ) {
-        action = methods;
-        if ( execute ) {
-          action();
-        }
       }
     }
 
+    // prevent changes to the bot
     Object.freeze( this );
   }
 }
 
-// send command to DOMbots
-export const SendCommand = ( bot, data = undefined ) => {
-  bot.action = {
-    secret : _secret,
-      data : data
-  }
-}
-
 // factory for creating Mothership and DOMbots
-export function Factory( blueprints ) {
+export default function Factory( blueprints ) {
+  const _secret = Math.floor( ( Math.random() * 100000000 + 10000000 ) );
   window[blueprints.name] = new Mothership( blueprints, _secret );
-  blueprints.bots.forEach( ( bot ) => window[`${bot.id}_BOT`] = new DOMbot( bot, _secret ) );
+  blueprints.bots.forEach( ( bot ) => window[`${bot.id}_BOT`] = new DOMbot( bot, _secret, window[blueprints.name] ) );
 }

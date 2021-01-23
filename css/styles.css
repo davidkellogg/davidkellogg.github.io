@@ -76,7 +76,7 @@ footer { grid-area: footer; }
  * ------------------------------------------------
  */
 
-a {
+nav a {
   white-space: nowrap;
   color:      #DEB887; /* burlywood */
   }
@@ -133,6 +133,7 @@ footer small {
   header > a#site-title {
     display: inline-block;
     padding: 0.625em;
+    color:  #DEB887; /* burlywood */
     }
 
   header > a#site-title:hover         { background-color: hsl( 19, 56%, 45% ); } /* sienna + 5% lightness */
