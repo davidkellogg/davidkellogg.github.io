@@ -91,8 +91,8 @@ class DOMbot {
 }
 
 // factory for creating Mothership and DOMbots
-export default function Factory( blueprints ) {
+export default function factory( blueprints ) {
   const _secret = Math.floor( ( Math.random() * 100000000 + 10000000 ) );
   window[blueprints.name] = new Mothership( blueprints, _secret );
-  blueprints.bots.forEach( ( bot ) => window[`${bot.id}_BOT`] = new DOMbot( bot, _secret, window[blueprints.name] ) );
+  blueprints.bots.forEach( ( bot ) => window[`${bot.name !== undefined ? bot.name : bot.id}_BOT`] = new DOMbot( bot, _secret, window[blueprints.name] ) );
 }

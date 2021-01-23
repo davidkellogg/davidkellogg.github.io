@@ -7,7 +7,7 @@
 */
 
 // import functions
-import Factory from "./DOMbot.js"
+import factory from "./DOMbot.js"
 
 // returns the reordered `array` by `keys` or undefined if either array is empty
 const reorder = ( array, keys ) => Array.from( keys, ( key ) => array[key] );
@@ -117,7 +117,6 @@ const blueprints = {
       action: [
         () => document.querySelector( "#results" ).insertAdjacentHTML( "beforebegin",
            `<form id="search">
-              <link rel="stylesheet" href="../css/navigation.css">
               <input id="searchBar" type="text" placeholder="Search for keywords..."></input>
               <input type="submit" value="Search"></input>
             </form>`
@@ -210,4 +209,4 @@ const blueprints = {
 };
 
 // instantiate Mothership and DOMbots
-Factory( blueprints );
+factory( blueprints );
