@@ -6,10 +6,10 @@ a.insertPagination {
   width:             10%;
   min-width:         80px;
   height:            3em;
-  background-color: #FFF;
+  background-color: #F8F8FF;
   border-radius:     0.3125em;
-  box-shadow:        0 0.3125em 0.3125em #333;
-  color:            #333;
+  box-shadow:        0 0.3125em 0.3125em #333333;
+  color:            #443322;
   text-decoration:   none;
   text-align:        center;
   }
@@ -18,7 +18,7 @@ a.insertPagination:hover,
 form#search:hover {
   transform:  scale(1.01);
   transition: 50ms linear;
-  box-shadow: 0 0.5em 0.5em #333;
+  box-shadow: 0 0.5em 0.5em #333333;
   }
 /* --------------------- */
 
@@ -28,7 +28,7 @@ form#search {
   margin:        0 1em;
   padding:       0;
   border-radius: 0.3125em;
-  box-shadow:  0 0.3125em 0.3125em #333;
+  box-shadow:  0 0.3125em 0.3125em #333333;
   }
 
 form#search > input {
@@ -44,12 +44,13 @@ form#search > input {
 form#search > input[type="text"] {
   flex:          80%;
   border-radius: 0.3125em 0 0 0.3125em;
+  background-color: #F8F8FF;
   }
 
 form#search > input[type="submit"] {
   flex:              20%;
   border-radius:     0 0.3125em 0.3125em 0;
-  background-color: #DDD;
+  background-color: #DDDDDD;
   }
 /* ---------- */
 
@@ -57,6 +58,6 @@ form#search > input[type="submit"] {
 p#speed {
   margin:    1.00em 2em 0;
   font-size: 0.75em;
-  color:    #333;
+  color:    #333333;
   }
 /* ---------- */

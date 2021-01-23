@@ -49,111 +49,98 @@
         <hr>
         <p>The general advice when working with CSS is to leverage the class architecture for applying styles to elements in the DOM. While this method for styling is effective for applying and reapplying styles to a variety of elements, I find it to be inideal when considering one-off or universal styles.</p>
         <p>Take, for example, the following CSS:</p>
-        <pre>
-          <code>
-            &lt;style&gt;
-              .blog-post {
-                font-family: Optima, sans-serif;
-                font-size:   12px;
-              }
-            &lt;/style&gt;
-          </code>
-        </pre>
+<pre><code>
+  &lt;style&gt;
+    .blog-post {
+      font-family: Optima, sans-serif;
+      font-size:   12px;
+    }
+  &lt;/style&gt;
+</code></pre>
         <p>The code above specifies that any element with the <code>.blog-post</code> class will display text as Optima at 12pt font. In practice, this class will often be applied to a parent <code>&lt;div&gt;</code> element. The following HTML should look familiar in terms of what is standard practice:</p>
-        <pre>
-          <code>
-            &lt;div class="blog-post"&gt;
-              &lt;p&gt;Some text here.&lt;/p&gt;
-              &lt;p&gt;More text here.&lt;/p&gt;
-            &lt;/div&gt;
-          </code>
-        </pre>
+<pre><code>
+  &lt;div class="blog-post"&gt;
+    &lt;p&gt;Some text here.&lt;/p&gt;
+    &lt;p&gt;More text here.&lt;/p&gt;
+  &lt;/div&gt;
+</code></pre>
         <p>While the above produces the desired results, I would make the argument that it is neither efficient, nor correct. Now, of course, every front-end is unique and requires its own design philosophies. However, as far as semantics are concerned, <code>&lt;div&gt;</code> tags (and similarly <code>&lt;span&gt;</code> tags) are criminal. As such, correct semantics would more accurately represent the intended output of the HTML.</p>
-        <pre>
-          <code>
-            &lt;article class="blog-post"&gt;
-              &lt;p&gt;Some text here.&lt;/p&gt;
-              &lt;p&gt;More text here.&lt;/p&gt;
-            &lt;/article&gt;
-          </code>
-        </pre>
+<pre><code>
+  &lt;article class="blog-post"&gt;
+    &lt;p&gt;Some text here.&lt;/p&gt;
+    &lt;p&gt;More text here.&lt;/p&gt;
+  &lt;/article&gt;
+</code></pre>
         <p>I would take this a step further, removing the need for custom classes and bake the style directly into the CSS for all the <code>&lt;p&gt;</code> children of <code>&lt;article&gt;</code>. To accomplish this, I would rewrite the <code>.blog-post</code> CSS and HTML.</p>
-        <pre>
-          <code>
-            &lt;style&gt;
-              article &gt; p {
-                font-family: Optima, sans-serif;
-                font-size:   12px;
-              }
-            &lt;/style&gt;
+<pre><code>
+  &lt;style&gt;
+    article &gt; p {
+      font-family: Optima, sans-serif;
+      font-size:   12px;
+    }
+  &lt;/style&gt;
 
-            &lt;article&gt;
-              &lt;p&gt;Some text here.&lt;/p&gt;
-              &lt;p&gt;More text here.&lt;/p&gt;
-            &lt;/article&gt;
-          </code>
-        </pre>
+  &lt;article&gt;
+    &lt;p&gt;Some text here.&lt;/p&gt;
+    &lt;p&gt;More text here.&lt;/p&gt;
+  &lt;/article&gt;
+</code></pre>
         <p>All of the code snippets above are equivelant insofar as the end-user is concerned, however, to a developer, they are quite different. First of all, the code is much more readable by ditching the generic <code>&lt;div&gt;</code> tag. Secondarily, the CSS is now easier to maintain because modifying <code>article&nbsp;&gt;&nbsp;p</code> won't errantly modify any elements with the <code>.blog-post</code> class we may not know about.</p>
         <p>By now, you should be seeing the advantages to paying attention to the specificity of your code. To further illustrate the benefits of specificity, suppose a blog post utilizes a variety of tags, including <code>&lt;blockquotes&gt;</code>. All text in the post should have 12pt font, but blockquotes should have a slightly larger font at 14pt. The following CSS accomplishes this goal:</p>
-        <pre>
-          <code>
-            &lt;style&gt;
-              article > * {
-                font-family: Optima, sans-serif;
-                font-size:   12px;
-              }
+<pre><code>
+  &lt;style&gt;
+    article > * {
+      font-family: Optima, sans-serif;
+      font-size:   12px;
+    }
 
-              article &gt; blockquote {
-                font-size: 14px;
-              }
-            &lt;/style&gt;
-          </code>
-        </pre>
+    article &gt; blockquote {
+      font-size: 14px;
+    }
+  &lt;/style&gt;
+</code></pre>
         <p>Now, suppose the font of articles should be changed to Times New Roman. This change is simple enough just by swapping out Optima for Times New Roman in <code>font-family</code>. Of course, this is a rudimentary example. To use an example from my own code, the title for this site uses a verbose verison of the following code:</p>
-        <pre>
-          <code>
-            &lt;style&gt;
-              header &gt; a#site-title {
-                display: inline-block;
-                padding: 0.625em;
-              }
+<pre><code>
+  &lt;style&gt;
+    header &gt; a#site-title {
+      display: inline-block;
+      padding: 0.625em;
+    }
 
-              header &gt; a#site-title:hover {
-                background-color: hsl( 19, 56%, 45% );
-              }
+    header &gt; a#site-title:hover {
+      background: hsl( 19, 56%, 45% );
+    }
 
-              header &gt; a#site-title &gt; * {
-                margin:    0.125em;
-                font-size: 1.500em;
-              }
+    header &gt; a#site-title &gt; * {
+      margin:    0.125em;
+      font-size: 1.500em;
+    }
 
-              header &gt; a#site-title &gt; h1 {
-                color: #FAEBD7;
-              }
-            &lt;style&gt;
+    header &gt; a#site-title &gt; h1 {
+      color: #FAEBD7;
+    }
+  &lt;style&gt;
 
-            &lt;header&gt;
-              &lt;a id="site-title" href="index.html"&gt;
-                &lt;h1&gt;David Kellogg&lt;/h1&gt;
-                &lt;h2&gt;a personal site&lt;/h2&gt;
-              &lt;/a&gt;
-            &lt;/header&gt;
-          </code>
-        </pre>
+  &lt;header&gt;
+    &lt;a id="site-title"
+          href="index.html"&gt;
+      &lt;h1&gt;David Kellogg&lt;/h1&gt;
+      &lt;h2&gt;a personal site&lt;/h2&gt;
+    &lt;/a&gt;
+  &lt;/header&gt;
+</code></pre>
         <p>Because there should only be one site title for the website, I utilize the ID attribute because IDs must be unique. This ensures that if the <code>site-title</code> ID were applied to any other element, then the above styling would have no effect because of specificity.</p>
         <p>Why would paying attention to specificity matter? In the code I use on this site, if I were to decide that I wanted to update the look and feel of the site title, I can do so without fear of errantly modifying any other aspect of the site. Additionally, by using IDs instead of classes, I ensure I don't apply <code>site-title</code> to other parts of the site. In short, it allows me to be intentional about every aspect of the site.</p>
         <p>One final example, just to drive the point home, the <code>&lt;code&gt;</code> tag is used in two different scenarios: inline and as a block. I want the inline <code>&lt;code&gt;</code> tags to have a different background color than the text around it. To accomplish this, I used the following code:</p>
-        <pre>
-          <code>
-            &lt;style&gt;
-              p &gt; code {
-                padding:           1px 2px;
-                background-color: #D3D3D3;
-                border-radius:     2px;
-              }
-            &lt;/style&gt;
-          </code>
-        </pre>
+<pre><code>
+  &lt;style&gt;
+    p &gt; code {
+      padding:       1px 2px;
+      background:   #D3D3D3;
+      border-radius: 2px;
+    }
+  &lt;/style&gt;
+</code></pre>
         <p>As you can see, the style was applied to the inline <code>&lt;code&gt;</code> tags without affecting the blocks of code. This process allows me to use the vanilla tag for both scenarios.</p>
         <p>To get to the point of this post, pay attention to how you're structuring your CSS styles and HTML semantics. This practice will improve the readability and maintainability of your code, as well as provide the flexibility to apply styles without the need to keep track of an excessive number of classes when building out your front-end.</p>
       </article>
@@ -174,6 +161,9 @@
           </li>
           <li>
             <a href="../privacy-policy.html" hreflang="en" referrerpolicy="no-referrer" rel="noreferrer" target="_self" type="text/html">Privacy Policy</a>
+          </li>
+          <li>
+            <a href="../development/index.html" hreflang="en" referrerpolicy="no-referrer" rel="noreferrer" target="_self" type="text/html">Dev Site</a>
           </li>
         </ul>
       </nav>
