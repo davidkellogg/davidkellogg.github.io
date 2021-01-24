@@ -85,7 +85,7 @@
     &lt;p&gt;More text here.&lt;/p&gt;
   &lt;/article&gt;
 </code></pre>
-        <p>All of the code snippets above are equivelant insofar as the end-user is concerned, however, to a developer, they are quite different. First of all, the code is much more readable by ditching the generic <code>&lt;div&gt;</code> tag. Secondarily, the CSS is now easier to maintain because modifying <code>article&nbsp;&gt;&nbsp;p</code> won't errantly modify any elements with the <code>.blog-post</code> class we may not know about.</p>
+        <p>All of the code snippets above are equivelant insofar as the end-user is concerned, however, to a developer, they are quite different. First of all, the code is much more readable by ditching the generic <code>&lt;div&gt;</code> tag. Secondarily, the CSS is now easier to maintain because modifying <code>article &gt; p</code> won't errantly modify any elements with the <code>.blog-post</code> class we may not know about.</p>
         <p>By now, you should be seeing the advantages to paying attention to the specificity of your code. To further illustrate the benefits of specificity, suppose a blog post utilizes a variety of tags, including <code>&lt;blockquotes&gt;</code>. All text in the post should have 12pt font, but blockquotes should have a slightly larger font at 14pt. The following CSS accomplishes this goal:</p>
 <pre><code>
   &lt;style&gt;
@@ -138,6 +138,7 @@
       padding:       1px 2px;
       background:   #D3D3D3;
       border-radius: 2px;
+      white-space: nowrap;
     }
   &lt;/style&gt;
 </code></pre>

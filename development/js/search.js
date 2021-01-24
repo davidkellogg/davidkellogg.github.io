@@ -37,9 +37,11 @@ const blueprints = {
       varIndex : "start",
       action : ( value, sendCommand ) => {
         blueprints.variables.start = value < 0 ? 0 : ( value > blueprints.variables.entries ? blueprints.variables.start : value );
-        sendCommand( blueprints.bots[2].id,  reorder( blueprints.data, blueprints.variables.sorted ).slice( blueprints.variables.start, blueprints.variables.start + blueprints.variables.delta ) );
-        sendCommand( blueprints.bots[4].id );
+        sendCommand( blueprints.bots[2].id,
+          reorder( blueprints.data, blueprints.variables.sorted )
+          .slice( blueprints.variables.start, blueprints.variables.start + blueprints.variables.delta ) );
         sendCommand( blueprints.bots[3].id );
+        sendCommand( blueprints.bots[4].id );
       }
     },
     { // delta
@@ -47,9 +49,11 @@ const blueprints = {
       action : ( value, sendCommand ) => {
         if ( blueprints.variables.entries > 0 ) {
           blueprints.variables.delta = value < 1 ? 1 : ( value > blueprints.variables.entries ? blueprints.variables.entries : value );
-          sendCommand( blueprints.bots[2].id,  reorder( blueprints.data, blueprints.variables.sorted ).slice( blueprints.variables.start, blueprints.variables.start + blueprints.variables.delta ) );
-          sendCommand( blueprints.bots[4].id );
+          sendCommand( blueprints.bots[2].id,
+            reorder( blueprints.data, blueprints.variables.sorted )
+            .slice( blueprints.variables.start, blueprints.variables.start + blueprints.variables.delta ) );
           sendCommand( blueprints.bots[3].id );
+          sendCommand( blueprints.bots[4].id );
         }
       }
     },
@@ -62,15 +66,17 @@ const blueprints = {
       action : ( value, sendCommand ) => {
         // speed function
         let timestamp = Date.now();
-        if ( value !== "" ) {
-          // data validation for keyword input
-          if ( typeof value === "string" ) {
-            blueprints.variables.keywords = value.split(" ");
+
+        // attempt to search for keywords
+        try {
+          // check for valid keywords
+          if ( value !== "" ) {
+            blueprints.variables.keywords = typeof value === "string" ? value.split(" ") : [`${value}`];
           } else {
-            blueprints.variables.keywords = [`${value}`];
+            throw 0;
           }
 
-          // filter and sort data based on keywords
+          // score article relevance
           const scoredArray = blueprints.data.map( ( { name: name, description: description } ) => {
             // reset score to 0
             let score = 0;
@@ -90,24 +96,30 @@ const blueprints = {
 
             // return score
             return score;
-          } ); // end array.map()
+          } ); // end array.map() iterations
 
-          // return filterd and sorted array
           blueprints.variables.sorted = Array.from( scoredArray.keys() ).filter( (a) => scoredArray[a] > 0 ).sort( ( b, c ) => scoredArray[c] - scoredArray[b] );
-        } else {
-          // reset to original ordering
+        }
+
+        // set default ordering
+        catch {
           blueprints.variables.sorted = Array.from( blueprints.data.keys() );
         }
 
-        // update private variables
-        blueprints.variables.entries = blueprints.variables.sorted.length;
-        blueprints.variables.start = 0;
+        // display results
+        finally {
+          // update private variables
+          blueprints.variables.start = 0;
+          blueprints.variables.entries = blueprints.variables.sorted.length;
 
-        // send commands to bots
-        sendCommand( blueprints.bots[1].id, Date.now() - timestamp );
-        sendCommand( blueprints.bots[2].id, reorder( blueprints.data, blueprints.variables.sorted ).slice( blueprints.variables.start, blueprints.variables.start + blueprints.variables.delta ) );
-        sendCommand( blueprints.bots[4].id );
-        sendCommand( blueprints.bots[3].id );
+          // send commands to bots
+          sendCommand( blueprints.bots[1].id, Date.now() - timestamp );
+          sendCommand( blueprints.bots[2].id,
+            reorder( blueprints.data, blueprints.variables.sorted )
+            .slice( blueprints.variables.start, blueprints.variables.start + blueprints.variables.delta ) );
+          sendCommand( blueprints.bots[3].id );
+          sendCommand( blueprints.bots[4].id );
+        }
       }
     }
   ],
@@ -123,7 +135,7 @@ const blueprints = {
           ),
         ( { id: id, relayMessage: relayMessage } ) => id.addEventListener( "submit", ( event ) => {
           event.preventDefault();
-          relayMessage( "keywords", document.querySelector( `#search > input[type=text]` ).value.toLowerCase() );
+          relayMessage( blueprints.validations[3].varIndex , document.querySelector( `#search > input[type=text]` ).value.toLowerCase() );
         } )
       ]
     },
@@ -183,7 +195,7 @@ const blueprints = {
         ),
         ( { id: id, mothership: mothership, relayMessage: relayMessage } ) => id.addEventListener( "click", ( click ) => {
             event.preventDefault();
-            relayMessage( "start", mothership.start + mothership.delta );
+            relayMessage( blueprints.validations[0].varIndex, mothership.start + mothership.delta );
           } ),
         ( { id: id, mothership: mothership } ) => {
           id.setAttribute( "style", mothership.start + mothership.delta < mothership.entries ? "" : "visibility: hidden;" );
@@ -198,7 +210,7 @@ const blueprints = {
         ),
         ( { id: id, mothership: mothership, relayMessage: relayMessage } ) => id.addEventListener( "click", ( click ) => {
             event.preventDefault();
-            relayMessage( "start", mothership.start - mothership.delta );
+            relayMessage( blueprints.validations[0].varIndex, mothership.start - mothership.delta );
           } ),
         ( { id: id, mothership: mothership } ) => {
           id.setAttribute( "style", mothership.start > 0 ? "" : "visibility: hidden;" );
