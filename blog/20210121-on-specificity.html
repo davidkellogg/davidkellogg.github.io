@@ -58,7 +58,7 @@
     }
   &lt;/style&gt;
 </code></pre>
-        <p>The code above specifies that any element with the <code>.blog-post</code> class will display text as Optima at 12pt font. In practice, this class will often be applied to a parent <code>&lt;div&gt;</code> element. The following HTML should look familiar in terms of what is standard practice:</p>
+        <p>The code above specifies that any element with the <code>blog-post</code> class will display text as Optima at 12pt font. In practice, this class will often be applied to a parent <code>&lt;div&gt;</code> element. The following HTML should look familiar in terms of what is standard practice:</p>
 <pre><code>
   &lt;div class="blog-post"&gt;
     &lt;p&gt;Some text here.&lt;/p&gt;
@@ -72,7 +72,7 @@
     &lt;p&gt;More text here.&lt;/p&gt;
   &lt;/article&gt;
 </code></pre>
-        <p>I would take this a step further, removing the need for custom classes and bake the style directly into the CSS for all the <code>&lt;p&gt;</code> children of <code>&lt;article&gt;</code>. To accomplish this, I would rewrite the <code>.blog-post</code> CSS and HTML.</p>
+        <p>I would take this a step further, removing the need for custom classes and bake the style directly into the CSS for all the <code>&lt;p&gt;</code> children of <code>&lt;article&gt;</code>. To accomplish this, I would rewrite the <code>blog-post</code> CSS and HTML.</p>
 <pre><code>
   &lt;style&gt;
     article &gt; p {
@@ -86,7 +86,7 @@
     &lt;p&gt;More text here.&lt;/p&gt;
   &lt;/article&gt;
 </code></pre>
-        <p>All of the code snippets above are equivelant insofar as the end-user is concerned, however, to a developer, they are quite different. First of all, the code is much more readable by ditching the generic <code>&lt;div&gt;</code> tag. Secondarily, the CSS is now easier to maintain because modifying <code>article &gt; p</code> won't errantly modify any elements with the <code>.blog-post</code> class we may not know about.</p>
+        <p>All of the code snippets above are equivelant insofar as the end-user is concerned, however, to a developer, they are quite different. First of all, the code is much more readable by ditching the generic <code>&lt;div&gt;</code> tag. Secondarily, the CSS is now easier to maintain because modifying <code>article &gt; p</code> won't errantly modify any elements with the <code>blog-post</code> class we may not know about.</p>
         <p>By now, you should be seeing the advantages to paying attention to the specificity of your code. To further illustrate the benefits of specificity, suppose a blog post utilizes a variety of tags, including <code>&lt;blockquotes&gt;</code>. All text in the post should have 12pt font, but blockquotes should have a slightly larger font at 14pt. The following CSS accomplishes this goal:</p>
 <pre><code>
   &lt;style&gt;
@@ -100,7 +100,7 @@
     }
   &lt;/style&gt;
 </code></pre>
-        <p>Now, suppose the font of articles should be changed to Times New Roman. This change is simple enough just by swapping out Optima for Times New Roman in <code>font-family</code>. Of course, this is a rudimentary example. To use an example from my own code, the title for this site uses a verbose verison of the following code:</p>
+        <p>Now, suppose the font of articles should be changed to Times New Roman. This change is simple enough just by swapping out Optima for Times New Roman in <code>font-family</code>. Of course, this is a rudimentary example. To use an example from my own code, the title for this site uses a verbose version of the following code:</p>
 <pre><code>
   &lt;style&gt;
     header &gt; a#site-title {
