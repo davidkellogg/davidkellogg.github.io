@@ -34,10 +34,10 @@ html {
 
 body {
   display:     grid;
-  grid:       "header navigation" auto
-              "main   main      " 1fr
-              "footer footer    " auto
-              "empty  empty     " 0
+  grid:       "header          navigation" auto
+              "main                  main" 1fr
+              "footer              footer" auto
+              "empty-bottom  empty-bottom" 0
              / auto   1fr;
   min-width:   360px;
   height:      100vh;
@@ -76,11 +76,6 @@ footer { grid-area: footer; }
  * ------------------------------------------------
  */
 
-nav a {
-  white-space: nowrap;
-  color:      #DEB887; /* burlywood */
-  }
-
 main h3 {
   font-size: 1.500em;
   margin:    0.833em 0;
@@ -111,13 +106,17 @@ footer small {
     padding:         0;
     }
 
-  nav a {
+  nav a,
+  nav label {
     display:         block;
     padding:         0.5em;
     text-decoration: none;
+    white-space:     nowrap;
+    color:          #DEB887; /* burlywood */
     }
 
-  nav a:hover {
+  nav > ul > li > a:hover,
+  nav > ul > li > label:hover {
     background-color: hsl( 19, 56%, 45% ); /* sienna + 5% lightness */
     border-radius:    0.25em;
     }
@@ -137,7 +136,6 @@ footer small {
     }
 
   header > a#site-title:hover         { background-color: hsl( 19, 56%, 45% ); } /* sienna + 5% lightness */
-
   header > a#site-title >        h1   { color: #FAEBD7; } /* antiquewhite */
   header > a#site-title > *:not( h1 ) { display: none;  }
   header > a#site-title > *:is(  h1, h2, h3, h4, h5, h6 ) {
@@ -149,31 +147,55 @@ footer small {
 /* header navigation  */
   nav#header-nav {
     grid-area:         navigation;
-    display:           flex;
-    flex-direction:    column;
-    flex:              none;
-    align-items:       flex-end;
-    align-self:        flex-start;
+    display:           grid;
+    grid: "empty label checkbox" auto
+          "emoty menu      menu" auto
+         / 1fr   auto      auto;
+    align-self:        self-start;
     justify-self:      self-start;
     width:             100%;
     background-color: #A0522D; /* sienna */
     }
 
-  nav#header-nav > ul          { display:    none;  }
-  nav#header-nav > ul > li     { display:    block; }
-  nav#header-nav > ul > li > a { text-align: right; }
+  nav#header-nav * {
+    text-align: right;
+    }
+
+  nav#header-nav > label {
+    grid-area:   label;
+    display:     inline-block;
+    padding:     0;
+    margin:      0 0 0 0.6875em;
+    align-self:  center;
+    font-size:   1.25em;
+    font-weight: 600;
+    color:      #FFE4C4; /* bisque */
+  }
+
+  nav#header-nav > ul {
+    grid-area: menu;
+    display:   none;
+    }
+
+  nav#header-nav > ul > li { display: block; }
 
   nav#header-nav > input[type=checkbox]#header-nav-toggle {
+    grid-area:         checkbox;
    -webkit-appearance: none;
     width:             2.25em;
     height:            2.25em;
     margin:            1.25em;
-    border:            1px solid #443322; /* dark gray, custom */
-    border-radius:     0.3125em;
+    background-image:  url("../images/navigation.svg");
+    background-size:   contain;
+    transition:        100ms ease-in-out;
     }
 
-  nav#header-nav > input[type=checkbox]:checked#header-nav-toggle      { background-color: #FFE4C4; } /* bisque */
-  nav#header-nav > input[type=checkbox]:checked#header-nav-toggle + ul { display:           block;  }
+  nav#header-nav > input[type=checkbox]:checked#header-nav-toggle {
+    transform:  rotate(45deg);
+    transition: 100ms ease-in-out;
+    }
+
+  nav#header-nav > input[type=checkbox]:checked#header-nav-toggle ~ ul { display: block; }
 /* ------------------ */
 
 /* footer navigation  */
@@ -183,6 +205,9 @@ footer small {
     }
 /* ------------------ */
 
+/* to create space for footer shadow   *
+ * when main tag overflows screen size */
+  div#space { grid-area: empty-bottom; }
 
 /*
  * Responsive design modifications to header and generic &
@@ -201,40 +226,37 @@ footer small {
  */
 
 @media screen and ( max-width: 720px ) {
-  nav#header-nav {
-    height: 100%;
+  nav#header-nav { height:  100%; }
+  div#space      { display: none; }
   }
-
-  /* to create space for footer shadow   *
-   * when main tag overflows screen size */
-  div#space {
-    display: none;
-    grid-area: empty;
-  }
-
-}
 
 @media screen
-  and ( min-width: 481px )
+  and ( min-width: 721px )
   and ( max-width: 960px ) {
 
   /* header navigation  */
     nav#header-nav {
-      flex-direction: row-reverse;
-      align-items:    center;
+      grid: "empty menu label checkbox" auto
+           / 1fr   auto auto  auto;
       }
 
-    nav#header-nav > ul > li { display: inline-block; }
+    nav#header-nav > ul {
+      align-self: center;
+      }
+
+    nav#header-nav > ul > li {
+      display:    inline-block;
+      }
   /* ------------------ */
   }
 
 @media screen and ( min-width: 721px ) {
 
   body {
-    grid: "empty-left header          empty-right" auto
-          "empty-left navigation      empty-right" auto
-          "empty-left main            empty-right" 1fr
-          "empty-left footer          empty-right" auto
+    grid: "empty-left   header       empty-right " auto
+          "empty-left   navigation   empty-right " auto
+          "empty-left   main         empty-right " 1fr
+          "empty-left   footer       empty-right " auto
           "empty-bottom empty-bottom empty-bottom" 1px
          / 1fr        minmax( 720px, 70% ) 1fr;
     }
@@ -262,8 +284,6 @@ footer small {
       font-weight: 400;
       }
   /* ------------------ */
-
-  div#space { grid-area: empty-bottom; }
 }
 
 @media screen
@@ -273,7 +293,7 @@ footer small {
   header {
     margin-bottom: 0;
     border-radius: 0.3125em 0.3125em 0 0;
-  }
+    }
 
   /* header navigation  */
     nav#header-nav { border-radius: 0 0 0.3125em 0.3125em; }
@@ -284,28 +304,36 @@ footer small {
   and ( min-width: 961px ) {
 
   body {
-    grid: "empty-left   header    empty-top-right" auto
-          "empty-left   main           navigation" 1fr
-          "empty-left   footer empty-bottom-right" auto
-          "empty-bottom empty-bottom empty-bottom" 1px
+    grid: "empty-left header   empty-top-right" auto
+          "empty-left main          navigation" 1fr
+          "empty-left footer       empty-right" auto
+          "empty-left empty-bottom empty-right" 1px
          / 1fr        minmax( 720px, 70% )  1fr;
     }
 
   /* header navigation  */
     nav#header-nav {
-      width:        auto;
-      margin:       0 1em;
-      align-items:  flex-start;
+      grid: "checkbox label" auto
+            "menu     menu " auto
+           / auto     minmax( 64px, auto );
+      width: auto;
+      margin: 0 1em;
       }
 
-    nav#header-nav > input[type=checkbox]:checked#header-nav-toggle + ul { background-color: #FFE4C4; } /* bisque */
+    nav#header-nav > label {
+      text-align: left;
+      margin:     0 0.6875em 0 0;
+      }
 
-    nav#header-nav > ul > li > a {
+    nav#header-nav > input[type=checkbox]:checked#header-nav-toggle ~ ul { background-color: #FFE4C4; } /* bisque */
+
+    nav#header-nav > ul > li > a,
+    nav#header-nav > ul > li > label {
       color:     #443322; /* dark gray, custom */
       text-align: left;
       }
 
-    nav#header-nav > ul > li > a:hover {
+    nav#header-nav > ul > li > *:hover {
       background-color: hsl( 33, 100%, 83% ); /* bisque - 5% lightness */
       border-radius:    0;
       }
