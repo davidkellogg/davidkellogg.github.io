@@ -1,0 +1,7 @@
+<svg id="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500">
+  <g stroke="#00009C" stroke-width="48" fill="none">
+    <polyline points="33.5,125 163.4,200 163.4,300 33.5,375"/>
+    <line x1="250" y1="0" x2="250" y2="500" />
+    <polyline points="466.5,125 250,250 466.5,375" stroke-miterlimit="0"/>
+  </g>
+</svg>

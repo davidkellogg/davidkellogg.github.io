@@ -1,8 +1,6 @@
-<svg version="1.1"
-     baseProfile="full"
-     width="64" height="64"
-     xmlns="http://www.w3.org/2000/svg">
-
-  <text x="50%" y="50%" font-size="96" text-anchor="middle" dominant-baseline="central" fill="#FFE4C4">+</text>
-
+<svg id="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <g stroke="#FFE4C4" stroke-width="8">
+    <line x1="0"  y1="32" x2="64" y2="32"></line>
+    <line x1="32" y1="0"  x2="32" y2="64"></line>
+  </g>
 </svg>

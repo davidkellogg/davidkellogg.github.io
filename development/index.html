@@ -6,8 +6,11 @@
     <meta charset="utf-8">
 
     <link rel="stylesheet" href="development.css">
-    <link rel="stylesheet" href="../css/navigation.css">
     <link rel="stylesheet" href="../css/tilecards.css">
+    <!-- insert navigation.css if Javascript is enabled -->
+    <script>
+      document.querySelector( "head" ).insertAdjacentHTML( "beforeend", `<link rel="stylesheet" href="../css/navigation.css">` );
+    </script>
   </head>
 
   <body bgcolor="#BBBBBB">
