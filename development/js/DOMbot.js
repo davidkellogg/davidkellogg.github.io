@@ -2,17 +2,27 @@
 
 // Mothership class
 class Mothership {
-  constructor( { variables: variables, validations: validations }, secret ) {
+  constructor( { data: data, dataProcessing: dataProcessing, variables: variables, variableProcessing: variableProcessing }, secret ) {
+    // declare data methods
+    if ( !Array.isArray( dataProcessing ) ) {
+      dataProcessing = [ dataProcessing ];
+    }
+    dataProcessing.forEach( ( { name: name, action: action } ) =>
+      Object.defineProperty( data, name, {
+        get: () => new Function(`return ( variables, data, ${action.toString().substr(1)}`)()( variables, data, undefined )
+      } )
+    );
+
     // declare public interface
-    validations.forEach( ( { varIndex: varIndex, action: action } ) =>
-      Object.defineProperty( this, varIndex, {
-        get: () => variables[varIndex],
+    if ( !Array.isArray( variableProcessing ) ) {
+      variableProcessing = [ variableProcessing ];
+    }
+    variableProcessing.forEach( ( { variable: variable, action: action } ) =>
+      Object.defineProperty( this, variable, {
+        get: () => variables[variable],
         set: ( { secret: key, message: value } ) => {
-          if ( key === secret ) {
-            action( value, sendCommand );
-            // let method = new Function( `return ${action.toString()}` );
-            // console.log(method);
-            // method( value, sendCommand );
+          if ( key === secret ) { //variables[variable] = 
+            new Function(`return ( sendCommand, variables, data, ${action.toString().substr(1)}`)()( sendCommand, variables, data, value );
           } else {
             console.info( "could not validate the authenticity of the message relayed to the mothership." );
           }

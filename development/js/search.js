@@ -4,7 +4,7 @@
 import factory from "./DOMbot.js"
 
 // blueprints
-const blueprints = {
+window.blueprints = {
   name: "search",
   data: ( () => {
     let dataConstruct = [];
@@ -16,6 +16,15 @@ const blueprints = {
     } ) );
     return dataConstruct;
   } )(),
+  dataProcessing: {
+    // returns an array of reordered `data` by `sorted` or undefined if either array is empty
+    name: "extract",
+    action: ( value ) => {
+      return Array
+        .from( variables.sorted, ( key ) => data[key] )
+        .slice( variables.start, variables.start + variables.delta );
+    }
+  },
   variables: {
     start: 0,
     delta: 10,
@@ -23,43 +32,41 @@ const blueprints = {
     keywords: [],
     sorted: []
   },
-  validations: [
+  variableProcessing: [
     { // start
-      varIndex: "start",
-      action: ( value, sendCommand ) => {
-        blueprints.variables.start = value < 0 ? 0 : ( value > blueprints.variables.entries ? blueprints.variables.start : value );
-        sendCommand( [ { bot: blueprints.bots[2].id, data: blueprints.data.extract },
-                              blueprints.bots[3].id,
-                              blueprints.bots[4].id ] );
+      variable: "start",
+      action: ( value ) => {
+        variables.start = value < 0 ? 0 : ( value > variables.entries ? variables.start : value );
+        sendCommand( [ { bot: "results", data: data.extract }, "next", "previous" ] );
       }
     },
     { // delta
-      varIndex: "delta"
+      variable: "delta"
     },
     { // entries
-      varIndex: "entries"
+      variable: "entries"
     },
     { // keywords
-      varIndex: "keywords",
-      action: ( value, sendCommand ) => {
+      variable: "keywords",
+      action: ( value ) => {
         // speed function
         let timestamp = Date.now();
 
         // attempt to search for keywords
         try { // check for valid keywords
           if ( value !== "" ) {
-            blueprints.variables.keywords = typeof value === "string" ? value.split(" ") : [`${value}`];
+            variables.keywords = typeof value === "string" ? value.split(" ") : [`${value}`];
           } else {
             throw 0;
           }
 
           // score article relevance
-          const scoredArray = blueprints.data.map( ( { name: name, description: description } ) => {
+          const scoredArray = data.map( ( { name: name, description: description } ) => {
             // reset score to 0
             let score = 0;
 
             // iterate through keywords
-            blueprints.variables.keywords.forEach( ( keyword ) => {
+            variables.keywords.forEach( ( keyword ) => {
               let index = 0;
               while (true) {
                 index = description.toLowerCase().indexOf( keyword, index );
@@ -75,18 +82,16 @@ const blueprints = {
             return score;
           } ); // end array.map() iterations
 
-          blueprints.variables.sorted = Array.from( scoredArray.keys() ).filter( (a) => scoredArray[a] > 0 ).sort( ( b, c ) => scoredArray[c] - scoredArray[b] );
+          variables.sorted = Array.from( scoredArray.keys() ).filter( (a) => scoredArray[a] > 0 ).sort( ( b, c ) => scoredArray[c] - scoredArray[b] );
         } catch { // set default ordering
-          blueprints.variables.sorted = Array.from( blueprints.data.keys() );
+          variables.sorted = Array.from( data.keys() );
         } finally { // display results
           // update private variables
-          blueprints.variables.start = 0;
-          blueprints.variables.entries = blueprints.variables.sorted.length;
+          variables.start = 0;
+          variables.entries = variables.sorted.length;
 
-          sendCommand( [ { bot: blueprints.bots[1].id, data: Date.now() - timestamp  },
-                         { bot: blueprints.bots[2].id, data: blueprints.data.extract },
-                                blueprints.bots[3].id,
-                                blueprints.bots[4].id ] );
+          sendCommand( [ { bot: "speed", data: Date.now() - timestamp  }, { bot: "results", data: data.extract }, "next", "previous" ] );
+          return variables.keywords;
         }
       }
     }
@@ -102,7 +107,7 @@ const blueprints = {
           ),
         ( relayMessage ) => document.querySelector( `#search` ).addEventListener( "submit", ( event ) => {
           event.preventDefault();
-          relayMessage( blueprints.validations[3].varIndex, document.querySelector( `#search > input[type=text]` ).value.toLowerCase() );
+          relayMessage( "keywords", document.querySelector( `#search > input[type=text]` ).value.toLowerCase() );
         } )
       ]
     },
@@ -162,7 +167,7 @@ const blueprints = {
         ),
         ( { id: id, mothership: mothership, relayMessage: relayMessage } ) => id.addEventListener( "click", ( click ) => {
             event.preventDefault();
-            relayMessage( blueprints.validations[0].varIndex, mothership.start + mothership.delta );
+            relayMessage( "start", mothership.start + mothership.delta );
           } ),
         ( { id: id, mothership: mothership } ) => {
           id.setAttribute( "style", mothership.start + mothership.delta < mothership.entries ? "" : "visibility: hidden;" );
@@ -177,7 +182,7 @@ const blueprints = {
         ),
         ( { id: id, mothership: mothership, relayMessage: relayMessage } ) => id.addEventListener( "click", ( click ) => {
             event.preventDefault();
-            relayMessage( blueprints.validations[0].varIndex, mothership.start - mothership.delta );
+            relayMessage( "start", mothership.start - mothership.delta );
           } ),
         ( { id: id, mothership: mothership } ) => {
           id.setAttribute( "style", mothership.start > 0 ? "" : "visibility: hidden;" );
@@ -187,12 +192,8 @@ const blueprints = {
   ]
 };
 
-// returns the reordered `array` by `keys` or undefined if either array is empty
-Object.defineProperty( blueprints.data, "extract", {
-  get: () => Array
-    .from( blueprints.variables.sorted, ( key ) => blueprints.data[key] )
-    .slice( blueprints.variables.start, blueprints.variables.start + blueprints.variables.delta )
-} );
-
 // instantiate Mothership and DOMbots
 factory( blueprints );
+
+// delete blueprints from memory
+delete window.blueprints;
