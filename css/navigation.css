@@ -49,6 +49,7 @@ form#search > input[type="text"] {
 
 form#search > input[type="submit"] {
   flex:              20%;
+ -webkit-appearance: none;
   border-radius:     0 0.3125em 0.3125em 0;
   background-color: #DDDDDD;
   }
