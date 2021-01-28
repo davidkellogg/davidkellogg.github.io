@@ -5,6 +5,10 @@ p > code {
   white-space: nowrap;
   }
 
+article > code {
+  white-space: pre-wrap;
+}
+
 article > h4 {
   font-size: 1.250em;
   margin:    0.833em 0 0.167em;

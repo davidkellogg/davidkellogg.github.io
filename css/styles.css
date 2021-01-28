@@ -115,9 +115,8 @@ footer small {
     color:          #DEB887; /* burlywood */
     }
 
-  nav > ul > li > a:hover,
-  nav > ul > li > label:hover {
-    background-color: hsl( 19, 56%, 45% ); /* sienna + 5% lightness */
+  nav > ul > li > a:hover {
+    background-color: hsl( 19, 56%, 45% ); /* sienna ~ 5% lightness */
     border-radius:    0.25em;
     }
 /* ------------------ */
@@ -149,7 +148,7 @@ footer small {
     grid-area:         navigation;
     display:           grid;
     grid: "empty label checkbox" auto
-          "emoty menu      menu" auto
+          "empty menu      menu" auto
          / 1fr   auto      auto;
     align-self:        self-start;
     justify-self:      self-start;
@@ -157,27 +156,26 @@ footer small {
     background-color: #A0522D; /* sienna */
     }
 
-  nav#header-nav * {
-    text-align: right;
+  nav#header-nav * { text-align: right; }
+
+  nav#header-nav > ul {
+    grid-area:  label;
+    align-self: center;
     }
 
-  nav#header-nav > label {
-    grid-area:   label;
-    display:     inline-block;
+  nav#header-nav > ul > li         { display: block; }
+  nav#header-nav > ul > li > a     { display: none;  }
+
+  nav#header-nav > label { grid-area: label }
+
+  nav#header-nav label {
+    align-self:  center;
     padding:     0;
     margin:      0 0 0 0.6875em;
-    align-self:  center;
     font-size:   1.25em;
     font-weight: 600;
     color:      #FFE4C4; /* bisque */
-  }
-
-  nav#header-nav > ul {
-    grid-area: menu;
-    display:   none;
     }
-
-  nav#header-nav > ul > li { display: block; }
 
   nav#header-nav > input[type=checkbox]#header-nav-toggle {
     grid-area:         checkbox;
@@ -196,7 +194,17 @@ footer small {
     transition: 100ms ease-in-out;
     }
 
-  nav#header-nav > input[type=checkbox]:checked#header-nav-toggle ~ ul { display: block; }
+  nav#header-nav > input[type=checkbox]:checked#header-nav-toggle ~ ul > li > *:hover {
+    background-color: hsl( 19, 56%, 45% ); /* sienna ~ 5% lightness */
+    border-radius:    0;
+    }
+
+  nav#header-nav > input[type=checkbox]:checked#header-nav-toggle ~ ul              { grid-area: menu; }
+  nav#header-nav > input[type=checkbox]:checked#header-nav-toggle ~ ul > li > a     { display:   block; }
+  nav#header-nav > input[type=checkbox]:checked#header-nav-toggle ~ ul > li > label {
+    margin:  0;
+    padding: 0.4em;
+    }
 /* ------------------ */
 
 /* footer navigation  */
@@ -218,12 +226,12 @@ footer small {
  * media queries layout:
  * body { min-width: 360px; }
  *
- * 360 480 600 720 840 960+
+ * 360 480 600 720 840 960~
  * xxxxxxxxxxxx-----------
  * ----xxxxxxxxxxxxxxxx---
- * ------------xxxxxxxxxxx+
+ * ------------xxxxxxxxxxx~
  * ------------xxxxxxxx---
- * --------------------xxx+
+ * --------------------xxx~
  */
 
 @media screen and ( max-width: 720px ) {
@@ -241,13 +249,11 @@ footer small {
            / 1fr   auto auto  auto;
       }
 
-    nav#header-nav > ul {
-      align-self: center;
-      }
+    nav#header-nav > ul { align-self: center; }
 
-    nav#header-nav > ul > li {
-      display:    inline-block;
-      }
+    nav#header-nav > ul > li { display: inline-block; }
+
+    nav#header-nav > input[type=checkbox]:checked#header-nav-toggle ~ ul > li > *:hover { border-radius:    0.25em; }
   /* ------------------ */
   }
 
@@ -281,7 +287,7 @@ footer small {
     header > a#site-title:hover { border-radius: 0.3125em; }
     header > a#site-title > h1  { font-size: 2.5em;        }
     header > a#site-title > h2  {
-      display: block;
+      display:     block;
       font-weight: 400;
       }
   /* ------------------ */
@@ -301,15 +307,14 @@ footer small {
   /* ------------------ */
   }
 
-@media screen
-  and ( min-width: 961px ) {
+@media screen and ( min-width: 961px ) {
 
   body {
     grid: "empty-left header   empty-top-right" auto
           "empty-left main          navigation" 1fr
           "empty-left footer       empty-right" auto
           "empty-left empty-bottom empty-right" 1px
-         / 1fr        minmax( 720px, 70% )  1fr;
+         / 1fr        minmax( 720px, 70% ) 1fr;
     }
 
   /* header navigation  */
@@ -317,26 +322,25 @@ footer small {
       grid: "checkbox label" auto
             "menu     menu " auto
            / auto     minmax( 64px, auto );
-      width: auto;
+      width:  auto;
       margin: 0 1em;
       }
 
-    nav#header-nav > label {
+    nav#header-nav label {
       text-align: left;
       margin:     0 0.6875em 0 0;
+      color:     #FFE4C4; /* bisque */
       }
 
-    nav#header-nav > input[type=checkbox]:checked#header-nav-toggle ~ ul { background-color: #FFE4C4; } /* bisque */
-
-    nav#header-nav > ul > li > a,
-    nav#header-nav > ul > li > label {
+    nav#header-nav > input[type=checkbox]:checked#header-nav-toggle ~ ul          { background-color: #FFE4C4; } /* bisque */
+    nav#header-nav > input[type=checkbox]:checked#header-nav-toggle ~ ul > li > * {
       color:     #443322; /* dark gray, custom */
       text-align: left;
       }
 
-    nav#header-nav > ul > li > *:hover {
+    /* nav#header-nav > input[type=checkbox]:checked#header-nav-toggle ~ ul > li > a:hover, */
+    nav#header-nav > input[type=checkbox]:checked#header-nav-toggle ~ ul > li > *:hover {
       background-color: hsl( 33, 100%, 83% ); /* bisque - 5% lightness */
-      border-radius:    0;
       }
   /* ------------------ */
 }
