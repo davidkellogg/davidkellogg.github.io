@@ -19,7 +19,7 @@ window.blueprints = {
   dataProcessing: {
     // returns an array of reordered `data` by `sorted` or undefined if either array is empty
     name: "extract",
-    action: ( value ) => {
+    action: () => {
       return Array
         .from( variables.sorted, ( key ) => data[key] )
         .slice( variables.start, variables.start + variables.delta );
@@ -37,7 +37,7 @@ window.blueprints = {
       variable: "start",
       action: ( value ) => {
         variables.start = value < 0 ? 0 : ( value > variables.entries ? variables.start : value );
-        sendCommand( [ { bot: "results", data: data.extract }, "next", "previous" ] );
+        sendCommand( [ { bot: "results", command: data.extract }, "next", "previous" ] );
       }
     },
     { // delta
@@ -90,14 +90,13 @@ window.blueprints = {
           variables.start = 0;
           variables.entries = variables.sorted.length;
 
-          sendCommand( [ { bot: "speed", data: Date.now() - timestamp  }, { bot: "results", data: data.extract }, "next", "previous" ] );
-          return variables.keywords;
+          sendCommand( [ { bot: "speed", command: Date.now() - timestamp  }, { bot: "results", command: data.extract }, "next", "previous" ] );
         }
       }
     }
   ],
   bots: [
-    { // #search
+    { // anonymous DOMbot actions
       action: [
         () => document.querySelector( "#results" ).insertAdjacentHTML( "beforebegin",
            `<form id="search">
@@ -117,24 +116,24 @@ window.blueprints = {
         () => document.querySelector( "#results" ).insertAdjacentHTML( "beforebegin",
           `<p id="speed" style="visibility: hidden;">0 records found in 0 milliseconds</p>`
         ),
-        ( { id: id, data: data, mothership: mothership } ) => {
-          if ( data !== undefined ) {
+        ( value ) => {
+          if ( value !== undefined ) {
             if ( id.hasAttribute( "style" ) ) {
               id.removeAttribute( "style" );
             }
-            id.innerHTML = `${mothership.entries} records found in ${data} millisecond${data !== 1 ? "s" : ""}`;
+            id.innerHTML = `${mothership.entries} records found in ${value} millisecond${value !== 1 ? "s" : ""}`;
           }
         }
       ],
     },
     { // #results
       id: document.querySelector( "ol#results" ),
-      action: ( { id: id, data: data } ) => {
-        if ( data !== undefined ) {
+      action: ( value ) => {
+        if ( value !== undefined ) {
            // clear currently displayed results
           results.innerHTML = "";
           // destructure `article` object properties into variables
-          data.forEach( ( { url: url, name: name, datetime: datetime, description: description } ) => {
+          value.forEach( ( { url: url, name: name, datetime: datetime, description: description } ) => {
             // insert `article` tilecard
             id.insertAdjacentHTML( 'beforeend',
               `<li>
@@ -165,11 +164,11 @@ window.blueprints = {
         () => document.querySelector( "#results" ).insertAdjacentHTML( "afterend",
            `<a id="next" class="insertPagination" style="display: none;" href="javascript:void(0)">Next</a>`
         ),
-        ( { id: id, mothership: mothership, relayMessage: relayMessage } ) => id.addEventListener( "click", ( click ) => {
+        () => id.addEventListener( "click", ( click ) => {
             event.preventDefault();
             relayMessage( "start", mothership.start + mothership.delta );
           } ),
-        ( { id: id, mothership: mothership } ) => {
+        () => {
           id.setAttribute( "style", mothership.start + mothership.delta < mothership.entries ? "" : "visibility: hidden;" );
         }
       ],
@@ -180,11 +179,11 @@ window.blueprints = {
         () => document.querySelector( "#results" ).insertAdjacentHTML( "afterend",
            `<a id="previous" class="insertPagination" style="display: none;" href="javascript:void(0)">Prev</a>`
         ),
-        ( { id: id, mothership: mothership, relayMessage: relayMessage } ) => id.addEventListener( "click", ( click ) => {
+        () => id.addEventListener( "click", ( click ) => {
             event.preventDefault();
             relayMessage( "start", mothership.start - mothership.delta );
           } ),
-        ( { id: id, mothership: mothership } ) => {
+        () => {
           id.setAttribute( "style", mothership.start > 0 ? "" : "visibility: hidden;" );
         }
       ],
