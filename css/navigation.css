@@ -1,64 +1,206 @@
-/* displayPageNavigation */
-a.insertPagination {
-  display:           inline-block;
-  margin:            1em;
-  padding:           1em;
-  width:             10%;
-  min-width:         80px;
-  height:            3em;
-  background-color: #F8F8FF;
-  border-radius:     0.3125em;
-  box-shadow:        0 0.3125em 0.3125em #333333;
-  color:            #443322;
-  text-decoration:   none;
-  text-align:        center;
+/* --- navigation --- */
+  nav ul {
+    list-style-type: none;
+    margin:          0;
+    padding:         0;
+    }
+
+  nav a,
+  nav label {
+    display:         block;
+    padding:         0.5em;
+    text-decoration: none;
+    white-space:     nowrap;
+    color:          #DEB887; /* burlywood */
+    }
+
+  nav > ul > li > a:hover {
+    background-color: hsl( 19, 56%, 45% ); /* sienna + 5% lightness */
+    border-radius:    0.25em;
+    }
+/* ------------------ */
+
+/* --- site title --- */
+  header > a#site-title {
+    display: inline-block;
+    padding: 0.625em;
+    color:  #DEB887; /* burlywood */
+    }
+
+  header > a#site-title:hover         { background-color: hsl( 19, 56%, 45% ); } /* sienna + 5% lightness */
+  header > a#site-title >        h1   { color: #FAEBD7; } /* antiquewhite */
+  header > a#site-title > *:not( h1 ) { display: none;  }
+  header > a#site-title > *:is(  h1, h2, h3, h4, h5, h6 ) {
+    margin:    0.125em;
+    font-size: 1.500em;
+    }
+
+@media screen
+  and ( min-width: 721px ) {
+
+  header > a#site-title       { text-decoration: none;   }
+  header > a#site-title:hover { border-radius: 0.3125em; }
+  header > a#site-title > h1  { font-size: 2.5em;        }
+  header > a#site-title > h2  {
+    display:     block;
+    font-weight: 400;
+    }
+  }
+/* ------------------ */
+
+/* header navigation  */
+  nav#header-nav {
+    grid-area:         navigation;
+    display:           grid;
+    grid: "empty label checkbox" minmax( 54px, auto )
+          "empty menu      menu" auto
+         / 1fr   auto      auto;
+    align-self:        self-start;
+    justify-self:      self-start;
+    height:            100%;
+    width:             100%;
+    background-color: #A0522D; /* sienna */
+    }
+
+  nav#header-nav *    { text-align: right; }
+  nav#header-nav > ul {
+    grid-area: menu;
+    display:   none;
+    }
+
+  nav#header-nav > ul > li         { display: block; }
+  nav#header-nav > ul > li > label {
+    margin:  0;
+    padding: 0.4em;
+    }
+
+  nav#header-nav > label {
+    grid-area:  label;
+    transition: 500ms ease-in-out;
+    }
+
+  nav#header-nav label {
+    align-self:  center;
+    padding:     0;
+    font-size:   1.25em;
+    font-weight: 600;
+    color:      #FFE4C4; /* bisque */
+    }
+
+  nav#header-nav > input[type=checkbox]#header-nav-toggle {
+    grid-area:         checkbox;
+   -webkit-appearance: none;
+    border-width:      0;
+    width:             2.25em;
+    height:            2.25em;
+    margin:            1.25em;
+    background-image:  url("../images/navigation.svg");
+    background-size:   contain;
+    transition:        500ms ease-in-out;
+    }
+
+  nav#header-nav > input[type=checkbox]:checked#header-nav-toggle {
+    transform:  rotate(135deg);
+    transition: 500ms ease-in-out;
+    }
+
+  nav#header-nav > input[type=checkbox]:checked#header-nav-toggle ~ ul *:hover {
+    background-color: hsl( 19, 56%, 45% ); /* sienna ~ 5% lightness */
+    border-radius:    0;
+    }
+
+  nav#header-nav > input[type=checkbox]:checked#header-nav-toggle + label {
+    color:     #A0522D;
+    transition: 500ms ease-in-out;
+    }
+
+  nav#header-nav > input[type=checkbox]:checked#header-nav-toggle ~ ul { display: block; }
+
+
+@media screen
+  and ( min-width: 721px ) {
+
+  nav#header-nav {
+    height:          auto;
+    border-radius:   0.3125em;
+    margin-bottom:   1.0000em;
+    box-shadow:    0 0.3125em 0.3125em #D3D3D3; /* lightgray */
+    }
   }
 
-a.insertPagination:hover,
-form#search:hover {
-  transform:  scale(1.01);
-  transition: 50ms linear;
-  box-shadow: 0 0.5em 0.5em #333333;
-  }
-/* --------------------- */
+@media screen
+  and ( min-width: 721px )
+  and ( max-width: 960px ) {
 
-/* -search--- */
-form#search {
-  display:       flex;
-  margin:        0 1em;
-  padding:       0;
-  border-radius: 0.3125em;
-  box-shadow:  0 0.3125em 0.3125em #333333;
-  }
+  nav#header-nav {
+    grid: "empty menu label checkbox" auto
+         / 1fr   auto auto  auto;
+    border-radius: 0 0 0.3125em 0.3125em;
+    }
 
-form#search > input {
-  display:   inline-block;
-  padding:   0.5em 1em;
-  margin:    0;
-  border:    0;
-  font-size: 1em;
-  height:    3em;
-  outline:   none;
+  nav#header-nav > ul   { align-self: center;       }
+  nav#header-nav > ul * { display:    inline-block; }
+
+  nav#header-nav > input[type=checkbox]:checked#header-nav-toggle + label      { display:       none;   }
+  nav#header-nav > input[type=checkbox]:checked#header-nav-toggle ~ ul *:hover { border-radius: 0.25em; }
   }
 
-form#search > input[type="text"] {
-  flex:          80%;
-  border-radius: 0.3125em 0 0 0.3125em;
-  background-color: #F8F8FF;
+@media screen
+  and ( min-width: 961px ) {
+
+  nav#header-nav {
+    grid: "checkbox label" auto
+          "menu     menu " auto
+         / auto     minmax( 96px, 1fr );
+    width:  auto;
+    margin: 0 1em;
+    }
+
+  nav#header-nav > label {
+    text-align: left;
+    color:     #FFE4C4; /* bisque */
+    }
+
+  nav#header-nav > ul {
+    padding-bottom: 0.25em;
+    border-radius:  0 0 0.3125em 0.3125em;
   }
 
-form#search > input[type="submit"] {
-  flex:              20%;
- -webkit-appearance: none;
-  border-radius:     0 0.3125em 0.3125em 0;
-  background-color: #DDDDDD;
-  }
-/* ---------- */
+  nav#header-nav > input[type=checkbox]:checked#header-nav-toggle ~ ul { background-color: #FFE4C4; } /* bisque */
+  nav#header-nav > input[type=checkbox]:checked#header-nav-toggle ~ ul * {
+    color:     #443322; /* dark gray, custom */
+    text-align: left;
+    }
 
-/* -speed---- */
-p#speed {
-  margin:    1.00em 2em 0;
-  font-size: 0.75em;
-  color:    #333333;
+  nav#header-nav > input[type=checkbox]:checked#header-nav-toggle ~ ul *:hover {
+    background-color: hsl( 33, 100%, 83% ); /* bisque - 5% lightness */
+    }
   }
-/* ---------- */
+/* ------------------ */
+
+/* footer navigation  */
+  footer > nav#footer-nav > ul > li {
+    display:   inline-block;
+    font-size: 0.75em;
+    }
+/* ------------------ */
+
+/* --linkedin icon--- */
+  a#linkedin-icon {
+    display:           inline-block;
+    padding:           0.1em 0.297em;
+    color:            #F8F8FF;
+    text-decoration:   none;
+    font-size:         2em;
+    font-weight:       700;
+    background-color: #C2DDFF;
+    border-radius:     0.25em;
+    box-shadow:      0 1px 1px #D3D3D3;
+    }
+
+  a#linkedin-icon:hover {
+    transform:  scale(1.1);
+    transition: 100ms linear;
+    box-shadow: 0 0.1em 0.1em #333333;
+    }
+/* ------------------ */
