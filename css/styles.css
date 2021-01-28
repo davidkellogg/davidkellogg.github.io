@@ -114,9 +114,15 @@ footer small {
     white-space:     nowrap;
     color:          #DEB887; /* burlywood */
     }
+<<<<<<< HEAD
     
   nav > ul > li > a:hover {
     background-color: hsl( 19, 56%, 45% ); /* sienna + 5% lightness */
+=======
+
+  nav > ul > li > a:hover {
+    background-color: hsl( 19, 56%, 45% ); /* sienna ~ 5% lightness */
+>>>>>>> 9d9d30d790f2e879c3a8448ff946ff7070878d29
     border-radius:    0.25em;
     }
 /* ------------------ */
@@ -147,7 +153,11 @@ footer small {
   nav#header-nav {
     grid-area:         navigation;
     display:           grid;
+<<<<<<< HEAD
     grid: "empty label checkbox" minmax( 54px, auto )
+=======
+    grid: "empty label checkbox" auto
+>>>>>>> 9d9d30d790f2e879c3a8448ff946ff7070878d29
           "empty menu      menu" auto
          / 1fr   auto      auto;
     align-self:        self-start;
@@ -159,6 +169,7 @@ footer small {
   nav#header-nav * { text-align: right; }
 
   nav#header-nav > ul {
+<<<<<<< HEAD
     grid-area: menu;
     display:   none;
     }
@@ -173,6 +184,16 @@ footer small {
     grid-area:  label;
     transition: 500ms ease-in-out;
     }
+=======
+    grid-area:  label;
+    align-self: center;
+    }
+
+  nav#header-nav > ul > li         { display: block; }
+  nav#header-nav > ul > li > a     { display: none;  }
+
+  nav#header-nav > label { grid-area: label }
+>>>>>>> 9d9d30d790f2e879c3a8448ff946ff7070878d29
 
   nav#header-nav label {
     align-self:  center;
@@ -210,7 +231,17 @@ footer small {
     transition: 500ms ease-in-out;
     }
 
-  nav#header-nav > input[type=checkbox]:checked#header-nav-toggle ~ ul { display: block; }
+  nav#header-nav > input[type=checkbox]:checked#header-nav-toggle ~ ul > li > *:hover {
+    background-color: hsl( 19, 56%, 45% ); /* sienna ~ 5% lightness */
+    border-radius:    0;
+    }
+
+  nav#header-nav > input[type=checkbox]:checked#header-nav-toggle ~ ul              { grid-area: menu; }
+  nav#header-nav > input[type=checkbox]:checked#header-nav-toggle ~ ul > li > a     { display:   block; }
+  nav#header-nav > input[type=checkbox]:checked#header-nav-toggle ~ ul > li > label {
+    margin:  0;
+    padding: 0.4em;
+    }
 /* ------------------ */
 
 /* footer navigation  */
@@ -279,8 +310,12 @@ footer small {
 
     nav#header-nav > ul > li { display: inline-block; }
 
+<<<<<<< HEAD
     nav#header-nav > input[type=checkbox]:checked#header-nav-toggle + label { display: none; }
     nav#header-nav > input[type=checkbox]:checked#header-nav-toggle ~ ul > li > *:hover { border-radius: 0.25em; }
+=======
+    nav#header-nav > input[type=checkbox]:checked#header-nav-toggle ~ ul > li > *:hover { border-radius:    0.25em; }
+>>>>>>> 9d9d30d790f2e879c3a8448ff946ff7070878d29
   /* ------------------ */
   }
 
@@ -348,7 +383,11 @@ footer small {
     nav#header-nav {
       grid: "checkbox label" auto
             "menu     menu " auto
+<<<<<<< HEAD
            / auto     minmax( 96px, 1fr );
+=======
+           / auto     minmax( 64px, auto );
+>>>>>>> 9d9d30d790f2e879c3a8448ff946ff7070878d29
       width:  auto;
       margin: 0 1em;
       }
@@ -359,17 +398,25 @@ footer small {
       color:     #FFE4C4; /* bisque */
       }
 
+<<<<<<< HEAD
     nav#header-nav > ul {
       padding-bottom: 0.25em;
       border-radius:  0 0 0.3125em 0.3125em;
     }
 
     nav#header-nav > input[type=checkbox]:checked#header-nav-toggle ~ ul { background-color: #FFE4C4; } /* bisque */
+=======
+    nav#header-nav > input[type=checkbox]:checked#header-nav-toggle ~ ul          { background-color: #FFE4C4; } /* bisque */
+>>>>>>> 9d9d30d790f2e879c3a8448ff946ff7070878d29
     nav#header-nav > input[type=checkbox]:checked#header-nav-toggle ~ ul > li > * {
       color:     #443322; /* dark gray, custom */
       text-align: left;
       }
 
+<<<<<<< HEAD
+=======
+    /* nav#header-nav > input[type=checkbox]:checked#header-nav-toggle ~ ul > li > a:hover, */
+>>>>>>> 9d9d30d790f2e879c3a8448ff946ff7070878d29
     nav#header-nav > input[type=checkbox]:checked#header-nav-toggle ~ ul > li > *:hover {
       background-color: hsl( 33, 100%, 83% ); /* bisque - 5% lightness */
       }
