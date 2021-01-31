@@ -1,21 +1,22 @@
 "use strict";
-
-// import functions
 import factory from "./DOMbot.js"
-
-// blueprints
-window.blueprints = {
+factory( {
   name: "search",
-  data: ( () => {
-    let dataConstruct = [];
-    document.querySelectorAll("li").forEach( ( node ) => dataConstruct.push( {
+  data: ( () => Array
+    .from( document.querySelectorAll("ol#results > li") ).map( ( node ) => ( {
       url: node.querySelector("a").getAttribute("href"),
       name: node.querySelector("h4").textContent,
       datetime: node.querySelector("time").getAttribute("datetime"),
       description: node.querySelector("p").textContent
-    } ) );
-    return dataConstruct;
-  } )(),
+    } ) )
+  )(),
+  variables: {
+    start: 0,
+    delta: 10,
+    entries: 0,
+    keywords: [],
+    sorted: []
+  },
   dataProcessing: {
     // returns an array of reordered `data` by `sorted` or undefined if either array is empty
     name: "extract",
@@ -25,14 +26,7 @@ window.blueprints = {
         .slice( variables.start, variables.start + variables.delta );
     }
   },
-  variables: {
-    start: 0,
-    delta: 10,
-    entries: 0,
-    keywords: [],
-    sorted: []
-  },
-  variableProcessing: [
+  variableInterface: [
     { // start
       variable: "start",
       action: ( value ) => {
@@ -89,7 +83,7 @@ window.blueprints = {
           // update private variables
           variables.start = 0;
           variables.entries = variables.sorted.length;
-
+          
           sendCommand( [ { bot: "speed", command: Date.now() - timestamp  }, { bot: "results", command: data.extract }, "next", "previous" ] );
         }
       }
@@ -129,7 +123,7 @@ window.blueprints = {
     { // #results
       id: document.querySelector( "ol#results" ),
       action: ( value ) => {
-        if ( value !== undefined ) {
+        if ( Array.isArray( value ) ) {
            // clear currently displayed results
           results.innerHTML = "";
           // destructure `article` object properties into variables
@@ -186,13 +180,7 @@ window.blueprints = {
         () => {
           id.setAttribute( "style", mothership.start > 0 ? "" : "visibility: hidden;" );
         }
-      ],
+      ]
     }
-  ]
-};
-
-// instantiate Mothership and DOMbots
-factory( blueprints );
-
-// delete blueprints from memory
-delete window.blueprints;
+  ] // end of bots
+} );

@@ -7,10 +7,8 @@ html { box-sizing: border-box; }
 body {
   height:       100vh;
   font-family: "Optima", sans-serif;
-  width:        70%;
   min-width:    480px;
   margin:       0 auto;
   }
 
-h1,
-h2 { text-align: center; }
+h1 { text-align: center; }

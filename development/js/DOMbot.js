@@ -3,18 +3,126 @@
 // convert `value` to array if not already an array
 const convertToArray = ( value ) => Array.isArray( value ) ? value : [ value ];
 
-// Mothership class
-class Mothership {
-  constructor( { data: data, dataProcessing: dataProcessing, variables: variables, variableProcessing: variableProcessing }, secret ) {
-    // declare data methods
+/* -Bot--------------------------------------------------------------------- */
+class Bot {
+  construct() {};
+
+  // generic communication channel
+  sendMessage( receiver, property, message, key ) {
+    receiver[property] = {
+      secret: key,
+      message: message
+    }
+  }
+
+  // attempt to execute `methods` return final
+  actions( methods, receiver, secret ) {
+    let finalAction = undefined;
+    // attempt to execute each `method`
+    convertToArray( methods ).forEach( ( method ) => {
+      try {
+        // execute each `method` then set `finalAction`
+        method( ( property, message ) => this.sendMessage( receiver, property, message, secret ) );
+        finalAction = method;
+      } catch( error ) {
+        // if unable to execute `method` send feedback to console
+        console.info( `malformed action: ${method}`);
+        console.error( error );
+      }
+    } ); // end forEach() loop
+    return finalAction;
+  }
+}
+/* ------------------------------------------------------------------------- */
+
+/* -DOMbot------------------------------------------------------------------ */
+class DOMbot extends Bot {
+  constructor( { id: id, action: methods }, secret, mothership ) {
+    super();
+
+    const relayMessage = ( property, message ) => this.sendMessage( mothership, property, message, secret);
+
+    let element = id instanceof HTMLElement ? id : undefined;
+
+    let action = undefined;
+    if ( methods !== undefined ) {
+      convertToArray( methods ).forEach( ( method ) => {
+        // generate element reference
+        if ( element instanceof HTMLElement === false ) {
+          element = document.querySelector( `#${id}` );
+        }
+
+        // assign `function` to `action()`
+        if ( typeof method === "function" ) {
+          action = new Function(`return ( relayMessage, id, mothership, ${method.toString().substr(1)}`)();
+        }
+
+        // attempt to perform action
+        try {
+          action( relayMessage, element, mothership, undefined );
+        } catch( error ) {
+          console.info( `malformed command: ${method}`);
+          console.error( error );
+        }
+      } ); // end methods forEach() loop
+    } else {
+      console.error( `no actions were declared for ${element}_BOT` )
+    }
+
+    // declare public interface
+    Object.defineProperties( this, {
+      action: {
+        set: ( { secret: key, message: command } ) => {
+          if ( key === secret ) {
+            action( relayMessage, element, mothership, command );
+          } else {
+            console.info( "cannot set value of `action`" );
+          }
+        }
+      }
+    } );
+
+    // prevent changes to the bot
+    Object.freeze( this );
+  }
+}
+/* ------------------------------------------------------------------------- */
+
+/* -Mothership-------------------------------------------------------------- */
+class Mothership extends Bot {
+  constructor( { data: data, dataProcessing: dataProcessing, variables: variables, variableInterface: variableInterface }, secret ) {
+    super();
+
+    /* -send-commands-to-DOMbots---------------------------------------- */
+    const sendCommand = ( commands ) => {
+      convertToArray( commands ).forEach( ( message ) => {                      // parse `commands`
+        try {
+          let bot = undefined, command = undefined;                             // declare variables in-scope variables
+          if ( typeof message === "object" ) {                                  // if `command` is an object
+            ( { bot, command } = message );                                     // destructure
+          } else {                                                              // otherwise, assume the command does not contain `data`
+            bot = message;                                                      // and assign value to `bot`
+          }
+          bot = bot instanceof HTMLElement ? bot.getAttribute( "id" ) : bot;    // if bot is a reference to DOM element, strip out ID
+          this.sendMessage( window[`${bot}_BOT`], "action", command, secret );  // send message to bots
+        } catch(error) {                                                        // if unable to send command, provide feedback in the console
+          console.info( `malformed command: ${message}`);
+          console.error( error );
+        }
+      } );
+    }
+    /* ----------------------------------------------------------------- */
+
+    /* -declare-data-methods-------------------------------------------- */
     convertToArray( dataProcessing ).forEach( ( { name: name, action: action } ) =>
       Object.defineProperty( data, name, {
         get: () => new Function(`return ( variables, data ${action.toString().substr(1)}`)()( variables, data )
       } )
     );
+    /* ----------------------------------------------------------------- */
 
-    // declare public interface
-    convertToArray( variableProcessing ).forEach( ( { variable: variable, action: action } ) =>
+    /* -declare-public-interface---------------------------------------- */
+    convertToArray( variableInterface ).forEach( ( { variable: variable, action: action } ) =>
       Object.defineProperty( this, variable, {
         get: () => variables[variable],
         set: ( { secret: key, message: value } ) => {
@@ -26,132 +134,37 @@ class Mothership {
         }
       } )
     );
-
-    // communication channel to DOMbots
-    const sendCommand = ( commands ) => {
-      // parse `commands`
-      convertToArray( commands ).forEach( ( order ) => {
-        // declare variables so available in scope for eventual command
-        let bot = undefined, command = undefined;
-        try {
-          if ( typeof order === "object" ) {
-            // if `command` is an object, destructure
-            ( { bot, command } = order );
-          } else {
-            // otherwise, assume the command does not contain `data`
-            // and assign value to `bot`
-            bot = order;
-          }
-
-          // if bot is a reference to DOM element, strip out ID
-          if ( bot instanceof HTMLElement ) {
-            bot = bot.getAttribute( "id" );
-          }
-
-          // if ( bot instanceof HTMLElement ) {}
-          window[`${bot}_BOT`].action = {
-            secret: secret,
-            command: command
-          }
-        } catch(error) {
-          // if unable to send command, provide feedback in the console
-          console.info( `malformed command: ${order}`);
-          console.error( error );
-        }
-      } );
-    }
+    /* ----------------------------------------------------------------- */
 
     // prevent further changes to mothership
-    Object.seal(this);
+    Object.seal( this );
   }
 }
+/* ------------------------------------------------------------------------- */
 
-// DOMbot class
-class DOMbot {
-  constructor( { id: id, action: methods }, secret = undefined, mothership = undefined ) {
-    // declare private variables
-    let _id = id instanceof HTMLElement ? id : undefined;
-
-    // declare public interface
-    Object.defineProperties( this, {
-      action: {
-        set: ( { secret: key, command: command } ) => {
-          if ( key === secret ) {
-            action( relayMessage, _id, mothership, command );
-          } else {
-            console.info( "cannot set value of `action`" );
-          }
-        }
-      }
-    } );
-
-    // communication channel to mothership
-    const relayMessage = ( property, message ) => {
-      mothership[property] = {
-        secret: secret,
-        message: message
-      }
-    }
-
-    // set the function for action
-    let action = undefined;
-    if ( methods !== undefined ) {
-      // if `methods` is not array, wrap in array
-      // parse `commands`
-      convertToArray( methods ).forEach( ( method ) => {
-        // generate element reference
-        if ( _id instanceof HTMLElement === false ) {
-          _id = document.querySelector( `#${id}` );
-        }
-
-        // assign `function` to `action()`
-        if ( typeof method === "function" ) {
-          action = new Function(`return ( relayMessage, id, mothership, ${method.toString().substr(1)}`)();
-        }
-
-        // attempt to perform action
-        try {
-          action( relayMessage, _id, mothership );
-        } catch( error ) {
-          console.info( `malformed command: ${method}`);
-          console.error( error );
-        }
-      } ); // end methods forEach() loop
-    } else {
-      console.error( `no actions were declared for ${_id}_BOT` )
-    }
-
-    // prevent changes to the bot
-    Object.freeze( this );
-  }
-}
-
-// factory for creating Mothership and DOMbots
+/* -factory----------------------------------------------------------------- */
 export default function factory( blueprints ) {
-  const _secret = Math.floor( ( Math.random() * 100000000 + 10000000 ) );
-  const mothership = blueprints.name !== undefined ? blueprints.name : "mothership";
+  const secret = crypto.getRandomValues( new Uint32Array( 16 ) );
+  let mothership = blueprints.name !== undefined ? blueprints.name : "mothership";
 
-  window[mothership] = new Mothership( blueprints, _secret );
+  /* -Mothership---------------------------------------------------------- */
+  // instantiate Motherhsip
+  window[mothership] = new Mothership( blueprints, secret );
+  /* --------------------------------------------------------------------- */
+
+  /* -instantiate-Bots---------------------------------------------------- */
   blueprints.bots.forEach( ( bot ) => {
     // run anonymous DOMbot commands
     if ( bot.name === undefined & bot.id === undefined ) {
-      // begin anonymous DOMbot forEach() loop
-      convertToArray( bot.action ).forEach( ( action ) => {
         try {
-          // anonymous communication channel to mothership
-          action( ( property, message ) => {
-            window[mothership][property] = {
-              secret: _secret,
-              message: message
-            }
-          } );
+          new Bot().actions( convertToArray( bot.action ), window[mothership], secret );
         } catch( error ) {
           // if unable to execute action, send feedback to console
           console.info( `malformed action: ${action}`);
           console.error( error );
+        } finally {
+          return null;
         }
-      } ); // end anonymous DOMbot forEach() loop
-      return null;
     } // end anonymous DOMbot commands
 
     // construct name for DOMbot
@@ -168,6 +181,8 @@ export default function factory( blueprints ) {
     }
 
     // instantiate DOMbot
-    window[name] = new DOMbot( bot, _secret, window[mothership] );
+    window[name] = new DOMbot( bot, secret, window[mothership] );
   } ); // end DOMbot forEach() loop
+  /* --------------------------------------------------------------------- */
 }
+/* ------------------------------------------------------------------------- */
