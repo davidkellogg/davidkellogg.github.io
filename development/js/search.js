@@ -1,5 +1,7 @@
 "use strict";
+
 import factory from "./DOMbot.js"
+
 factory( {
   name: "search",
   data: ( () => Array
@@ -83,13 +85,13 @@ factory( {
           // update private variables
           variables.start = 0;
           variables.entries = variables.sorted.length;
-          
+
           sendCommand( [ { bot: "speed", command: Date.now() - timestamp  }, { bot: "results", command: data.extract }, "next", "previous" ] );
         }
       }
     }
   ],
-  bots: [
+  bot: [
     { // anonymous DOMbot actions
       action: [
         () => document.querySelector( "#results" ).insertAdjacentHTML( "beforebegin",

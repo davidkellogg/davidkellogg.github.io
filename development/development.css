@@ -12,3 +12,27 @@ body {
   }
 
 h1 { text-align: center; }
+
+/* -back---------------- */
+  a#back {
+    display:           inline-block;
+    margin:            1em;
+    padding:           1em;
+    width:             10%;
+    min-width:         120px;
+    height:            3em;
+    background-color: #F8F8FF;
+    border-radius:     0.3125em;
+    box-shadow:        0 0.3125em 0.3125em #333333;
+    color:            #443322;
+    text-decoration:   none;
+    text-align:        center;
+    white-space:       nowrap;
+    }
+
+  a#back:hover {
+    transform:  scale(1.01);
+    transition: 50ms linear;
+    box-shadow: 0 0.5em 0.5em #333333;
+    }
+/* --------------------- */

@@ -149,40 +149,47 @@ export default function factory( blueprints ) {
 
   /* -Mothership---------------------------------------------------------- */
   // instantiate Motherhsip
-  window[mothership] = new Mothership( blueprints, secret );
+  if ( blueprints.data !== undefined ) {
+    window[mothership] = new Mothership( blueprints, secret );
+  }
   /* --------------------------------------------------------------------- */
 
   /* -instantiate-Bots---------------------------------------------------- */
-  blueprints.bots.forEach( ( bot ) => {
-    // run anonymous DOMbot commands
-    if ( bot.name === undefined & bot.id === undefined ) {
-        try {
-          new Bot().actions( convertToArray( bot.action ), window[mothership], secret );
-        } catch( error ) {
-          // if unable to execute action, send feedback to console
-          console.info( `malformed action: ${action}`);
-          console.error( error );
-        } finally {
-          return null;
-        }
-    } // end anonymous DOMbot commands
+    convertToArray( blueprints.bot ).forEach( ( bot ) => {
+      if ( typeof bot === "function" ) {
+        new Bot().actions( bot );
+        return null;
+      }
 
-    // construct name for DOMbot
-    let name = "_BOT";
-    if ( bot.name !== undefined ) {
-      // if `name` property is present
-      name = bot.name + name;
-    } else if ( bot.id !== undefined && typeof bot.id === "string" ) {
-      // if `id` property is present and a string
-      name = bot.id + name;
-    } else if ( bot.id !== undefined && bot.id instanceof HTMLElement ) {
-      // if `id` property is present and an element reference
-      name = bot.id.getAttribute( "id" ) + name;
-    }
+      // run anonymous DOMbot commands
+      if ( bot.name === undefined && bot.id === undefined ) {
+          try {
+            new Bot().actions( convertToArray( bot.action ), window[mothership], secret );
+          } catch( error ) {
+            // if unable to execute action, send feedback to console
+            console.info( `malformed action: ${action}`);
+            console.error( error );
+          } finally {
+            return null;
+          }
+      } // end anonymous DOMbot commands
 
-    // instantiate DOMbot
-    window[name] = new DOMbot( bot, secret, window[mothership] );
-  } ); // end DOMbot forEach() loop
+      // construct name for DOMbot
+      let name = "_BOT";
+      if ( bot.name !== undefined ) {
+        // if `name` property is present
+        name = bot.name + name;
+      } else if ( bot.id !== undefined && typeof bot.id === "string" ) {
+        // if `id` property is present and a string
+        name = bot.id + name;
+      } else if ( bot.id !== undefined && bot.id instanceof HTMLElement ) {
+        // if `id` property is present and an element reference
+        name = bot.id.getAttribute( "id" ) + name;
+      }
+
+      // instantiate DOMbot
+      window[name] = new DOMbot( bot, secret, window[mothership] );
+    } ); // end DOMbot forEach() loop
+  }
   /* --------------------------------------------------------------------- */
-}
 /* ------------------------------------------------------------------------- */
