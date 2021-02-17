@@ -128,15 +128,10 @@ footer { grid-area: footer; }
  * --------------------------------------------------------------
  */
 
-main h3 {
-  font-size: 1.500em;
-  margin:    0.833em 0;
-  }
-
-main hr {
-  margin:       0.5em 0;
-  border:       1px solid #443322;
-  border-style: solid hidden hidden;
+h3 {
+  margin: 0;
+  padding: 0;
+  font-size: 1.5em;
   }
 
 footer small {
@@ -144,9 +139,9 @@ footer small {
   margin:  0.5em 0 0;
   }
 
-/* --- links in p --- */
-  p a:link    { color:          #6A5ACD; } /* slateblue */
-  p a:visited { color:          #663399; } /* rebeccapurple */
-  p a:hover   { text-decoration: none;   }
-  p a:active  { color:          #FF00FF; } /* magenta */
+/* -links------------ */
+  a         { text-decoration: none;   }
+  a:link    { color:          #6A5ACD; } /* slateblue */
+  a:visited { color:          #663399; } /* rebeccapurple */
+  a:active  { color:          #FF00FF; } /* magenta */
 /* ------------------ */

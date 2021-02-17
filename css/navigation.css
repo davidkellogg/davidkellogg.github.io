@@ -11,8 +11,9 @@
     padding:         0.5em;
     text-decoration: none;
     white-space:     nowrap;
-    color:          #DEB887; /* burlywood */
     }
+
+  nav a { color: #DEB887 !important; } /* burlywood */
 
   nav > ul > li > a:hover {
     background-color: hsl( 19, 56%, 45% ); /* sienna + 5% lightness */
@@ -139,7 +140,7 @@
     }
 
   nav#header-nav > ul   { align-self: center;       }
-  nav#header-nav > ul * { display:    inline-block; }
+  nav#header-nav > ul > li { display:    inline-block; }
 
   nav#header-nav > input[type=checkbox]:checked#header-nav-toggle + label      { display:       none;   }
   nav#header-nav > input[type=checkbox]:checked#header-nav-toggle ~ ul *:hover { border-radius: 0.25em; }
@@ -168,7 +169,7 @@
 
   nav#header-nav > input[type=checkbox]:checked#header-nav-toggle ~ ul { background-color: #FFE4C4; } /* bisque */
   nav#header-nav > input[type=checkbox]:checked#header-nav-toggle ~ ul * {
-    color:     #443322; /* dark gray, custom */
+    color:     #443322 !important; /* dark gray, custom */
     text-align: left;
     }
 
@@ -182,7 +183,10 @@
   footer > nav#footer-nav > ul > li {
     display:   inline-block;
     font-size: 0.75em;
+    color:    #FFE4C4;
     }
+
+  footer > nav#footer-nav > ul > li > a { color: #DEB887; }
 /* ------------------ */
 
 /* --linkedin icon--- */
