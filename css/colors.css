@@ -1,0 +1,51 @@
+/*
+ * #F8F8FF ghostwhite    site background
+ *
+   * #A0522D sienna        header, footer background
+   * #DEB887 burlywood     header, footer text color
+   * #D3D3D3 lightgray     header, navigation, main, footer box-shadow
+ *
+   * #FFE4C4 bisque        main background
+   * #443322 dark gray     main, navigation text color (custom)
+ * #663399 rebeccapurple main a:visited
+ * #6A5ACD slateblue     main a:link
+ * #FF00FF magenta       main a:active
+ *
+ * hsl( 19,  56%, 45% )  sienna + 5% lightness
+ * hsl( 33, 100%, 83% )  bisque - 5% lightness
+ */
+
+:root {
+  --hover-shift: 5%;
+
+  /* #A0522D sienna */
+  --background-dark-h: 19;
+  --background-dark-s: 56%;
+  --background-dark-l: 40%;
+  --background-dark: hsl(
+    clamp( 0, var( --background-dark-h ), 360 ),
+    clamp( 0%, var( --background-dark-s ), 100% ),
+    clamp( 0%, var( --background-dark-l ), 100% ) );
+  --background-dark-hover: hsl(
+    clamp( 0, var( --background-dark-h ), 360 ),
+    clamp( 0%, var( --background-dark-s ), 100% ),
+    clamp( 0%, calc( var( --background-dark-l ) + var( --hover-shift ) ), 100% ) );
+
+  /* #FFE4C4 bisque */
+  --background-light-h: 33;
+  --background-light-s: 100%;
+  --background-light-l: 88%;
+  --background-light: hsl(
+    clamp( 0, var( --background-light-h ), 360 ),
+    clamp( 0%, var( --background-light-s ), 100% ),
+    clamp( 0%, var( --background-light-l ), 100% ) );
+  --background-light-hover: hsl(
+    clamp( 0, var( --background-light-h ), 360 ),
+    clamp( 0%, var( --background-light-s ), 100% ),
+    clamp( 0%, calc( var( --background-light-l ) - var( --hover-shift ) ), 100% ) );
+
+  --text-dark: #443322;
+  --text-mid: #DEB887; /* burleywood */
+  --text-light: #FAEBD7; /* antiquewhite */
+  --shadow: #D3D3D3; /* lightgray */
+}

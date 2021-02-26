@@ -49,19 +49,20 @@ header { grid-area: header; }
 
 header,
 footer {
-  text-align:        center;
-  background-color: #A0522D; /* sienna */
-  color:            #DEB887; /* burlywood */
-  }
+  color: var( --text-mid );
+  text-align: center;
+  background-color: var( --background-dark );
+}
 
 main {
-  grid-area:         main;
-  color:            #443322; /* dark gray, custom */
-  background-color: #FFE4C4; /* bisque */
-  }
+  grid-area: main;
+  color: var( --text-dark );
+  background-color: var( --background-light );
+}
 
 main,
-footer { padding:   1.25em; }
+footer { padding: 1.25em; }
+
 footer { grid-area: footer; }
 
 /* -space------------ */
@@ -97,7 +98,7 @@ footer { grid-area: footer; }
   footer {
     border-radius:   0.3125em;
     margin-bottom:   1.0000em;
-    box-shadow:    0 0.3125em 0.3125em #D3D3D3; /* lightgray */
+    box-shadow:    0 0.3125em 0.3125em var( --shadow );
     }
 }
 
@@ -140,8 +141,8 @@ footer small {
   }
 
 /* -links------------ */
-  a         { text-decoration: none;   }
-  a:link    { color:          #6A5ACD; } /* slateblue */
-  a:visited { color:          #663399; } /* rebeccapurple */
-  a:active  { color:          #FF00FF; } /* magenta */
+  main a         { text-decoration: none;   }
+  main a:link    { color:          #6A5ACD; } /* slateblue */
+  main a:visited { color:          #663399; } /* rebeccapurple */
+  main a:active  { color:          #FF00FF; } /* magenta */
 /* ------------------ */

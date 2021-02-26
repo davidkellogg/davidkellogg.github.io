@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+
+  <!-- Title and linked files -->
+  <head>
+    <title>David Kellogg - CSS Adaptable Colors</title>
+
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="user-scalable=no, width=device-width" />
+
+    <link rel="icon" href="../images/logo.svg">
+    <link rel="stylesheet" href="../css/colors.css">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/navigation.css">
+
+    <style>
+      p > code {
+        background-color: #D3D3D3;
+        padding:           1px 2px;
+        border-radius:     2px;
+        white-space: nowrap;
+        }
+
+      article > code {
+        white-space: pre-wrap;
+      }
+
+      article > h4 {
+        font-size: 1.250em;
+        margin:    0.833em 0 0.167em;
+        padding:   0 0 0 0.5em;
+        }
+
+      article > time { padding: 0 0 0 0.75em; }
+    </style>
+  </head>
+
+  <body>
+    <!-- Header -->
+    <header id="title">
+      <a id="site-title" href="../index.html">
+        <h1>David Kellogg</h1>
+        <h2>a personal site</h2>
+      </a>
+    </header>
+
+    <nav id="header-nav">
+      <input type=checkbox id="header-nav-toggle">
+      <label for="header-nav-toggle">Blog</label>
+      <ul>
+        <li>
+          <a href="../index.html" hreflang="en" referrerpolicy="no-referrer" rel="noreferrer" target="_self" type="text/html">Home</a>
+        </li>
+        <li>
+          <a href="index.html" hreflang="en" referrerpolicy="no-referrer" rel="noreferrer" target="_self" type="text/html">Blog</a>
+        </li>
+        <li>
+          <a href="development/index.html" hreflang="en" referrerpolicy="no-referrer" rel="noreferrer" target="_self" type="text/html">Development</a>
+        </li>
+        <li>
+          <a href="20210216-privacy-policy.html" hreflang="en" referrerpolicy="no-referrer" rel="noreferrer" target="_self" type="text/html">Home</a>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- Body -->
+    <main>
+      <article>
+        <h4>CSS Adaptable Colors</h4>
+        <time datetime="2021-02-26 16:44-0700">February 26, 2021</time>
+        <hr>
+        <p>I am in the process of redesigning the CSS structure of this site to make it more modular. The ultimate goal is to make it easy to drop the different modules into the pages where they are necessary. This naturally creates something of "minimum resources necessary" practice on page load, positively impacting performance as no unnecessary resources are loaded. One key issues I have kept running into is the varied use of color. While less than a dozen colors are in use, it has become cumbersome to refer back to a list of hex codes to determine which colors to use.</p>
+        <p>Thankfully, this was a relatively simple issue to mitigate with the use of CSS' <code>var()</code> function. Take, for example, the following code:</p>
+        <code>
+          header {
+            background-color: #A0522D; /* sienna */
+          }
+        </code>
+        <p>The above code is the original method for which I used to set the header of this site. There's nothing explicitly wrong with this code. However, I use the same line multiple times for various parts of the site, including the footer and navigation header. Again, there is nothing <em>wrong</em> with this practice. Where I have found the issue to lie is searching for this line across multiple CSS moduels. What if I decide to change the header and footer color? I can change the hex code easily enough, but after doing so I realized I hadn't updated the hex code for the navigation header, which is stored in a separate file. Thus, the ability to modify and tweak the site is now more cumbersome than it needs to be. Enter, <code>var()</code>:</p>
+        <code>
+          :root {
+            --background-dark: #A0522D; /* sienna */
+          }
+          header {
+            background-color: var( --background-dark );
+          }
+          footer {
+            background-color: var( --background-dark );
+          }
+          nav#header-nav {
+            background-color: var( --background-dark );
+          }
+        </code>
+        <p>Now, should I wish to change or tweak the background color for my headers and footers and other corresponding places, all I need to do is change the variable in <code>:root</code>. I can now store the variable declarations in a colors.css file, and completely reinvent the color scheme of my site in a matter of seconds instead of sifting through multiple files.</p>
+        <p>None of this is revolutionary, in fact I'd even go as far as to say this is common practice, or at the very least should be. With this adaptability in place, I sought to push what I could do with variables and see what flexibility I can implement to ease development down the road.</p>
+        <p>The first thing that came to mind was whether I could nest variables, and if so, what added functionality would that bring? So, I first converted the hex code for sienna into hsl, and from there built out my variables to nest into each other.</p>
+        <code>
+        :root {
+          /* #A0522D sienna */
+          --background-dark-h: 19;
+          --background-dark-s: 56%;
+          --background-dark-l: 40%;
+          --background-dark: hsl(
+            var( --background-dark-h ),
+            var( --background-dark-s ),
+            var( --background-dark-l ) );
+        }
+        </code>
+        <p>This code accomplishes the exact same thing as the previous code, but now there is added flexibility in each aspect of the color. The question that now remains is "why?" There are two use cases that I foresee, one of which I have already implemented on this site.</p>
+        <p>The first use case is with JavaScript. Because <code>:root</code> is a member of the DOM, it can be selected and its attributed modified. The following line of JavaScript lightens the header color by 5%.</p>
+        <code>
+          &lt;script&gt;
+            document
+              .querySelector(':root')
+              .style
+              .setProperty('--background-dark-l', '45%');
+          &lt;/script&gt;
+        </code>
+        <p>The combination of CSS and JavaScript in this manner could be leveraged to create an interface that gives fine grained control over the colors of this site (or any page that employs this tactic) to the user. The changes could be saved in <code>localstorage</code> for further use in the site, with the changes persisting so long as the storage persists. To ensure this method is as error-free as possible, I additionally employed the use of the <code>clamp()</code> function to restrict what possible values may be passed to the individual components.</p>
+        <code>
+          :root {
+          --background-dark: hsl(
+              clamp( 0,  var( --background-dark-h ), 360  ),
+              clamp( 0%, var( --background-dark-s ), 100% ),
+              clamp( 0%, var( --background-dark-l ), 100% ) );
+          }
+        </code>
+        <p>The second use case is for variants of the colors. This is the case I have begun to employ on this site. Various components utilize a slightly lighter or darker shade of the base color to highlight the element on mouseover. To create the appropriate shade of the color, I once again used hsl to construct the appropriate color.</p>
+        <code>
+          :root {
+            --hover-shift: 5%;
+            --background-dark-hover: hsl(
+              clamp( 0,  var( --background-dark-h ), 360 ),
+              clamp( 0%, var( --background-dark-s ), 100% ),
+              clamp( 0%, calc( var( --background-dark-l )
+                + var( --hover-shift ) ), 100% ) );
+          }
+          nav#header-nav:hover {
+            background-color: var( --background-dark-hover );
+          }
+        </code>
+        <p>While this method of managing the colors (or any other standardizated pieces) of a site can grow quite ugly, I believe that it provides a large degree of flexibility in managing a modular CSS structure, as well as opening the door to the possibities of fine-tuned JavaScript integrations with large degrees of accuracy.</p>
+      </article>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+      <nav id="footer-nav">
+        <ul>
+          <li>
+            <a href="../index.html" hreflang="en" referrerpolicy="no-referrer" rel="noreferrer" target="_self" type="text/html">Home</a>
+          </li>
+          <li>
+            <a href="index.html" hreflang="en" referrerpolicy="no-referrer" rel="noreferrer" target="_self" type="text/html">Blog</a>
+          </li>
+          <li>
+            <a href="../development/index.html" hreflang="en" referrerpolicy="no-referrer" rel="noreferrer" target="_self" type="text/html">Development</a>
+          </li>
+          <li>
+            <a href="20210216-privacy-policy.html" hreflang="en" referrerpolicy="no-referrer" rel="noreferrer" target="_self" type="text/html">Home</a>
+          </li>
+        </ul>
+      </nav>
+
+      <small>&#169; 2020-2021 David Kellogg</small>
+    </footer>
+
+    <div id="space"></div>
+  </body>
+</html>
