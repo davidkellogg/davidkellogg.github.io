@@ -1,134 +1,3 @@
-/*
- * #F8F8FF ghostwhite    site background
- *
- * #A0522D sienna        header, footer background
- * #DEB887 burlywood     header, footer text color
- * #D3D3D3 lightgray     header, navigation, main, footer box-shadow
- *
- * #FFE4C4 bisque        main background
- * #443322 dark gray     main, navigation text color (custom)
- * #663399 rebeccapurple main a:visited
- * #6A5ACD slateblue     main a:link
- * #FF00FF magenta       main a:active
- *
- * hsl( 19,  56%, 45% )  sienna + 5% lightness
- * hsl( 33, 100%, 83% )  bisque - 5% lightness
- */
-
-
-/*
- * Set the look and feel of the site
- * --------------------------------------------------------------
- */
-
-/* -box-sizing fix--- */
-html {
-  box-sizing:        border-box;
-  background-color: #F8F8FF; /* ghostwhite */
-  }
-
-*,
-*:before,
-*:after { box-sizing: inherit; }
-/* ------------------ */
-
-body {
-  display:     grid;
-  grid:       "header          navigation" auto
-              "main                  main" 1fr
-              "footer              footer" auto
-              "empty-bottom  empty-bottom" 0
-             / auto   1fr;
-  min-width:   360px;
-  height:      100vh;
-  margin:      0;
-  font-family: Optima, sans-serif;
-  }
-
-header { grid-area: header; }
-
-header,
-footer {
-  color: var( --text-mid );
-  text-align: center;
-  background-color: var( --background-dark );
-}
-
-main {
-  grid-area: main;
-  color: var( --text-dark );
-  background-color: var( --background-light );
-}
-
-main,
-footer { padding: 1.25em; }
-
-footer { grid-area: footer; }
-
-/* -space------------ */
-  div#space { grid-area: empty-bottom; }
-
-@media screen
-  and ( max-width: 720px ) {
-
-  div#space { display: none; }
-
-  }
-/* ------------------ */
-
-@media screen
-  and ( min-width: 721px ) {
-
-  body {
-    grid: "empty-left   header       empty-right " auto
-          "empty-left   navigation   empty-right " auto
-          "empty-left   main         empty-right " 1fr
-          "empty-left   footer       empty-right " auto
-          "empty-bottom empty-bottom empty-bottom" 1px
-         / 1fr        minmax( 720px, 70% ) 1fr;
-    }
-
-  header {
-    padding:    0.6250em;
-    margin-top: 1.0000em;
-    }
-
-  header,
-  main,
-  footer {
-    border-radius:   0.3125em;
-    margin-bottom:   1.0000em;
-    box-shadow:    0 0.3125em 0.3125em var( --shadow );
-    }
-}
-
-@media screen
-  and ( min-width: 721px )
-  and ( max-width: 960px ) {
-
-  header {
-    margin-bottom: 0;
-    border-radius: 0.3125em 0.3125em 0 0;
-    }
-  }
-
-@media screen
-  and ( min-width: 961px ) {
-
-  body {
-    grid: "empty-left header   empty-top-right" auto
-          "empty-left main          navigation" 1fr
-          "empty-left footer       empty-right" auto
-          "empty-left empty-bottom empty-right" 1px
-         / 1fr        minmax( 720px, 70% ) 1fr;
-    }
-}
-
-/*
- * set the look and feel of generic inline elements
- * --------------------------------------------------------------
- */
-
 h3 {
   margin: 0;
   padding: 0;
@@ -146,3 +15,22 @@ footer small {
   main a:visited { color:          #663399; } /* rebeccapurple */
   main a:active  { color:          #FF00FF; } /* magenta */
 /* ------------------ */
+
+p > code {
+  background-color: #D3D3D3;
+  padding:           1px 2px;
+  border-radius:     2px;
+  white-space: nowrap;
+  }
+
+article > code {
+  white-space: pre-wrap;
+}
+
+article > h4 {
+  font-size: 1.250em;
+  margin:    0.833em 0 0.167em;
+  padding:   0 0 0 0.5em;
+  }
+
+article > time { padding: 0 0 0 0.75em; }
