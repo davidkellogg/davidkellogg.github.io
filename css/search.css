@@ -1,3 +1,9 @@
+html { box-sizing: border-box; }
+
+*,
+*:before,
+*:after { box-sizing: inherit; }
+
 /* displayPageNavigation */
   a.insertPagination {
     display:           inline-block;
@@ -15,7 +21,7 @@
     }
 
   a.insertPagination:hover,
-  form#search:hover {
+  form:hover {
     transform:  scale(1.01);
     transition: 50ms linear;
     box-shadow: 0 0.5em 0.5em #333333;
@@ -23,7 +29,7 @@
 /* --------------------- */
 
 /* -search-------------- */
-  form#search {
+  form {
     display:       flex;
     margin:        0 1em;
     padding:       0;
@@ -31,7 +37,7 @@
     box-shadow:  0 0.3125em 0.3125em #333333;
     }
 
-  form#search > input {
+  form > input {
     display:   inline-block;
     padding:   0.5em 1em;
     margin:    0;
@@ -41,13 +47,13 @@
     outline:   none;
     }
 
-  form#search > input[type="text"] {
+  form > input[type="text"] {
     flex:          80%;
     border-radius: 0.3125em 0 0 0.3125em;
     background-color: #F8F8FF;
     }
 
-  form#search > input[type="submit"] {
+  form > input[type="submit"] {
     flex:              20%;
    -webkit-appearance: none;
     border-radius:     0 0.3125em 0.3125em 0;
