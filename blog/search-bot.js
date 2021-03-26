@@ -71,10 +71,10 @@ customElements.define( "search-bot", class extends HTMLElement {
   } // end of constructor
 
   // set default attributes
-  connectedCallback() {
-    this.setAttribute( "search" , "" );
-    // this.setAttribute( "display" , "10" );
-  }
+  // connectedCallback() {
+  //   this.setAttribute( "search" , "" );
+  //   this.setAttribute( "display" , "10" );
+  // }
 
   // watch for attribute changes
   static get observedAttributes() { return [ 'search', 'display' ] };
