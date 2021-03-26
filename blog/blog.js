@@ -1,10 +1,12 @@
 "use strict";
 
 let PAGEURL = new URL( window.location.href );
+const observedElements = document.querySelector("search-bot");
 const pageVariables = {};
 
 for ( const [ key, value ] of PAGEURL.searchParams ) {
   pageVariables[ key ] = value;
+  observedElements.setAttribute( key, value )
 }
 
 new MutationObserver( ( mutationList ) => {
@@ -17,7 +19,7 @@ new MutationObserver( ( mutationList ) => {
 
     window.history.replaceState( null, null, PAGEURL );
   });
-}).observe( document.querySelector("search-bot"), {
+}).observe( observedElements, {
   attributes: true,
   attributeFilter: [ "search" ]
 });
