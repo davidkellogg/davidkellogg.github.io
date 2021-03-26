@@ -12,12 +12,16 @@ ol#results {
 }
 
 ol#results > li {
-  margin:            1em;
+  margin:            0.5em 1em;
   background-color: #F8F8FF;
   transition:        50ms linear;
   border-radius:     0.3125em;
   box-shadow:      0 0.3125em 0.3125em #333333;
   }
+
+  ol#results > li:first-child { margin: 1.0em 1em 0.5em; }
+  ol#results > li:last-child  { margin: 0.5em 1em 1.0em; }
+
 
 ol#results > li:hover {
   transform:  scale(1.01);

@@ -31,5 +31,5 @@ export default function reorder( forString, inList ) {
 
   Array.from( Array.from( RELEVANCE.keys() ).sort( ( a, b ) => RELEVANCE[b] - RELEVANCE[a] ), ( key ) => inList.children[key] )
     .forEach( ( child ) => { inList.appendChild( child ) });
-  console.info( `searched for ${SEARCHSTRING} in ${Date.now() - TIMESTAMP}ms` );
+  console.info( `searched for '${SEARCHSTRING}' in ${Date.now() - TIMESTAMP}ms` );
 };
