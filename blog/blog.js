@@ -6,7 +6,9 @@ const pageVariables = {};
 
 for ( const [ key, value ] of PAGEURL.searchParams ) {
   pageVariables[ key ] = value;
+  console.log( pageVariables );
   observedElements.setAttribute( key, value )
+  console.log( observedElements );
 }
 
 new MutationObserver( ( mutationList ) => {
