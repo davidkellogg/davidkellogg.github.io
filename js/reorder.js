@@ -1,4 +1,6 @@
 "use strict";
+
+// import functions
 import sanitize from "./sanitize.js";
 
 export default function reorder( forString, inList ) {
