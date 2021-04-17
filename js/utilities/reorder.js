@@ -16,7 +16,7 @@ export default function reorder( forString, inList ) {
 
   const RELEVANCE = new Array( inList.children.length ).fill( 0 );
 
-  Array.from( inList.children ).forEach( ( node, index ) => {
+  Array.prototype.forEach.call( inList.children, ( node, index ) => {
     let text = ""
     node.querySelectorAll( "*" ).forEach( ( subNode ) =>  {
       text += subNode.innerText
@@ -31,7 +31,7 @@ export default function reorder( forString, inList ) {
     });
   });
 
-  Array.from( Array.from( RELEVANCE.keys() ).sort( ( a, b ) => RELEVANCE[b] - RELEVANCE[a] ), ( key ) => inList.children[key] )
-    .forEach( ( child ) => { inList.appendChild( child ) });
+  Array.from( Array.from( RELEVANCE.keys(), ( a, b ) => RELEVANCE[b] - RELEVANCE[a] ),
+    ( key ) => inList.children[key] ).forEach( ( child ) => { inList.appendChild( child ) });
   console.info( `searched for '${SEARCHSTRING}' in ${Date.now() - TIMESTAMP}ms` );
 };

@@ -1,5 +1,5 @@
 /* results */
-ol#results {
+.search-bot {
   display:         flex;
   flex-direction:  column;
   justify-content: flex-start;
@@ -11,7 +11,7 @@ ol#results {
   list-style-type: none;
 }
 
-ol#results > li {
+.search-bot > li {
   margin:            0.5em 1em;
   background-color: #F8F8FF;
   transition:        50ms linear;
@@ -19,33 +19,33 @@ ol#results > li {
   box-shadow:      0 0.3125em 0.3125em #333333;
   }
 
-  ol#results > li:first-child { margin: 1.0em 1em 0.5em; }
-  ol#results > li:last-child  { margin: 0.5em 1em 1.0em; }
+  .search-bot > li:first-child { margin: 1.0em 1em 0.5em; }
+  .search-bot > li:last-child  { margin: 0.5em 1em 1.0em; }
 
 
-ol#results > li:hover {
+.search-bot > li:hover {
   transform:  scale(1.01);
   transition: 50ms linear;
   box-shadow: 0 0.5em 0.5em #333333;
   }
 
-ol#results > li * {
+.search-bot > li * {
   margin:          0;
   color:          #443322;
   text-decoration: none;
   }
 
-ol#results > li > a > article     { padding: 1.00em; }
-ol#results > li > a > article > * {
+.search-bot > li > a > article     { padding: 1.00em; }
+.search-bot > li > a > article > * {
   display:   block;
   padding:   0 8px;
   }
 
-ol#results > li > a > article > h4              { font-size: 1.25em;  }
-ol#results > li > a > article > h4.first-header { font-size: 1.00em;  }
-ol#results > li > a > article > time            { font-size: 0.75em;  }
+.search-bot > li > a > article > h4              { font-size: 1.25em;  }
+.search-bot > li > a > article > h4.first-header { font-size: 1.00em;  }
+.search-bot > li > a > article > time            { font-size: 0.75em;  }
 
-ol#results > li > a > article > hr {
+.search-bot > li > a > article > hr {
   margin: 0.5em 0;
   padding: 0 0.5em;
   }
