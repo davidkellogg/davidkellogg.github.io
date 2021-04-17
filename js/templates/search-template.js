@@ -24,7 +24,7 @@ FORM.append( "input" )
   .attribute( "type", "submit" )
   .attribute( "value", "Search" )
 
-const LIST = document.querySelector(".search-bot");
+const LIST = document.querySelector(".search");
 
 bot.action( FORM )
   .setType( "onsubmit" )
