@@ -5,33 +5,23 @@ import sanitize from "./sanitize.js";
 
 export default function reorder( forString, inList ) {
   const TIMESTAMP = Date.now();
-  const SEARCHSTRING = sanitize( forString );
 
-  const SEARCHARRAY = new Array( SEARCHSTRING.length - 2 ).fill( SEARCHSTRING ).map( ( searchItem, index ) => {
-    // following line adapted from
-    // https://stackoverflow.com/questions/3115150/how-to-escape-regular-expression-special-characters-using-javascript
-    // accessed March 12, 2021
-    return new RegExp( searchItem.substr( index, 3 ).replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&"), "g" )
-  });
+  // construct all search criteria as RegEx
+  const SEARCHFOR = new Array( forString.length - 2 ).fill( forString ).map( ( currentValue, index ) =>
+    new RegExp( sanitize( currentValue.substr( index, 3 ) ).replace( /[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&"), "g" ) );
 
-  const RELEVANCE = new Array( inList.children.length ).fill( 0 );
+  // construct a scored relevance array
+  const RELEVANCE = Array.prototype.map.call( inList.children, ( node ) => Array.prototype.reduce.call( SEARCHFOR,
+    ( accumulator, currentValue ) => accumulator + ( node.innerText.match( currentValue ) || [] ).length, 0 ) );
 
-  Array.prototype.forEach.call( inList.children, ( node, index ) => {
-    let text = ""
-    node.querySelectorAll( "*" ).forEach( ( subNode ) =>  {
-      text += subNode.innerText
-    });
-    SEARCHARRAY.forEach( ( searchItem ) => {
-      try {
-        // following line adapted from
-        // https://stackoverflow.com/questions/4009756/how-to-count-string-occurrence-in-string
-        // accessed March 12, 2021
-        RELEVANCE[index] += ( text.match( searchItem ) || [] ).length;
-      } finally {}
-    });
-  });
+  // stage elements for reorder
+  const NEWORDER = Array.prototype.map.call( [ ...RELEVANCE.keys() ].sort( ( a, b ) => RELEVANCE[b] - RELEVANCE[a] ),
+    ( key ) => inList.children[key] );
 
-  Array.from( Array.from( RELEVANCE.keys(), ( a, b ) => RELEVANCE[b] - RELEVANCE[a] ),
-    ( key ) => inList.children[key] ).forEach( ( child ) => { inList.appendChild( child ) });
-  console.info( `searched for '${SEARCHSTRING}' in ${Date.now() - TIMESTAMP}ms` );
+  // reorder elements
+  NEWORDER.forEach( ( child ) => inList.appendChild( child ) );
+
+  console.info( `searched for '${forString}' in ${Date.now() - TIMESTAMP}ms` );
+
+  return inList;
 };

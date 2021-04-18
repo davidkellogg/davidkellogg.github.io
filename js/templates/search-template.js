@@ -1,35 +1,53 @@
 "use strict";
 
-import DomBot from "../bots/dom-bot.js";
 import reorder from "../utilities/reorder.js";
 
-customElements.define( "dom-bot", DomBot );
+const search = {
+  // create search-bot element
+  get template() {
+    const bot = document.createElement("dom-bot");
 
-/* --------------[ dom-bot ]-------------- */
+    // link to CSS styling
+    bot.append( "link" )
+      .attribute( "rel", "stylesheet" )
+      .attribute( "href", "../css/search.css" );
 
-const bot =  document.createElement("dom-bot");
+    // create form element
+    const FORM = bot.append( "form" );
 
-bot.append( "link" )
-  .attribute( "rel", "stylesheet" )
-  .attribute( "href", "../css/search.css" );
+    // create text input
+    FORM.append( "input" )
+      .attribute( "type", "text" )
+      .attribute( "placeholder", "Search for keywords..." );
 
-const FORM = bot.append( "form" );
+    // create submit button
+    FORM.append( "input" )
+      .attribute( "type", "submit" )
+      .attribute( "value", "Search" );
 
-// create form
-FORM.append( "input" )
-  .attribute( "type", "text" )
-  .attribute( "placeholder", "Search for keywords..." )
+    // stage onsubmit event listener
+    bot.action( FORM )
+      .setType( "onsubmit" )
+      .setAttributeName( "search" )
+      .setAttributeValue( () => FORM.firstChild.value );
 
-FORM.append( "input" )
-  .attribute( "type", "submit" )
-  .attribute( "value", "Search" )
+    return bot;
+  },
 
-const LIST = document.querySelector(".search");
+  // reorder function for seach-bot
+  get reorder() {
+    return reorder;
+  },
 
-bot.action( FORM )
-  .setType( "onsubmit" )
-  .setListener( ( value ) => reorder( value, LIST ) )
-  .setAttributeName( "search" )
-  .setAttributeValue( () => FORM.firstChild.value )
+  // observable attributes for search-bot
+  get observables() {
+    return {
+      attributes: true,
+      attributeFilter: ["search"]
+    };
+  }
+};
 
-document.querySelector("main").insertBefore( bot, LIST )
+Object.freeze( search );
+
+export default search;
