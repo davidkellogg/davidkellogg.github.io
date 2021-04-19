@@ -6,6 +6,8 @@ const search = {
   // create search-bot element
   get template() {
     const bot = document.createElement("dom-bot");
+    // template( DomBot ) {
+    // const bot = new DomBot();
 
     // link to CSS styling
     bot.append( "link" )
@@ -45,6 +47,11 @@ const search = {
       attributes: true,
       attributeFilter: ["search"]
     };
+  },
+
+  // search-template.js URL
+  get source() {
+    return import.meta.url;
   }
 };
 
