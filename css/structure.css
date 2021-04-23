@@ -1,90 +1,40 @@
-/* -box-sizing fix--- */
 html {
-  box-sizing:        border-box;
-  background-color: #F8F8FF; /* ghostwhite */
-  }
+  box-sizing: border-box;
+  background-color: var( --site-background );
+}
 
 *,
 *:before,
 *:after { box-sizing: inherit; }
-/* ------------------ */
 
 body {
-  display:     grid;
-  grid:       "header          navigation" auto
-              "main                  main" 1fr
-              "footer              footer" auto
-             / auto   1fr;
-  min-width:   22.5rem;
-  height:      100vh;
-  margin:      0;
-  font-family: Optima, sans-serif;
-  }
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+}
 
-header { grid-area: header; }
+body > * {
+  min-width: 22.5rem;
+}
 
-header,
-footer {
-  color: var( --text-mid );
-  text-align: center;
-  background-color: var( --background-dark );
+header {
+  /* display: flex; */
+  /* flex-direction: row; */
+  align-items: center;
+}
+
+nav {
+  display: block;
 }
 
 main {
-  grid-area: main;
-  color: var( --text-dark );
-  background-color: var( --background-light );
+  flex: 1;
+  max-width: 60rem;
+  margin: 0 auto;
+  padding: 1rem;
 }
 
-main,
-footer { padding: 1rem; }
-
-footer { grid-area: footer; }
-
-@media screen
-  and ( min-width: 721px ) {
-
-  html { padding: 1rem; }
-
-  body {
-    grid: "empty-left header       empty-right " auto
-          "empty-left navigation   empty-right " auto
-          "empty-left main         empty-right " 1fr
-          "empty-left footer       empty-right " auto
-         / 1fr        minmax( 720px, 70% ) 1fr;
-   height: calc( 100vh - 2rem );
-    }
-
-  header { padding: 0.625rem; }
-
-  header,
-  main,
-  footer {
-    border-radius: 0.5rem;
-    filter: drop-shadow( 0 0.5rem 0.25rem var( --shadow ) );
-    }
-
-  main { margin: 1rem 0; }
-}
-
-@media screen
-  and ( min-width: 721px )
-  and ( max-width: 960px ) {
-
-  header {
-    margin-bottom: 0;
-    border-radius: 0.5rem 0.5rem 0 0;
-    filter: drop-shadow( 0 0 0 #FFFFFF);
-    }
-  }
-
-@media screen
-  and ( min-width: 961px ) {
-
-  body {
-    grid: "empty-left header   empty-top-right" auto
-          "empty-left main          navigation" 1fr
-          "empty-left footer       empty-right" auto
-         / 1fr        minmax( 720px, 70% ) 1fr;
-    }
+footer {
+  text-align: center;
 }

@@ -33,7 +33,8 @@ document.querySelectorAll( ".search" ).forEach( ( list, index ) => {
       });
 
       // insert search-bot into DOM
-      list.parentElement.insertBefore( bot, list );
+      document.body.querySelector( "header" ).insertAdjacentElement( "beforeend", bot );
+      // list.parentElement.insertBefore( bot, list );
 
       // register search-bot
       window.urlBot.observe( bot, search.observables );

@@ -1,36 +1,117 @@
-h3 {
-  margin: 0;
-  padding: 0;
+body {
+  font-family: "Optima", sans-serif;
+}
+
+/* --[ header ]-- */
+header {
+  color: var( --text-light );
+  background-color: var( --structure-background );
+}
+
+header h1 {
   font-size: 1.5em;
-  }
+  text-align: center;
+}
+/* -------------- */
 
-footer small {
-  display: block;
-  margin:  0.5em 0 0;
-  }
+/* ---[ main ]--- */
+main {
+  font-size: 1.25em;
+}
 
-/* -links------------ */
-  main a         { text-decoration: none;   }
-  main a:link    { color:          #6A5ACD; } /* slateblue */
-  main a:visited { color:          #663399; } /* rebeccapurple */
-  main a:active  { color:          #FF00FF; } /* magenta */
-/* ------------------ */
+main > * {
+  padding: 0;
+  margin: 0;
+}
+
+main > a {
+  display: inline-block;
+  color: var( --text-dark );
+  padding: 4px 8px;
+  background-color: var( --code-background );
+  text-decoration: none;
+  transition: 250ms ease-in-out;
+}
+
+main > a:hover {
+  transform: scale( 1.1 );
+}
 
 p > code {
-  background-color: #D3D3D3;
-  padding:           1px 2px;
-  border-radius:     2px;
+  background-color: var( --code-background );
+  color: var( --text-dark );
+  padding: 1px 4px;
+  border-radius: 2px;
   white-space: nowrap;
   }
+
+article > time {
+  display: inline-block;
+  font-weight: 600;
+  margin-top: 1em;
+}
 
 article > code {
   white-space: pre-wrap;
 }
+/* -------------- */
 
-article > h4 {
-  font-size: 1.250em;
-  margin:    0.833em 0 0.167em;
-  padding:   0 0 0 0.5em;
-  }
+/* -[ anchors ]-- */
+main > * a {
+  color: var( --link-color );
+  white-space: nowrap;
+}
 
-article > time { padding: 0 0 0 0.75em; }
+main > * a:hover {
+  text-decoration: none;
+}
+
+main > * a:active { color: var( --link-color ); }
+
+main > * a[rel="external"] {
+  border-bottom: 1px dotted;
+}
+
+main > * a[rel="external"]:hover {
+  border-color: var( --link-color );
+  border-bottom: 1px dotted transparent;
+}
+/* -------------- */
+
+/* --[ footer ]-- */
+footer {
+  background-color: var( --structure-background );
+  color: var( --text-light );
+}
+
+footer > small {
+  display: inline-block;
+  margin: 0.5em 0.25em 1em;
+}
+footer a {
+  display: inline-block;
+  transition: 250ms ease-in-out;
+  text-decoration: none;
+}
+
+footer a:hover {
+  transform: scale( 1.1 );
+}
+
+footer a:not( #linkedin-icon ) {
+  color: var( --text-light );
+  padding: 0.5em;
+  margin-top: 0.5em;
+}
+
+footer a:not( #linkedin-icon ):hover {
+  color: #FFCC00;
+}
+
+a#linkedin-icon {
+  padding: 0 3px;
+  border-radius: 2px;
+  color: var( --text-light );
+  background-color: #939393;
+}
+/* -------------- */

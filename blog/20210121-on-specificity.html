@@ -9,54 +9,32 @@
     <meta charset="utf-8">
     <meta name="viewport" content="user-scalable=no, width=device-width" />
 
-    <link rel="icon" href="../images/logo.svg">
-    <link rel="stylesheet" href="../css/colors.css">
-    <link rel="stylesheet" href="../css/structure.css">
-    <link rel="stylesheet" href="../css/navigation.css">
-    <link rel="stylesheet" href="../css/styles.css">
+    <base href="../" target="_self">
+    <link rel="icon" href="images/logo.svg">
+    <link rel="stylesheet" href="css/structure.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/colors.css">
   </head>
 
   <body>
     <!-- Header -->
-    <header id="title">
-      <a id="site-title" href="../index.html">
-        <h1>David Kellogg</h1>
-        <h2>a personal site</h2>
-      </a>
+    <header>
+      <h1>on specificity</h1>
     </header>
-
-    <nav id="header-nav">
-      <input type=checkbox id="header-nav-toggle">
-      <label for="header-nav-toggle">Blog</label>
-      <ul>
-        <li>
-          <a href="../index.html" hreflang="en" referrerpolicy="no-referrer" rel="noreferrer" target="_self" type="text/html">Home</a>
-        </li>
-        <li>
-          <a href="index.html" hreflang="en" referrerpolicy="no-referrer" rel="noreferrer" target="_self" type="text/html">Blog</a>
-        </li>
-        <li>
-          <a href="development/index.html" hreflang="en" referrerpolicy="no-referrer" rel="noreferrer" target="_self" type="text/html">Development</a>
-        </li>
-        <li>
-          <a href="20210216-privacy-policy.html" hreflang="en" referrerpolicy="no-referrer" rel="noreferrer" target="_self" type="text/html">Home</a>
-        </li>
-      </ul>
-    </nav>
 
     <!-- Body -->
     <main>
+      <a href="index.html" hreflang="en" referrerpolicy="no-referrer" rel="noreferrer" target="_self" type="text/html">Home</a>
+
       <article>
-        <h4>On Specificity</h4>
         <time datetime="2021-01-21 09:00-0700">January 21, 2021</time>
-        <hr>
         <p>The general advice when working with CSS is to leverage the class architecture for applying styles to elements in the DOM. While this method for styling is effective for applying and reapplying styles to a variety of elements, I find it to be inideal when considering one-off or universal styles.</p>
         <p>Take, for example, the following CSS:</p>
         <code>
           &lt;style&gt;
             .blog-post {
               font-family: Optima, sans-serif;
-              font-size:   12px;
+              font-size: 12px;
             }
           &lt;/style&gt;
         </code>
@@ -79,7 +57,7 @@
           &lt;style&gt;
             article &gt; p {
               font-family: Optima, sans-serif;
-              font-size:   12px;
+              font-size: 12px;
             }
           &lt;/style&gt;
 
@@ -94,7 +72,7 @@
           &lt;style&gt;
             article > * {
               font-family: Optima, sans-serif;
-              font-size:   12px;
+              font-size: 12px;
             }
 
             article &gt; blockquote {
@@ -102,7 +80,7 @@
             }
           &lt;/style&gt;
         </code>
-        <p>Now, suppose the font of articles should be changed to Times New Roman. This change is simple enough just by swapping out Optima for Times New Roman in <code>font-family</code>. Of course, this is a rudimentary example. To use an example from my own code, the title for this site uses a verbose version of the following code:</p>
+        <p>Now, suppose the font of articles should be changed to Times New Roman. This change is simple enough just by swapping out Optima for Times New Roman in <code>font-family</code>. Of course, this is a rudimentary example. To use an example from my own code, <del>the title for this site</del> <ins>a previous version of this site</ins> uses a verbose version of the following code:</p>
         <code>
           &lt;style&gt;
             header &gt; a#site-title {
@@ -115,7 +93,7 @@
             }
 
             header &gt; a#site-title &gt; * {
-              margin:    0.125em;
+              margin: 0.125em;
               font-size: 1.500em;
             }
 
@@ -138,8 +116,8 @@
         <code>
           &lt;style&gt;
             p &gt; code {
-              padding:       1px 2px;
-              background:   #D3D3D3;
+              padding: 1px 2px;
+              background: <del>#D3D3D3</del> <ins>#B3BFD4</ins>;
               border-radius: 2px;
               white-space: nowrap;
             }
@@ -147,31 +125,16 @@
         </code>
         <p>As you can see, the style was applied to the inline <code>&lt;code&gt;</code> tags without affecting the blocks of code. This process allows me to use the vanilla tag for both scenarios.</p>
         <p>To get to the point of this post, pay attention to how you're structuring your CSS styles and HTML semantics. This practice will improve the readability and maintainability of your code, as well as provide the flexibility to apply styles without the need to keep track of an excessive number of classes when building out your front-end.</p>
+        <p>Edited: <time datetime="2021-04-20 21:15-0400">April 20, 2021</time></p>
       </article>
     </main>
 
     <!-- Footer -->
     <footer>
-      <nav id="footer-nav">
-        <ul>
-          <li>
-            <a href="../index.html" hreflang="en" referrerpolicy="no-referrer" rel="noreferrer" target="_self" type="text/html">Home</a>
-          </li>
-          <li>
-            <a href="index.html" hreflang="en" referrerpolicy="no-referrer" rel="noreferrer" target="_self" type="text/html">Blog</a>
-          </li>
-          <li>
-            <a href="../development/index.html" hreflang="en" referrerpolicy="no-referrer" rel="noreferrer" target="_self" type="text/html">Development</a>
-          </li>
-          <li>
-            <a href="20210216-privacy-policy.html" hreflang="en" referrerpolicy="no-referrer" rel="noreferrer" target="_self" type="text/html">Home</a>
-          </li>
-        </ul>
-      </nav>
-
+      <a href="blog/20210216-privacy-policy.html" hreflang="en" referrerpolicy="no-referrer" rel="noreferrer" target="_self" type="text/html">privacy policy</a>
+      <br>
       <small>&#169; 2020-2021 David Kellogg</small>
+      <a id="linkedin-icon" href="https://www.linkedin.com/in/david-kellogg-us/" hreflang="en" referrerpolicy="no-referrer" rel="external" target="_blank" type="text/html">in</a>
     </footer>
-
-    <div id="space"></div>
   </body>
 </html>

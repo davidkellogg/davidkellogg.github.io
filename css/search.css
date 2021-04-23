@@ -4,67 +4,32 @@ html { box-sizing: border-box; }
 *:before,
 *:after { box-sizing: inherit; }
 
-/* displayPageNavigation */
-  a.insertPagination {
-    display:           inline-block;
-    margin:            1em;
-    padding:           1em;
-    width:             10%;
-    min-width:         80px;
-    height:            3em;
-    background-color: #F8F8FF;
-    border-radius:     0.3125em;
-    box-shadow:        0 0.3125em 0.3125em #333333;
-    color:            #443322;
-    text-decoration:   none;
-    text-align:        center;
-    }
-
-  a.insertPagination:hover,
-  form:hover {
-    transform:  scale(1.01);
-    transition: 50ms linear;
-    box-shadow: 0 0.5em 0.5em #333333;
-    }
-/* --------------------- */
-
 /* -search-------------- */
-  form {
-    display:       flex;
-    margin:        1em;
-    padding:       0;
-    border-radius: 0.3125em;
-    box-shadow:  0 0.3125em 0.3125em #333333;
-    }
+form {
+  display: inline-block;
+  margin: 8px;
+  padding: 0;
+}
 
-  form > input {
-    display:   inline-block;
-    padding:   0.5em 1em;
-    margin:    0;
-    border:    0;
-    font-size: 1em;
-    height:    3em;
-    outline:   none;
-    }
+form > input {
+  display: inline-block;
+  padding: 0.5em 1em;
+  margin: 0;
+  border: 0;
+  font-size: 1em;
+  outline: none;
+  transition: 500ms ease-in-out;
+}
 
-  form > input[type="text"] {
-    flex:          80%;
-    border-radius: 0.3125em 0 0 0.3125em;
-    background-color: #F8F8FF;
-    }
+form > input[type="text"] {
+  background-color: var( --text-light );
+}
 
-  form > input[type="submit"] {
-    flex:              20%;
-   -webkit-appearance: none;
-    border-radius:     0 0.3125em 0.3125em 0;
-    background-color: #DDDDDD;
-    }
-/* --------------------- */
-
-/* -speed--------------- */
-  p#speed {
-    margin:    1.00em 2em 0;
-    font-size: 0.75em;
-    color:    #333333;
-    }
+form > input[type="submit"] {
+ -webkit-appearance: none;
+  background-image: url( "../images/search-icon.svg" );
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
 /* --------------------- */

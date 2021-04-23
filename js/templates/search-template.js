@@ -12,7 +12,7 @@ const search = {
     // link to CSS styling
     bot.append( "link" )
       .attribute( "rel", "stylesheet" )
-      .attribute( "href", "../css/search.css" );
+      .attribute( "href", "css/search.css" );
 
     // create form element
     const FORM = bot.append( "form" );
@@ -25,7 +25,7 @@ const search = {
     // create submit button
     FORM.append( "input" )
       .attribute( "type", "submit" )
-      .attribute( "value", "Search" );
+      .attribute( "value", " " );
 
     // stage onsubmit event listener
     bot.action( FORM )

@@ -9,120 +9,78 @@
     <meta charset="utf-8">
     <meta name="viewport" content="user-scalable=no, width=device-width" />
 
+    <base href="./" target="_self">
     <link rel="icon" href="images/logo.svg">
-    <link rel="stylesheet" href="css/colors.css">
     <link rel="stylesheet" href="css/structure.css">
-    <link rel="stylesheet" href="css/navigation.css">
     <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/colors.css">
     <link rel="stylesheet" href="css/tilecards.css">
-
-    <style>
-      @media screen
-        and ( min-width: 721px ) {
-
-        main {
-          display: grid;
-          grid: "blog development" auto / 50% 50%;
-        }
-      }
-    </style>
   </head>
+
+  <script src="js/mothership.js" type="module" async></script>
+  <style>
+    header {
+      display: flex;
+      flex-direction: row;
+    }
+
+    @media screen
+      and ( min-width: 481px ) {
+      header {
+        justify-content: flex-end;
+      }
+    }
+
+    @media screen
+      and ( max-width: 480px ) {
+      header {
+        justify-content: center;
+      }
+    }
+  </style>
 
   <body>
 
     <!-- Header -->
-    <header id="title">
-      <a id="site-title" href="index.html">
-        <h1>David Kellogg</h1>
-        <h2>a personal site</h2>
-      </a>
+    <header>
     </header>
-
-    <nav id="header-nav">
-      <input type=checkbox id="header-nav-toggle">
-      <label for="header-nav-toggle">Home</label>
-      <ul>
-        <li>
-          <label for="header-nav-toggle">Home</label>
-        </li>
-        <li>
-          <a href="blog/index.html" hreflang="en" referrerpolicy="no-referrer" rel="noreferrer" target="_self" type="text/html">Blog</a>
-        </li>
-        <li>
-          <a href="development/index.html" hreflang="en" referrerpolicy="no-referrer" rel="noreferrer" target="_self" type="text/html">Development</a>
-        </li>
-        <li>
-          <a href="blog/20210216-privacy-policy.html" hreflang="en" referrerpolicy="no-referrer" rel="noreferrer" target="_self" type="text/html">Privacy Policy</a>
-        </li>
-      </ul>
-    </nav>
-
-    <!-- <a id="linkedin-icon" href="https://www.linkedin.com/in/david-kellogg-us/" hreflang="en" referrerpolicy="no-referrer" rel="external" target="_blank" type="text/html">in</a> -->
 
     <!-- Body -->
     <main>
-      <!-- Blog -->
-      <section>
-        <a href="blog/index.html" hreflang="en" referrerpolicy="no-referrer" rel="noreferrer" target="_self" type="text/html"><h3>Blog</h3></a>
-        <ol class="search">
-          <li>
-            <a href="blog/20210226-css-adaptable-colors.html">
-              <article>
-                <h4 class="first-header">Latest Post:</h4>
-                <h4>CSS Adaptable Colors</h4>
-                <time datetime="2021-02-26 16:34-0700">February 26, 2021</time>
-                <hr>
-                <p>A brief discussion on making standardized colors adaptable in a modular CSS environment.</p>
-              </article>
-            </a>
-          </li>
-          <li>
-            <a href="blog/20210216-privacy-policy.html">
-              <article>
-                <h4>Privacy Policy</h4>
-                <time datetime="2021-02-16 21:48-07:00">February 16, 2021</time>
-                <hr>
-                <p>This site's privacy policy.</p>
-              </article>
-            </a>
-          </li>
-        </ol>
-        <!--
-          <a href="privacy-policy.html" hreflang="en" referrerpolicy="no-referrer" rel="noreferrer" target="_self" type="text/html">Privacy Policy</a>
-        -->
-      </section>
-
-      <!-- Development -->
-      <section>
-        <a href="development/index.html" hreflang="en" referrerpolicy="no-referrer" rel="noreferrer" target="_self" type="text/html"><h3>Development</h3></a>
-      </section>
+      <ol class="search">
+        <li>
+          <a href="blog/20210226-adaptable-colors.html">
+            <article>
+              <h4>Adaptable Colors</h4>
+              <p><time datetime="2021-02-26 16:34-0700">February 26, 2021</time> A brief discussion on making standardized colors adaptable in a modular CSS environment.</p>
+            </article>
+          </a>
+        </li>
+        <li>
+          <a href="blog/20210216-privacy-policy.html">
+            <article>
+              <h4>Privacy Policy</h4>
+              <p><time datetime="2021-02-16 21:48-07:00">February 16, 2021</time> This site's privacy policy.</p>
+            </article>
+          </a>
+        </li>
+        <li>
+          <a href="blog/20210121-on-specificity.html">
+            <article>
+              <h4>On Specificity</h4>
+              <p><time datetime="2021-01-20 09:00-07:00">January 21, 2021</time> A brief discussion on the benefits of paying attention to specificity in your CSS and HTML.</p>
+            </article>
+          </a>
+        </li>
+      </ol>
     </main>
-
 
     <!-- Footer -->
     <footer>
-      <!-- <section> -->
-        <nav id="footer-nav">
-          <ul>
-            <li>
-              <a href="#" hreflang="en" referrerpolicy="no-referrer" rel="noreferrer" target="_self" type="text/html">Home</a>
-            </li>
-            <li>
-              <a href="blog/index.html" hreflang="en" referrerpolicy="no-referrer" rel="noreferrer" target="_self" type="text/html">Blog</a>
-            </li>
-            <li>
-              <a href="development/index.html" hreflang="en" referrerpolicy="no-referrer" rel="noreferrer" target="_self" type="text/html">Development</a>
-            </li>
-            <li>
-              <a href="blog/20210216-privacy-policy.html" hreflang="en" referrerpolicy="no-referrer" rel="noreferrer" target="_self" type="text/html">Privacy Policy</a>
-            </li>
-          </ul>
-        <!-- </section> -->
-      </nav>
-
+      <a href="blog/20210216-privacy-policy.html" hreflang="en" referrerpolicy="no-referrer" rel="noreferrer" target="_self" type="text/html">privacy policy</a>
+      <br>
       <small>&#169; 2020-2021 David Kellogg</small>
+      <a id="linkedin-icon" href="https://www.linkedin.com/in/david-kellogg-us/" hreflang="en" referrerpolicy="no-referrer" rel="external" target="_blank" type="text/html">in</a>
     </footer>
-
-    <div id="space"></div>
   </body>
 </html>
