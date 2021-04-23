@@ -19,8 +19,7 @@ body > * {
 }
 
 header {
-  /* display: flex; */
-  /* flex-direction: row; */
+  min-height: 51px;
   align-items: center;
 }
 

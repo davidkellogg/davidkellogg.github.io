@@ -10,7 +10,7 @@
 .search > li {
   margin: 0.5em;
   transition: 50ms linear;
-  border: 1px #CCCCCC solid;
+  border: 1px var( --border-light ) solid;
   border-radius: 0.25em;
   display: block;
 }

@@ -6,4 +6,5 @@
   --text-light: var( --site-background );
   --code-background: #B3BFD4;
   --link-color: var( --structure-background );
+  --border-light: #CCCCCC;
 }

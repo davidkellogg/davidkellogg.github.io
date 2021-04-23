@@ -19,6 +19,8 @@ form > input {
   font-size: 1em;
   outline: none;
   transition: 500ms ease-in-out;
+ -webkit-appearance: none;
+ -webkit-border-radius: 0;
 }
 
 form > input[type="text"] {
@@ -26,10 +28,13 @@ form > input[type="text"] {
 }
 
 form > input[type="submit"] {
- -webkit-appearance: none;
   background-image: url( "../images/search-icon.svg" );
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+}
+
+form > input[type="submit"]:hover {
+  background-image: url( "../images/search-icon-glow.svg" );
 }
 /* --------------------- */
