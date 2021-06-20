@@ -11,14 +11,14 @@
 
     <base href="./" target="_self">
     <link rel="icon" href="images/logo.svg">
-    <link rel="prefetch" href="images/search-icon-glow.svg">
     <link rel="stylesheet" href="css/structure.css">
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/colors.css">
     <link rel="stylesheet" href="css/tilecards.css">
   </head>
 
-  <script src="js/mothership.js" type="module" async></script>
+  <script src="js/search-bot.mjs" type="module" async></script>
+
   <style>
     header {
       display: flex;
@@ -44,11 +44,20 @@
 
     <!-- Header -->
     <header>
+      <search-bot></search-bot>
     </header>
 
     <!-- Body -->
     <main>
-      <ol class="search">
+      <ol id="searchList" class="tilecards">
+        <li class="myb-border">
+          <a href="https://mindyourbusiness.substack.com/p/cookies-deprecation-in-progress">
+            <article>
+              <h4>Cookies: Deprecation in Progress</h4>
+              <p><time datetime="2021-06-08 06:59-0700">June 8, 2021</time> Firefox 89 brings with it greater protection against cookies that track you across the web. This move is yet another signal of Cookies becoming a deprecated technology.</p>
+            </article>
+          </a>
+        </li>
         <li>
           <a href="pages/20210226-adaptable-colors.html">
             <article>

@@ -26,11 +26,13 @@ main > * {
 
 main > a {
   display: inline-block;
+  border: 0;
+  border-radius: 0.25em;
   color: var( --text-dark );
   padding: 4px 8px;
   background-color: var( --code-background );
   text-decoration: none;
-  transition: 250ms ease-in-out;
+  transition: 50ms linear;
 }
 
 main > a:hover {
@@ -90,7 +92,7 @@ footer > small {
 }
 footer a {
   display: inline-block;
-  transition: 250ms ease-in-out;
+  transition: 50ms linear;
   text-decoration: none;
 }
 
@@ -110,7 +112,7 @@ footer a:not( #linkedin-icon ):hover {
 
 a#linkedin-icon {
   padding: 0 3px;
-  border-radius: 2px;
+  border-radius: 0.25em;
   color: var( --text-light );
   background-color: #939393;
 }

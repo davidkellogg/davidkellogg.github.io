@@ -10,7 +10,7 @@
 
   <g stroke="#333333" stroke-width="32" fill="none">
     <circle cx="300" cy="200" r="75" fill="#F8F8FF"></circle>
-    <line x1="125" y1="375" x2="250" y2="250" />
+    <line x1="125" y1="375" x2="240" y2="260" stroke-linecap="round" />
   </g>
 
 </svg>

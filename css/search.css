@@ -6,7 +6,7 @@ html { box-sizing: border-box; }
 
 /* -search-------------- */
 form {
-  display: inline-block;
+  display: block;
   margin: 8px;
   padding: 0;
 }
@@ -15,16 +15,15 @@ form > input {
   display: inline-block;
   padding: 0.5em 1em;
   margin: 0;
-  border: 0;
+  border: 0 white solid;
   font-size: 1em;
   outline: none;
-  transition: 500ms ease-in-out;
  -webkit-appearance: none;
- -webkit-border-radius: 0;
 }
 
 form > input[type="text"] {
   background-color: var( --text-light );
+  border-radius: 0.25em 0 0 0.25em;
 }
 
 form > input[type="submit"] {
@@ -32,6 +31,7 @@ form > input[type="submit"] {
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+  border-radius: 0 0.25em 0.25em 0;
 }
 
 form > input[type="submit"]:hover {

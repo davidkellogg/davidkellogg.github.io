@@ -1,5 +1,5 @@
-/* --[ search ]-- */
-.search {
+/* --[ tilecards ]-- */
+.tilecards {
   display: flex;
   flex-direction: column;
   margin: 0;
@@ -7,7 +7,7 @@
   list-style-type: none;
 }
 
-.search > li {
+.tilecards > li {
   margin: 0.5em;
   transition: 50ms linear;
   border: 1px var( --border-light ) solid;
@@ -15,27 +15,42 @@
   display: block;
 }
 
-.search > li:hover {
+.tilecards > li:hover {
   transform: scale( 1.01 );
-  box-shadow: 0 0 1em var( --text-dark );
+  border: 1px var( --site-background ) solid;
+  box-shadow: 0 0 0.5em var( --text-dark );
 }
 
-.search > li * {
+.tilecards > li:nth-child(10) ~ li {
+  display: none;
+}
+
+.tilecards > li * {
   margin: 0;
   color: var( --text-dark );
   text-decoration: none;
 }
 
-.search article { padding: 1.00em; }
-.search article > * { padding: 0; }
-.search article > h4 { font-size: 1.25em; }
-.search article > p {
+.tilecards article { padding: 1.00em; }
+.tilecards article > * { padding: 0; }
+.tilecards article > h4 { font-size: 1.25em; }
+.tilecards article > p {
   margin: 0.25em 0 0;
   padding: 0.25em 0 0;
   border-top: 1px var( --text-dark ) solid;
   white-space: normal;
 }
 
-.search time { font-weight: 600; }
+.tilecards time { font-weight: 600; }
 
 /* -------------- */
+
+.tilecards .myb-border {
+  border: 1px var( --myb ) dotted;
+  background-color: var( --myb-background );
+}
+
+.tilecards .myb-border:hover {
+  border: 1px var( --myb-background ) solid;
+  box-shadow: 0 0 0.5em var( --myb );
+}
