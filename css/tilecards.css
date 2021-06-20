@@ -33,7 +33,11 @@
 
 .tilecards article { padding: 1.00em; }
 .tilecards article > * { padding: 0; }
-.tilecards article > h4 { font-size: 1.25em; }
+.tilecards article > h4 {
+  font-size: 1.25em;
+  white-space: pre-wrap;
+}
+
 .tilecards article > p {
   margin: 0.25em 0 0;
   padding: 0.25em 0 0;
