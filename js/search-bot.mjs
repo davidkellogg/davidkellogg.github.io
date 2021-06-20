@@ -91,6 +91,9 @@ customElements.define( "search-bot", class extends HTMLElement {
     // get current url
     Object.defineProperty( this, "pageUrl", { value: new URL( window.location.href ) } );
 
+    // align search-bot to end of header
+    document.querySelector( "header" ).style.justifyContent = "end";
+
     // prevent changes to search-bot
     Object.seal( this );
   }
@@ -119,6 +122,20 @@ customElements.define( "search-bot", class extends HTMLElement {
 
   // run when search-bot is disconnected
   disconnectedCallback() {
+
+    const header = document.querySelector( "header" )
+
+    // align header contents to center
+    void header.removeAttribute( "style" );
+
+    // create heading element
+    const pageTitle = document.createElement( "h1" );
+
+    // set text of heading element
+    pageTitle.innerText = "David Kellogg"
+
+    // append heading to header
+    void header.appendChild( pageTitle );
 
     // update the current url without search string
     void window.history.replaceState( null, null, this.pageUrl.pathname );

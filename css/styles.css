@@ -9,8 +9,10 @@ header {
 }
 
 header h1 {
-  font-size: 1.5em;
+  font-size: 1.75em;
   text-align: center;
+  margin: 0;
+  padding: 8px 0;
 }
 /* -------------- */
 
