@@ -19,12 +19,9 @@ body > * {
 }
 
 header {
-  min-height: 51px;
-  align-items: center;
-}
-
-nav {
-  display: block;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }
 
 main {

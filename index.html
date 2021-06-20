@@ -5,9 +5,11 @@
   <head>
     <title>David Kellogg - Home</title>
 
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta charset="utf-8">
-    <meta name="viewport" content="user-scalable=no, width=device-width" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="user-scalable=no, width=device-width">
+    <meta name="referrer" content="origin">
 
     <base href="./" target="_self">
     <link rel="icon" href="images/logo.svg">
@@ -18,40 +20,20 @@
   </head>
 
   <script src="js/search-bot.mjs" type="module" async></script>
-
-  <style>
-    header {
-      display: flex;
-      flex-direction: row;
-    }
-
-    @media screen
-      and ( min-width: 481px ) {
-      header {
-        justify-content: flex-end;
-      }
-    }
-
-    @media screen
-      and ( max-width: 480px ) {
-      header {
-        justify-content: center;
-      }
-    }
-  </style>
-
   <body>
 
     <!-- Header -->
     <header>
-      <search-bot></search-bot>
+      <search-bot>
+        <h1>David Kellogg</h1>
+      </search-bot>
     </header>
 
     <!-- Body -->
     <main>
       <ol id="searchList" class="tilecards">
         <li class="myb-border">
-          <a href="https://mindyourbusiness.substack.com/p/cookies-deprecation-in-progress" rel="external" target="_blank">
+          <a href="https://mindyourbusiness.substack.com/p/cookies-deprecation-in-progress" rel="external">
             <article>
               <h4>Cookies: Deprecation in Progress</h4>
               <p><time datetime="2021-06-08 06:59-0700">June 8, 2021</time> Firefox 89 brings with it greater protection against cookies that track you across the web. This move is yet another signal of Cookies becoming a deprecated technology.</p>
@@ -87,10 +69,10 @@
 
     <!-- Footer -->
     <footer>
-      <a href="pages/20210216-privacy-policy.html" hreflang="en" referrerpolicy="no-referrer" rel="noreferrer" target="_self" type="text/html">privacy policy</a>
+      <a href="pages/20210216-privacy-policy.html">privacy policy</a>
       <br>
       <small>&#169; 2020-2021 David Kellogg</small>
-      <a id="linkedin-icon" href="https://www.linkedin.com/in/david-kellogg-us/" hreflang="en" referrerpolicy="no-referrer" rel="external" target="_blank" type="text/html">in</a>
+      <a id="linkedin-icon" href="https://www.linkedin.com/in/david-kellogg-us/" rel="external">in</a>
     </footer>
   </body>
 </html>
