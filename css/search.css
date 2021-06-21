@@ -6,12 +6,17 @@ html { box-sizing: border-box; }
 
 /* -search-------------- */
 form {
-  margin: 0.5em;
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+  width: 312px;
+  margin: 8px;
 }
 
 form > input {
   display: inline-block;
   padding: 0.5em 1em;
+  margin: 0;
   border: 0 white solid;
   font-size: 1em;
   outline: none;
@@ -19,6 +24,7 @@ form > input {
 }
 
 form > input[type="text"] {
+  flex: 1;
   background-color: var( --text-light );
   border-radius: 0.25em 0 0 0.25em;
 }

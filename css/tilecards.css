@@ -8,7 +8,7 @@
 }
 
 .tilecards > li {
-  margin: 0.5em;
+  margin: 8px;
   transition: 50ms linear;
   border: 1px var( --border-light ) solid;
   border-radius: 0.25em;
