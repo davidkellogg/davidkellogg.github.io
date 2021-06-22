@@ -68,7 +68,7 @@ customElements.define( "search-bot", class extends HTMLElement {
     inputSubmit.type = "submit";
 
     // clear default value of submit button
-    inputSubmit.value = " ";
+    inputSubmit.value = "";
 
     // attach submit button to form
     void form.appendChild( inputSubmit );

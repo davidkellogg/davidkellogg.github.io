@@ -15,6 +15,7 @@ form > input {
   margin: 0;
   border: 0;
   font-size: 1em;
+  height: 35px;
   outline: none;
  -webkit-appearance: none;
 }
@@ -29,6 +30,7 @@ form > input[type="submit"] {
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+  width: 35px;
   border-radius: 0 0.25em 0.25em 0;
 }
 
