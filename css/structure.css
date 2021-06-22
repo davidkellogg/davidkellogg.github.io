@@ -19,9 +19,6 @@ body > * {
 }
 
 header {
-  display: flex;
-  flex-direction: row-reverse;
-  align-content: center;
   padding: 0;
 }
 

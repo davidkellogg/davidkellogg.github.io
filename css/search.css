@@ -6,6 +6,10 @@ html { box-sizing: border-box; }
 
 /* -search-------------- */
 form {
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+  align-content: center;
   margin: 8px;
 }
 
