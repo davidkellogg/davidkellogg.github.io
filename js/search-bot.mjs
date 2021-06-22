@@ -92,7 +92,11 @@ customElements.define( "search-bot", class extends HTMLElement {
     Object.defineProperty( this, "pageUrl", { value: new URL( window.location.href ) } );
 
     // align search-bot to end of header
-    document.querySelector( "header" ).style.justifyContent = "end";
+    Array.prototype.filter.call(
+      Array.prototype.filter.call(
+        document.styleSheets, styleSheet => /structure\.css$/.test( styleSheet.href ) )[0]
+      .cssRules, cssRule => cssRule.selectorText === "header" )[0]
+    .style["justify-content"] = "end";
 
     // prevent changes to search-bot
     Object.seal( this );
@@ -126,7 +130,11 @@ customElements.define( "search-bot", class extends HTMLElement {
     const header = document.querySelector( "header" )
 
     // align header contents to center
-    void header.removeAttribute( "style" );
+    Array.prototype.filter.call(
+      Array.prototype.filter.call(
+        document.styleSheets, styleSheet => /structure\.css$/.test( styleSheet.href ) )[0]
+      .cssRules, cssRule => cssRule.selectorText === "header" )[0]
+    .style["justify-content"] = "center";
 
     // create heading element
     const pageTitle = document.createElement( "h1" );
