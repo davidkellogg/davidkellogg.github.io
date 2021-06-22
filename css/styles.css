@@ -109,7 +109,7 @@ footer a:not( #linkedin-icon ) {
 }
 
 footer a:not( #linkedin-icon ):hover {
-  color: #FFCC00;
+  color: var( --text-hover );
 }
 
 a#linkedin-icon {
