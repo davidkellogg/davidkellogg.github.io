@@ -85,7 +85,13 @@ customElements.define( "search-bot", class extends HTMLElement {
     // create reflection property for search attribute
     Object.defineProperty( this, "search", {
       get: () => this.getAttribute( "search" ),
-      set: ( value ) => this.setAttribute( "search", value ?? "" )
+      set: ( string ) => this.setAttribute( "search", string ?? "" )
+    });
+
+    // create reflection property for display attribute
+    Object.defineProperty( this, "display", {
+      get: () => this.getAttribute( "display" ),
+      set: ( number ) => this.setAttribute( "display", number ?? 10 )
     });
 
     // get current url
@@ -98,11 +104,22 @@ customElements.define( "search-bot", class extends HTMLElement {
   // run when search-bot is connected
   connectedCallback() {
 
-    // if search-bot is connected to DOM and the url contains a search string
-    if ( this.isConnected && this.pageUrl.searchParams.has( "search" ) ) {
+    // verify search-bot is connected to DOM
+    if ( this.isConnected ) {
 
-      // then set search attribute to search string
-      this.search = this.pageUrl.searchParams.get( "search" );
+      // if search string is present in url
+      if ( this.pageUrl.searchParams.has( "search" ) ) {
+
+        // then set search attribute to search string
+        this.search = this.pageUrl.searchParams.get( "search" );
+      }
+
+      // if display count is present in url
+      if ( this.pageUrl.searchParams.has( "display" ) ) {
+
+        // then set search attribute to display
+        this.display = this.pageUrl.searchParams.get( "display" );
+      }
     }
   }
 
@@ -137,22 +154,51 @@ customElements.define( "search-bot", class extends HTMLElement {
   }
 
   // get list of observerd attributes
-  static get observedAttributes() { return ["search"]; }
+  static get observedAttributes() { return ["search", "display"]; }
 
   // run when observed attributes change value
   attributeChangedCallback( name, oldValue, newValue ) {
 
-    // if search string is at least three letters and the search is new
-    if ( newValue.length > 2 && newValue !== oldValue ) {
+    // if the value has changed
+    if ( newValue !== oldValue ) {
+
+      // if search string is at least three letters
+      if ( name === "search" && newValue.length > 2 ) {
+
+        // then reorder searchList by search relevance
+        void reorder( newValue, document.querySelector( "#searchList" ) );
+
+      // if the changed attribute is display
+      } else if ( name === "display" ) {
+
+        // if the attribute value is a number and greater than 0
+        if ( typeof +newValue === "number" && newValue > 0 ) {
+
+          // change specific CSS Rule
+          Array.prototype.find.call(
+            Array.prototype.find.call(
+
+              // from tilecards.css
+              document.styleSheets, styleSheet => /tilecards\.css$/.test( styleSheet.href ) )
+
+            // get current rule
+            .cssRules, cssRule => /^\.tilecards > li:nth-child\(\d{0,2}\) ~ li/.test( cssRule.selectorText ) )
+
+          // and update to new value
+          .selectorText = `.tilecards > li:nth-child(${newValue}) ~ li`;
+
+        // otherwise revert attribute to default
+        } else {
+          this.setAttribute( name, 10 );
+          return null;
+        }
+      }
 
       // set the value of search into pageUrl property
-      void this.pageUrl.searchParams.set( "search", newValue );
+      void this.pageUrl.searchParams.set( name, newValue );
 
       // update the current url with pageUrl
       void window.history.replaceState( null, null, this.pageUrl );
-
-      // then reorder searchList by search relevance
-      void reorder( newValue, document.querySelector( "#searchList" ) );
     }
   };
 });
