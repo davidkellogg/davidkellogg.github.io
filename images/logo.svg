@@ -1,7 +1,14 @@
 <svg id="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500">
-  <g stroke="#002B70" stroke-width="48" fill="none">
-    <polyline points="33.5,125 163.4,200 163.4,300 33.5,375"/>
-    <line x1="250" y1="50" x2="250" y2="450" />
-    <polyline points="466.5,125 250,250 466.5,375" stroke-miterlimit="0"/>
+
+  <style>
+    .color-scheme {
+      stroke: #F8F8FF;
+    }
+  </style>
+
+  <g stroke-width="48" fill="none">
+    <path d="M33.5,125 C250,125 250,375 33.5,375" stroke="#FFCC00" stroke-linecap="round" />
+    <line class="color-scheme" x1="250" y1="50" x2="250" y2="450" stroke-linecap="round" />
+    <path class="color-scheme" d="M466.5,125 C250,125 250,375 466.5,375" stroke-linecap="round" />
   </g>
 </svg>
