@@ -4,15 +4,29 @@ body {
 
 /* --[ header ]-- */
 header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-content: center;
   color: var( --text-light );
   background-color: var( --structure-background );
+}
+
+header > a > img {
+  display: block;
+  height: 35px;
+  margin: 8px;
+}
+
+header > a:hover {
+  background-color: hsl(217, 100%, 27%);
 }
 
 header h1 {
   font-size: 1.75em;
   text-align: center;
   margin: 0;
-  padding: 8px 0;
+  padding: 8px;
 }
 /* -------------- */
 

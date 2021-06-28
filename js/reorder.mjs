@@ -1,9 +1,8 @@
 export default function reorder( forString, inList ) {
-  const TIMESTAMP = Date.now();
-
+  
   // construct search criteria from search string
   // create array to store search criteria and fill each index with search string
-  const SEARCHARRAY = new Array( forString.slice(-2) ).fill( forString )
+  const SEARCHARRAY = new Array( forString.length - 2 ).fill( forString )
 
     // change each search string into regular expression for efficient searching
     .map( ( currentString, index ) => new RegExp(
@@ -23,17 +22,14 @@ export default function reorder( forString, inList ) {
 
   // reorder inList's children by relevance
   // stage elements for reorder
-  Array.prototype.map
+  const REORDEREDARRAY = Array.prototype.map
 
     // create new array from the keys of the relevance scored array and sort them by relevance
     .call( [ ...RELEVANCE.keys() ].sort( ( a, b ) => RELEVANCE[b] - RELEVANCE[a] ),
 
     // then reorder inList children by relevance
-    ( key ) => inList.children[key] ).forEach( ( child ) => inList.appendChild( child ) );
-
-  // post search time in debug log
-  console.debug( `searched for '${forString}' in ${Date.now() - TIMESTAMP}ms` );
+    ( key ) => inList.children[key] );
 
   // return the reordered element
-  return inList;
+  return REORDEREDARRAY;
 };

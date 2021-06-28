@@ -4,16 +4,12 @@ html { box-sizing: border-box; }
 *:before,
 *:after { box-sizing: inherit; }
 
-/* -search-------------- */
 form {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-  align-content: center;
   margin: 8px;
 }
 
-form > input {
+form > input,
+form > button {
   display: inline-block;
   height: 35px;
   vertical-align: middle;
@@ -30,7 +26,7 @@ form > input[type="text"] {
   border-radius: 0.25em 0 0 0.25em;
 }
 
-form > input[type="submit"] {
+form > button[type="submit"] {
   background-image: url( "../images/search-icon.svg" );
   background-position: center;
   background-repeat: no-repeat;
@@ -39,7 +35,6 @@ form > input[type="submit"] {
   border-radius: 0 0.25em 0.25em 0;
 }
 
-form > input[type="submit"]:hover {
+form > button[type="submit"]:hover {
   background-image: url( "../images/search-icon-glow.svg" );
 }
-/* --------------------- */
