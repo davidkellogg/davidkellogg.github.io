@@ -30,6 +30,7 @@ searchBox.placeholder = "Search for keywords...";
 const submitButton = document.createElement( "button" );
 submitButton.type = "submit";
 
+
 // attach inputs to form
 [ searchBox, submitButton ].forEach( element => form.appendChild( element ) );
 

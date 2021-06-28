@@ -5,14 +5,14 @@ html { box-sizing: border-box; }
 *:after { box-sizing: inherit; }
 
 form {
+  display: flex;
+  align-content: center;
   margin: 8px;
 }
 
-form > input,
-form > button {
+form > * {
   display: inline-block;
   height: 35px;
-  vertical-align: middle;
   margin: auto 0;
   padding: 0.5em 1em;
   font-size: 1em;

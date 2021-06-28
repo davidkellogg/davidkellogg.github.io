@@ -8,7 +8,7 @@
     } -->
   </style>
 
-  <filter id="shadow">
+  <!-- <filter id="shadow">
     <feComponentTransfer in="SourceAlpha">
       <feFuncA type="table" tableValues="1 0" />
     </feComponentTransfer>
@@ -21,9 +21,10 @@
       <feMergeNode in="SourceGraphic" />
       <feMergeNode />
     </feMerge>
-  </filter>
+  </filter> -->
 
-  <g stroke-width="48" fill="none" filter="url(#shadow)">
+  <!-- <g stroke-width="48" fill="none" filter="url(#shadow)"> -->
+  <g stroke-width="48" fill="none">
     <path d="M33.5,125 C225,125 225,375 33.5,375" stroke="#FFCC00" stroke-linecap="round" />
     <line class="color-scheme" x1="250" y1="50" x2="250" y2="450" stroke-linecap="round" />
     <path class="color-scheme" d="M466.5,125 C275,125 275,375 466.5,375" stroke-linecap="round" />
