@@ -6,9 +6,11 @@
   --text-light: var( --site-background );
   --code-background: #B3BFD4;
   --link-color: var( --structure-background );
-  --border-light: #CCCCCC;
   --text-hover: #FFCC00;
 
   --myb: #6B26FF;
   --myb-background: #F5F0FF;
+
+  --dev: #CCCCCC;
+  --dev-background: #F2F2FF;
 }

@@ -14,15 +14,15 @@ form > * {
   display: inline-block;
   height: 35px;
   margin: auto 0;
-  padding: 0.5em 1em;
-  font-size: 1em;
+  padding: 8px 16px;
+  font-size: 16px;
   border: 0;
   outline: none;
  -webkit-appearance: none;
 }
 
 form > input[type="text"] {
-  background-color: var( --text-light );
+  background-color: var( --site-background );
   border-radius: 0.25em 0 0 0.25em;
 }
 
