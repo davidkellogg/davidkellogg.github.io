@@ -8,9 +8,11 @@
   --link-color: var( --structure-background );
   --text-hover: #FFCC00;
 
-  --myb: #6B26FF;
+  --myb-border: #6B26FF33;
+  --myb-shadow: #6B26FF;
   --myb-background: #F5F0FF;
 
-  --dev: #CCCCCC;
+  --dev-border: #3333FF33;
+  --dev-shadow: #3333FF;
   --dev-background: #F2F2FF;
 }

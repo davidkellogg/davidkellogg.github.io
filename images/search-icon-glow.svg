@@ -1,16 +1,6 @@
 <svg id="navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" style="background-color: #F8F8FF">
-  <!-- <defs>
-    <radialGradient id="background">
-      <stop stop-color="hsla( 48, 100%, 50%, 25% )" offset="0%" />
-      <stop stop-color="#F8F8FF" offset="75%" />
-    </radialGradient>
-  </defs>
-
-  <circle class="glow" cx="300" cy="200" r="250" fill="url(#background)"></circle> -->
-
   <g stroke="#333333" stroke-width="32" fill="none">
-    <circle cx="300" cy="200" r="75" fill="hsla( 48, 100%, 50%, 25% )"></circle>
+    <circle cx="300" cy="200" r="75" fill="#FFCC0060"></circle>
     <line x1="125" y1="375" x2="240" y2="260" stroke-linecap="round" />
   </g>
-
 </svg>

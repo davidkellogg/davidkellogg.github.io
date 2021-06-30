@@ -127,7 +127,8 @@ footer a:not( #linkedin-icon ):hover {
 }
 
 a#linkedin-icon {
-  padding: 0 3px;
+  width: 20px;
+  height: 20px;
   border-radius: 0.25em;
   color: var( --text-light );
   background-color: #939393;

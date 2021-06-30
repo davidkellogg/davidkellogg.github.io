@@ -72,24 +72,33 @@
   background-color: var( --site-background );
 }
 
+/* .tilecards ul > li:first-child {
+  font-weight: 600;
+} */
 
-li.dev-border {
-  border: 1px var( --dev ) solid;
+.dev-border,
+.myb-border {
+  border-width: 1px;
+  border-style: solid;
+}
+
+.dev-border {
+  border-color: var( --dev-border );
   background-color: var( --dev-background );
 }
 
-.tilecards > li.dev-border:hover {
-  border: 1px var( --site-background ) solid;
-  box-shadow: 0 0 0.5em var( --text-dark );
+.tilecards > .dev-border:hover {
+  border-color: var( --site-background );
+  box-shadow: 0 0 0.5em var( --dev-shadow );
 }
 
 
-li.myb-border {
-  border: 1px var( --myb ) dotted;
+.myb-border {
+  border-color: var( --myb-border );
   background-color: var( --myb-background );
 }
 
-.tilecards > li.myb-border:hover {
-  border: 1px var( --myb-background ) solid;
-  box-shadow: 0 0 0.5em var( --myb );
+.tilecards > .myb-border:hover {
+  border-color: var( --myb-background );
+  box-shadow: 0 0 0.5em var( --myb-shadow );
 }

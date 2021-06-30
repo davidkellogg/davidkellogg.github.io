@@ -42,9 +42,20 @@ form.onsubmit = ( event ) => {
   const TIMESTAMP = Date.now();
   void event.preventDefault();
   void event.stopPropagation();
-  void reorder( searchBox.value, list ).forEach( child => list.appendChild( child ) );
+  void reorder( searchBox.value, list.querySelectorAll( searchBox.value[0] === "+" ?  "ul" : searchBox.value[0] === "@" ? "h4" : ":scope > *" ) )
+    .map( key => list.children[key] ).forEach( child => list.appendChild( child ) );
   console.debug( `searched for '${searchBox.value}' in ${Date.now() - TIMESTAMP}ms` );
 };
+
+// attach events to tags for searching
+document.querySelectorAll( "#searchList ul > li" ).forEach( li => {
+  li.onclick = ( event ) => {
+    void event.preventDefault();
+    void event.stopPropagation();
+    searchBox.value = `+${li.innerText}`;
+    void submitButton.click();
+  }
+});
 
 
 // attach closed shadowRoot to header
