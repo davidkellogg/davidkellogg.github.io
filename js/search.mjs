@@ -30,7 +30,6 @@ searchBox.placeholder = "Search for keywords...";
 const submitButton = document.createElement( "button" );
 submitButton.type = "submit";
 
-
 // attach inputs to form
 [ searchBox, submitButton ].forEach( element => form.appendChild( element ) );
 
@@ -45,7 +44,15 @@ form.onsubmit = ( event ) => {
   void reorder( searchBox.value, list.querySelectorAll( searchBox.value[0] === "+" ?  "ul" : searchBox.value[0] === "@" ? "h4" : ":scope > *" ) )
     .map( key => list.children[key] ).forEach( child => list.appendChild( child ) );
   console.debug( `searched for '${searchBox.value}' in ${Date.now() - TIMESTAMP}ms` );
+  window.scrollTo( 0, 0 );
 };
+
+// attach closed shadowRoot to header
+const shadowRoot = document.querySelector( "header" ).attachShadow({ mode: "closed" });
+
+// attach elements to shadowRoot
+[ slot, stylesheet, preload, form ].forEach( element => shadowRoot.appendChild( element ) );
+
 
 // attach events to tags for searching
 document.querySelectorAll( "#searchList ul > li" ).forEach( li => {
@@ -58,8 +65,6 @@ document.querySelectorAll( "#searchList ul > li" ).forEach( li => {
 });
 
 
-// attach closed shadowRoot to header
-const shadowRoot = document.querySelector( "header" ).attachShadow({ mode: "closed" });
-
-// attach elements to shadowRoot
-[ slot, stylesheet, preload, form ].forEach( element => shadowRoot.appendChild( element ) );
+// create CSS hover rule for tags
+const cssRules = [ ...document.styleSheets ].find( styleSheet => /tilecards\.css$/.test( styleSheet.href ) );
+cssRules.insertRule( ".tilecards ul > li:hover { background-color: #FFCC0040; }", cssRules.length );
