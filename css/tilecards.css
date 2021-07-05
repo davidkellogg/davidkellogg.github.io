@@ -17,9 +17,9 @@
   transform: scale( 1.01 );
 }
 
-/* .tilecards > li:nth-child(10) ~ li {
+.tilecards > li:nth-child(10) ~ li {
   display: none;
-} */
+}
 
 .tilecards > li * {
   margin: 0;
