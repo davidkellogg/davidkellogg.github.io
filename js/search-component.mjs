@@ -39,6 +39,7 @@ customElements.define( "search-component", class extends HTMLElement {
 
     // preload hover image for search icon
     const preload = document.createElement( "link" );
+    preload.href = "images/search-icon-glow.svg";
     preload.rel = "preload";
     preload.as = "image";
     void shadowRoot.appendChild( preload );
