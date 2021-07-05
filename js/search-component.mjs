@@ -127,7 +127,7 @@ customElements.define( "search-component", class extends HTMLElement {
     if ( newValue !== oldValue ) {
 
       // if search string is at least three letters
-      if ( name === "search" && newValue.length > 2 ) {
+      if ( name === "search" ) {
 
         const search = newValue.split(":");
         const query = (() => {
@@ -148,14 +148,24 @@ customElements.define( "search-component", class extends HTMLElement {
           }
         })();
 
-        // then reorder searchList by search relevance
-        void reorder( search.join(":"), searchList.querySelectorAll( query ) )
-          .map( key => searchList.children[key] )
-          .forEach( child => searchList.appendChild( child ) );
+        // concatenate search back together
+        const filteredSearch = search.join(":");
 
-        // send success message to console
-        console.debug( `searched for '${newValue}' in ${performance.now() - timestamp}ms` );
-        return null;
+        if ( filteredSearch.length > 2 ) {
+
+          // then reorder searchList by search relevance
+          void reorder( filteredSearch, searchList.querySelectorAll( query ) )
+            .map( key => searchList.children[key] )
+            .forEach( child => searchList.appendChild( child ) );
+
+          // send success message to console
+          console.debug( `searched for '${search}' in ${performance.now() - timestamp}ms` );
+
+        // send failure message to console
+        } else {
+          console.debug( "search must be at least 3 characters" );
+        }
+
 
       // if the changed attribute is display
       } else if ( name === "display" ) {
@@ -177,15 +187,17 @@ customElements.define( "search-component", class extends HTMLElement {
 
           // send success message to console
           console.debug( `updated display in ${performance.now() - timestamp}ms` );
-          return null;
 
         // otherwise revert attribute to default
         } else {
           console.debug( `cannot set display to '${newValue}', reverted to 10` );
-          this.setAttribute( name, 10 );
-          return null;
+          void this.setAttribute( name, 10 ); // placed after console message because otherwise attributeChangedCallback would fire again and print its message first
         }
       }
+
+    // send failure message to console
+    } else {
+      console.debug( "attribute must contain new value" );
     }
 
     return null;
