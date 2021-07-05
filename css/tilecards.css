@@ -17,10 +17,6 @@
   transform: scale( 1.01 );
 }
 
-.tilecards > li:nth-child(10) ~ li {
-  display: none;
-}
-
 .tilecards > li * {
   margin: 0;
   color: var( --text-dark );
@@ -71,10 +67,6 @@
   padding: 0 4px;
   background-color: var( --site-background );
 }
-
-/* .tilecards ul > li:first-child {
-  font-weight: 600;
-} */
 
 .dev-border,
 .myb-border {

@@ -42,6 +42,7 @@ customElements.define( "search-component", class extends HTMLElement {
     preload.href = "images/search-icon-glow.svg";
     preload.rel = "preload";
     preload.as = "image";
+    preload.type = "image/svg+xml";
     void shadowRoot.appendChild( preload );
 
 
@@ -82,9 +83,10 @@ customElements.define( "search-component", class extends HTMLElement {
     /* --- --- --- --- --- --- --- --- --- --- --- --- --- */
 
 
-    // create CSS hover rule for tags
+    // insert CSS rules
     const tilecardsStyleSheet = [ ...document.styleSheets ].find( styleSheet => /tilecards\.css$/.test( styleSheet.href ) );
-    void tilecardsStyleSheet.insertRule( ".tilecards ul > li:hover { background-color: #FFCC0040; }", tilecardsStyleSheet.length );
+    void tilecardsStyleSheet.insertRule( ".tilecards ul > li:hover { background-color: #FFCC0040; }", tilecardsStyleSheet.cssRules.length );
+    void tilecardsStyleSheet.insertRule( ".tilecards > li:nth-child(10) ~ li { display: none; }", tilecardsStyleSheet.cssRules.length );
 
     console.debug( `search-component instantiated in ${performance.now() - timestamp}ms` );
   }
@@ -105,9 +107,10 @@ customElements.define( "search-component", class extends HTMLElement {
     // remove events to tags for searching
     void searchList.querySelectorAll( "ul > li" ).forEach( li => li.onclick = undefined );
 
-    // remove CSS hover rule for tags
+    // remove inserted CSS rules
     const tilecardsStyleSheet = [ ...document.styleSheets ].find( styleSheet => /tilecards\.css$/.test( styleSheet.href ) );
     void tilecardsStyleSheet.deleteRule( [...tilecardsStyleSheet.cssRules].findIndex( cssRule => ".tilecards ul > li:hover" === cssRule.selectorText ) );
+    void tilecardsStyleSheet.deleteRule( [...tilecardsStyleSheet.cssRules].findIndex( cssRule => /^\.tilecards > li:nth-child\(\d{0,2}\) ~ li/.test( cssRule.selectorText ) ) );
 
     // send message to console
     console.debug( "search-component disconnected from document" );
