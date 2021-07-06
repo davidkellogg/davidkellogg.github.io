@@ -23,6 +23,9 @@ customElements.define( "search-component", class extends HTMLElement {
       set: ( number ) => this.setAttribute( "display", number ?? 10 )
     });
 
+    // create property for tilecards stylesheet access
+    void Object.defineProperty( this, "tilecardsStyleSheet", { value: [ ...document.styleSheets ].find( styleSheet => /tilecards\.css$/.test( styleSheet.href ) ) });
+
     // prevent changes to search-component
     void Object.seal( this );
     /* --- --- --- --- --- --- --- --- --- --- --- --- --- */
@@ -82,11 +85,9 @@ customElements.define( "search-component", class extends HTMLElement {
     });
     /* --- --- --- --- --- --- --- --- --- --- --- --- --- */
 
-
     // insert CSS rules
-    const tilecardsStyleSheet = [ ...document.styleSheets ].find( styleSheet => /tilecards\.css$/.test( styleSheet.href ) );
-    void tilecardsStyleSheet.insertRule( ".tilecards ul > li:hover { background-color: #FFCC0040; }", tilecardsStyleSheet.cssRules.length );
-    void tilecardsStyleSheet.insertRule( ".tilecards > li:nth-child(10) ~ li { display: none; }", tilecardsStyleSheet.cssRules.length );
+    this.tilecardsStyleSheet.insertRule( ".tilecards ul > li:hover { background-color: #FFCC0040; }", this.tilecardsStyleSheet.cssRules.length );
+    this.tilecardsStyleSheet.insertRule( ".tilecards > li:nth-child(10) ~ li { display: none; }", this.tilecardsStyleSheet.cssRules.length );
 
     console.debug( `search-component instantiated in ${performance.now() - timestamp}ms` );
   }
@@ -108,9 +109,8 @@ customElements.define( "search-component", class extends HTMLElement {
     void searchList.querySelectorAll( "ul > li" ).forEach( li => li.onclick = undefined );
 
     // remove inserted CSS rules
-    const tilecardsStyleSheet = [ ...document.styleSheets ].find( styleSheet => /tilecards\.css$/.test( styleSheet.href ) );
-    void tilecardsStyleSheet.deleteRule( [...tilecardsStyleSheet.cssRules].findIndex( cssRule => ".tilecards ul > li:hover" === cssRule.selectorText ) );
-    void tilecardsStyleSheet.deleteRule( [...tilecardsStyleSheet.cssRules].findIndex( cssRule => /^\.tilecards > li:nth-child\(\d{0,2}\) ~ li/.test( cssRule.selectorText ) ) );
+    void this.tilecardsStyleSheet.deleteRule( [...tilecardsStyleSheet.cssRules].findIndex( cssRule => ".tilecards ul > li:hover" === cssRule.selectorText ) );
+    void this.tilecardsStyleSheet.deleteRule( [...tilecardsStyleSheet.cssRules].findIndex( cssRule => /^\.tilecards > li:nth-child\(\d{0,2}\) ~ li/.test( cssRule.selectorText ) ) );
 
     // send message to console
     console.debug( "search-component disconnected from document" );
@@ -151,6 +151,7 @@ customElements.define( "search-component", class extends HTMLElement {
         // concatenate search back together
         const filteredSearch = search.join(":");
 
+        // if keywords contain at least 3 characters
         if ( filteredSearch.length > 2 ) {
 
           // then reorder searchList by search relevance
@@ -171,19 +172,13 @@ customElements.define( "search-component", class extends HTMLElement {
       } else if ( name === "display" ) {
 
         // if the attribute value is a number and greater than 0
-        if ( typeof +newValue === "number" && newValue > 0 ) {
+        if ( typeof +newValue === "number" && +newValue > 0 ) {
 
-          // update CSS Rule to new display number
-          Array.prototype.find.call(
+          // find the appropriate display rule from tilecards.css
+          [...this.tilecardsStyleSheet.cssRules].find( cssRule => /^\.tilecards > li:nth-child\(\d{0,2}\) ~ li/.test( cssRule.selectorText ) )
 
-            // get the cssRules from the appropriate styleSheet
-            [...document.styleSheets].find( styleSheet => /tilecards\.css$/.test( styleSheet.href ) ).cssRules,
-
-            // get the appropriate cssRule from the styleSheet
-            cssRule => /^\.tilecards > li:nth-child\(\d{0,2}\) ~ li/.test( cssRule.selectorText )
-
-          // update selectorText of cssRule
-          ).selectorText = `.tilecards > li:nth-child(${newValue}) ~ li`;
+            // update selectorText of cssRule
+            .selectorText = `.tilecards > li:nth-child(${newValue}) ~ li`;
 
           // send success message to console
           console.debug( `updated display in ${performance.now() - timestamp}ms` );

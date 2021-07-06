@@ -4,7 +4,7 @@ export default function reorder( forString, inList ) {
   // create array to store search criteria and fill each index with search string
   // change each search string into regular expression for efficient searching
   // cut search string down to three characters and replace with regular expression
-  const SEARCHARRAY = new Array( forString.length - 2 ).fill( forString ).map( ( currentString, index ) => new RegExp( currentString.substr( index, 3 ).replace( /[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&"), "g" ) );
+  const SEARCHARRAY = new Array( forString.length - 2 ).fill( forString ).map( ( currentString, index ) => new RegExp( currentString.substr( index, 3 ).replace( /[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&"), "gi" ) );
 
   // score the relevance of inList's children by search string
   // create an array to store relevance scoring
