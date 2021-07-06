@@ -129,7 +129,7 @@ customElements.define( "search-component", class extends HTMLElement {
       // if search string is at least three letters
       if ( name === "search" ) {
 
-        const search = newValue.split(":");
+        let search = newValue.split(":");
         const query = (() => {
 
           // search query for tags
@@ -149,13 +149,13 @@ customElements.define( "search-component", class extends HTMLElement {
         })();
 
         // concatenate search back together
-        const filteredSearch = search.join(":");
+        search = search.join(":");
 
         // if keywords contain at least 3 characters
-        if ( filteredSearch.length > 2 ) {
+        if ( search.length > 2 ) {
 
           // then reorder searchList by search relevance
-          void reorder( filteredSearch, searchList.querySelectorAll( query ) )
+          void reorder( search, searchList.querySelectorAll( query ) )
             .map( key => searchList.children[key] )
             .forEach( child => searchList.appendChild( child ) );
 
