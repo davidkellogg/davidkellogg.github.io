@@ -1,5 +1,6 @@
 import score from "./score.mjs";
 import match from "./match.mjs";
+import latest from "./latest.mjs";
 
 // define search-component element
 customElements.define( "search-component", class extends HTMLElement {
@@ -132,44 +133,53 @@ customElements.define( "search-component", class extends HTMLElement {
       // if search string is at least three letters
       if ( name === "search" ) {
 
-        // break search into array
-        let search = newValue.split(":");
-
         // get search relevance
-        const relevance = (() => {
+        (() => {
+
+          // break search into array
+          let search = newValue.split(":");
 
           // search query for tags
           if ( search[0].toLowerCase() === "tag" ) {
             search = search.slice(1).join(":");
-            return match( search, searchList.querySelectorAll( "ul" ) )
+
+            // if search string long enough, perform search
+            if ( search.length > 2 ) {
+              return match( search, searchList.querySelectorAll( "ul" ) )
+            }
+
 
           // search query for titles
           } else if ( search[0].toLowerCase() === "title" ) {
-            search = search.slice(1).join(":");
-            return score( search, searchList.querySelectorAll( "h4" ) );
+            return search.slice(1).join(":");
+
+            // if search string long enough, perform search
+            if ( search.length > 2 ) {
+              return score( search, searchList.querySelectorAll( "h4" ) );
+            }
+
 
           // default search query
           } else {
             search = search.join(":");
-            return score( search, searchList.querySelectorAll( ":scope > *" ) );
+
+            // if search string long enough, perform search
+            if ( search.length > 2 ) {
+              return score( search, searchList.querySelectorAll( ":scope > *" ) );
+            }
           }
-        })();
 
-
-        // if keywords contain at least 3 characters
-        if ( search.length > 2 ) {
-
-          // then reorder searchList by search relevance
-          relevance.map( key => searchList.children[key] ).forEach( child => searchList.appendChild( child ) );
-
-          // send success message to console
-          console.debug( `searched for '${newValue}' in ${performance.now() - timestamp}ms` );
-
-        // send failure message to console
-        } else {
+          // send message to console
           console.debug( "search must be at least 3 characters" );
-        }
 
+          // sort new to old
+          return latest( searchList.querySelectorAll( "time" ) );
+
+        // then reorder searchList by search relevance
+        })().map( key => searchList.children[key] ).forEach( child => searchList.appendChild( child ) );
+
+        // send message to console
+        console.debug( `searched for '${newValue}' in ${performance.now() - timestamp}ms` );
 
       // if the changed attribute is display
       } else if ( name === "display" ) {
@@ -199,5 +209,5 @@ customElements.define( "search-component", class extends HTMLElement {
     }
 
     return null;
-  };
+  }
 });
