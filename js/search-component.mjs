@@ -1,4 +1,5 @@
-import reorder from "./reorder.mjs";
+import score from "./score.mjs";
+import match from "./match.mjs";
 
 // define search-component element
 customElements.define( "search-component", class extends HTMLElement {
@@ -71,7 +72,8 @@ customElements.define( "search-component", class extends HTMLElement {
     form.onsubmit = ( event ) => {
       void event.preventDefault();
       void event.stopPropagation();
-      search.value.length > 2 && void this.setAttribute( "search", search.value );
+      search.value = search.value;
+      void this.setAttribute( "search", search.value );
     }
 
     // attach events to tags for searching
@@ -80,7 +82,7 @@ customElements.define( "search-component", class extends HTMLElement {
         void event.preventDefault();
         void event.stopPropagation();
         search.value = `tag:${li.innerText}`;
-        void submit.click();
+        void this.setAttribute( "search", `tag:${li.innerText}` );
       }
     });
     /* --- --- --- --- --- --- --- --- --- --- --- --- --- */
@@ -89,6 +91,7 @@ customElements.define( "search-component", class extends HTMLElement {
     this.tilecardsStyleSheet.insertRule( ".tilecards ul > li:hover { background-color: #FFCC0040; }", this.tilecardsStyleSheet.cssRules.length );
     this.tilecardsStyleSheet.insertRule( ".tilecards > li:nth-child(10) ~ li { display: none; }", this.tilecardsStyleSheet.cssRules.length );
 
+    // send message to console
     console.debug( `search-component instantiated in ${performance.now() - timestamp}ms` );
   }
 
@@ -129,38 +132,38 @@ customElements.define( "search-component", class extends HTMLElement {
       // if search string is at least three letters
       if ( name === "search" ) {
 
+        // break search into array
         let search = newValue.split(":");
-        const query = (() => {
+
+        // get search relevance
+        const relevance = (() => {
 
           // search query for tags
           if ( search[0].toLowerCase() === "tag" ) {
-            void search.shift();
-            return "ul";
+            search = search.slice(1).join(":");
+            return match( search, searchList.querySelectorAll( "ul" ) )
 
           // search query for titles
           } else if ( search[0].toLowerCase() === "title" ) {
-            void search.shift();
-            return "h4";
+            search = search.slice(1).join(":");
+            return score( search, searchList.querySelectorAll( "h4" ) );
 
           // default search query
           } else {
-            return ":scope > *";
+            search = search.join(":");
+            return score( search, searchList.querySelectorAll( ":scope > *" ) );
           }
         })();
 
-        // concatenate search back together
-        search = search.join(":");
 
         // if keywords contain at least 3 characters
         if ( search.length > 2 ) {
 
           // then reorder searchList by search relevance
-          void reorder( search, searchList.querySelectorAll( query ) )
-            .map( key => searchList.children[key] )
-            .forEach( child => searchList.appendChild( child ) );
+          relevance.map( key => searchList.children[key] ).forEach( child => searchList.appendChild( child ) );
 
           // send success message to console
-          console.debug( `searched for '${search}' in ${performance.now() - timestamp}ms` );
+          console.debug( `searched for '${newValue}' in ${performance.now() - timestamp}ms` );
 
         // send failure message to console
         } else {
