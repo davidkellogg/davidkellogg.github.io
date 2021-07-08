@@ -133,53 +133,54 @@ customElements.define( "search-component", class extends HTMLElement {
       // if search string is at least three letters
       if ( name === "search" ) {
 
-        // get search relevance
-        (() => {
+        // break search into array
+        let search = newValue.split(":");
+        let relevance = [];
 
-          // break search into array
-          let search = newValue.split(":");
+        // search query for tags
+        if ( search[0].toLowerCase() === "tag" ) {
+          search = search.slice(1).join(":");
 
-          // search query for tags
-          if ( search[0].toLowerCase() === "tag" ) {
-            search = search.slice(1).join(":");
-
-            // if search string long enough, perform search
-            if ( search.length > 2 ) {
-              return match( search, searchList.querySelectorAll( "ul" ) )
-            }
-
-
-          // search query for titles
-          } else if ( search[0].toLowerCase() === "title" ) {
-            return search.slice(1).join(":");
-
-            // if search string long enough, perform search
-            if ( search.length > 2 ) {
-              return score( search, searchList.querySelectorAll( "h4" ) );
-            }
-
-
-          // default search query
-          } else {
-            search = search.join(":");
-
-            // if search string long enough, perform search
-            if ( search.length > 2 ) {
-              return score( search, searchList.querySelectorAll( ":scope > *" ) );
-            }
+          // if search string long enough, perform search
+          if ( search.length > 2 ) {
+            relevance = match( search, searchList.querySelectorAll( "ul" ) )
           }
 
-          // send message to console
-          console.debug( "search must be at least 3 characters" );
 
-          // sort new to old
-          return latest( searchList.querySelectorAll( "time" ) );
+        // search query for titles
+        } else if ( search[0].toLowerCase() === "title" ) {
+          search = search.slice(1).join(":");
+
+          // if search string long enough, perform search
+          if ( search.length > 2 ) {
+            relevance = score( search, searchList.querySelectorAll( "h4" ) );
+          }
+
+
+        // default search query
+        } else {
+          search = search.join(":");
+
+          // if search string long enough, perform search
+          if ( search.length > 2 ) {
+            relevance = score( search, searchList.querySelectorAll( ":scope > *" ) );
+          }
+        }
+
+        // sort new to old
+        if ( search.length < 3 ) {
+          console.debug( "search must be at least 3 characters" );
+          relevance = latest( searchList.querySelectorAll( "time" ) );
+        }
 
         // then reorder searchList by search relevance
-        })().map( key => searchList.children[key] ).forEach( child => searchList.appendChild( child ) );
+        relevance.map( key => searchList.children[key] ).forEach( child => searchList.appendChild( child ) );
 
         // send message to console
-        console.debug( `searched for '${newValue}' in ${performance.now() - timestamp}ms` );
+        if ( search.length > 2 ) {
+          console.debug( `searched for '${newValue}' in ${performance.now() - timestamp}ms` );
+        }
+
 
       // if the changed attribute is display
       } else if ( name === "display" ) {
